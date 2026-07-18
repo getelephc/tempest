@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\Container;
+
+use Tempest\Reflection\ClassReflector;
+use UnitEnum;
+
+interface DynamicInitializer
+{
+    public function canInitialize(ClassReflector $class, string|UnitEnum|null $tag): bool;
+
+    public function initialize(ClassReflector $class, string|UnitEnum|null $tag, Container $container): object;
+}

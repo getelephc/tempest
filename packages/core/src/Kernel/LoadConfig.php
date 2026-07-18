@@ -1,0 +1,155 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\Core\Kernel;
+
+use Tempest\Container\Container;
+use Tempest\Core\ConfigCache;
+use Tempest\Core\Environment;
+use Tempest\Discovery\DiscoveryConfig;
+use Tempest\Support\Arr\MutableArray;
+use Tempest\Support\Filesystem;
+use Tempest\Support\Path;
+use Tempest\Support\Str;
+
+use function Tempest\root_path;
+
+/** @internal */
+final readonly class LoadConfig
+{
+    public function __construct(
+        private DiscoveryConfig $discoveryConfig,
+        private Container $container,
+        private ConfigCache $cache,
+        private Environment $environment,
+    ) {}
+
+    public function __invoke(): void
+    {
+        $configPaths = $this->cache->resolve('config_cache', $this->find(...));
+
+        foreach ($configPaths as $path) {
+            $configFile = require $path;
+
+            if ($configFile instanceof DiscoveryConfig) {
+                $configFile->locations = [...$this->discoveryConfig->locations, ...$configFile->locations];
+                $configFile->classes = [...$this->discoveryConfig->classes, ...$configFile->classes];
+            }
+
+            $this->container->config($configFile);
+        }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function find(): array
+    {
+        $configPaths = new MutableArray();
+
+        // Scan for config files in all discovery locations
+        foreach ($this->discoveryConfig->locations as $discoveryLocation) {
+            $this->scan($discoveryLocation->path, $configPaths);
+        }
+
+        $suffixes = [
+            'production' => ['.production.config.php', '.prod.config.php', '.prd.config.php'],
+            'staging' => ['.staging.config.php', '.stg.config.php'],
+            'testing' => ['.test.config.php', '.testing.config.php'],
+            'development' => ['.dev.config.php', '.local.config.php'],
+        ];
+
+        return $configPaths
+            ->filter(fn (string $path) => match (true) {
+                $this->environment->isLocal() => ! Str\contains($path, [...$suffixes['production'], ...$suffixes['staging'], ...$suffixes['testing']]),
+                $this->environment->isProduction() => ! Str\contains($path, [...$suffixes['staging'], ...$suffixes['testing'], ...$suffixes['development']]),
+                $this->environment->isStaging() => ! Str\contains($path, [...$suffixes['testing'], ...$suffixes['development'], ...$suffixes['production']]),
+                default => true,
+            })
+            ->sortByCallback(function (string $path1, string $path2) use ($suffixes): int {
+                $getPriority = fn (string $path): int => match (true) {
+                    Str\contains($path, '/vendor/') => 0,
+                    ! Str\contains($path, root_path()) => 0,
+                    Str\contains($path, $suffixes['testing']) => 6,
+                    Str\contains($path, $suffixes['development']) => 5,
+                    Str\contains($path, $suffixes['production']) => 4,
+                    Str\contains($path, $suffixes['staging']) => 3,
+                    Str\contains($path, '.config.php') => 2,
+                    default => 1,
+                };
+
+                $priorityA = $getPriority($path1);
+                $priorityB = $getPriority($path2);
+
+                if ($priorityA !== $priorityB) {
+                    return $priorityA <=> $priorityB;
+                }
+
+                return strcmp($path1, $path2);
+            })
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Recursively scan a directory and apply a given set of discovery classes to all files
+     */
+    private function scan(string $path, MutableArray $configPaths): void
+    {
+        $input = Filesystem\normalize_path($path);
+
+        // Make sure the path is valid
+        if ($input === null) {
+            return;
+        }
+
+        $input = Path\normalize($input);
+
+        // Directories are scanned recursively
+        if (is_dir($input)) {
+            // Make sure the current directory is not marked for skipping
+            if ($this->shouldSkipDirectory($input)) {
+                return;
+            }
+
+            $subPaths = scandir($input, SCANDIR_SORT_NONE);
+            if ($subPaths === false) {
+                return;
+            }
+
+            foreach ($subPaths as $subPath) {
+                // `.` and `..` are skipped
+                if ($subPath === '.') {
+                    continue;
+                }
+
+                if ($subPath === '..') {
+                    continue;
+                }
+
+                // Scan all files and folders within this directory
+                $this->scan("{$input}/{$subPath}", $configPaths);
+            }
+
+            return;
+        }
+
+        // Only include config files
+        if (! str_ends_with($input, '.config.php')) {
+            return;
+        }
+
+        $configPaths[] = $input;
+    }
+
+    /**
+     * Check whether a given directory should be skipped
+     */
+    private function shouldSkipDirectory(string $path): bool
+    {
+        $directory = pathinfo($path, PATHINFO_BASENAME);
+
+        return $directory === 'node_modules' || $directory === 'vendor';
+    }
+}

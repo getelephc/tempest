@@ -1,0 +1,23 @@
+{
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"qa": "bun fmt && bun run test run && bun run build",
+		"fmt": "dprint fmt ./packages/vite-plugin-tempest/**/*.{ts,vue,json}",
+		"fmt:check": "dprint check ./packages/vite-plugin-tempest/**/*.{ts,vue,json}",
+		"build": "bun --filter '*' build",
+		"dev": "bun --filter '*' build:stub",
+		"test": "vitest"
+	},
+	"devDependencies": {
+		"@types/bun": "1.3.14",
+		"bumpp": "^10.2.3",
+		"dprint": "^0.54.0",
+		"typescript": "^6.0.3",
+		"unbuild": "^3.6.1",
+		"vite-plugin-tempest": "workspace:*",
+		"vitest": "^4.1.9"
+	}
+}

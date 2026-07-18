@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\Router\Routing\Construction;
+
+use Tempest\Container\Singleton;
+use Tempest\Router\RouteConfig;
+
+/**
+ * @internal
+ */
+#[Singleton]
+final class RouteConfigurator
+{
+    /** @var string The mark to give the next route in the matching Regex */
+    private string $regexMark = 'a';
+
+    /** @var array<string,array<string,\Tempest\Router\Routing\Construction\DiscoveredRoute>> */
+    private array $staticRoutes = [];
+
+    /** @var array<string,array<string,\Tempest\Router\Routing\Construction\DiscoveredRoute>> */
+    private array $dynamicRoutes = [];
+
+    /** @var array<string,string[]> */
+    private array $handlerIndex = [];
+
+    private bool $isDirty = false;
+
+    private RoutingTree $routingTree;
+
+    public function __construct()
+    {
+        $this->routingTree = new RoutingTree();
+    }
+
+    public function addRoute(DiscoveredRoute $route): void
+    {
+        $this->isDirty = true;
+
+        $handler = $route->handler->getDeclaringClass()->getName() . '::' . $route->handler->getName();
+        $this->handlerIndex[$handler] ??= [];
+        $this->handlerIndex[$handler][] = $route->uri;
+
+        if ($route->isDynamic) {
+            $this->addDynamicRoute($route);
+        } else {
+            $this->addStaticRoute($route);
+        }
+    }
+
+    private function addDynamicRoute(DiscoveredRoute $route): void
+    {
+        $markedRoute = $this->markRoute($route);
+        $this->dynamicRoutes[$route->method->value][$markedRoute->mark] = $route;
+
+        $this->routingTree->add($markedRoute);
+    }
+
+    private function addStaticRoute(DiscoveredRoute $route): void
+    {
+        $uriWithTrailingSlash = rtrim($route->uri, '/');
+
+        $this->staticRoutes[$route->method->value][$uriWithTrailingSlash] = $route;
+        $this->staticRoutes[$route->method->value][$uriWithTrailingSlash . '/'] = $route;
+    }
+
+    private function markRoute(DiscoveredRoute $route): MarkedRoute
+    {
+        $this->regexMark = str_increment($this->regexMark);
+
+        return new MarkedRoute(
+            mark: $this->regexMark,
+            route: $route,
+        );
+    }
+
+    public function toRouteConfig(): RouteConfig
+    {
+        $this->isDirty = false;
+
+        return new RouteConfig(
+            $this->staticRoutes,
+            $this->dynamicRoutes,
+            $this->routingTree->toMatchingRegexes(),
+            $this->handlerIndex,
+        );
+    }
+
+    public function isDirty(): bool
+    {
+        return $this->isDirty;
+    }
+}

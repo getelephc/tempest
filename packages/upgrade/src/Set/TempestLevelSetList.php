@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\Upgrade\Set;
+
+final class TempestLevelSetList
+{
+    public const string UP_TO_TEMPEST_20 = __DIR__ . '/../../config/sets/level/up-to-tempest-20.php';
+
+    public const string UP_TO_TEMPEST_28 = __DIR__ . '/../../config/sets/level/up-to-tempest-28.php';
+
+    public const string UP_TO_TEMPEST_30 = __DIR__ . '/../../config/sets/level/up-to-tempest-30.php';
+
+    public const string UP_TO_TEMPEST_34 = __DIR__ . '/../../config/sets/level/up-to-tempest-34.php';
+
+    public const string UP_TO_TEMPEST_310 = __DIR__ . '/../../config/sets/level/up-to-tempest-310.php';
+
+    public const string UP_TO_TEMPEST_314 = __DIR__ . '/../../config/sets/level/up-to-tempest-314.php';
+}

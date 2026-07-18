@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\Http;
+
+use ArrayAccess;
+use ArrayIterator;
+use IteratorAggregate;
+use LogicException;
+use Tempest\Support\Str;
+use Traversable;
+
+final readonly class RequestHeaders implements ArrayAccess, IteratorAggregate
+{
+    /**
+     * @param array<string, string> $headers
+     */
+    public static function normalizeFromArray(array $headers): self
+    {
+        return new self(array_combine(
+            array_map(strtolower(...), array_keys($headers)),
+            array_values(array_map(fn (mixed $value) => Str\parse($value), $headers)),
+        ));
+    }
+
+    /** @param array<string, string> $headers */
+    private function __construct(
+        private array $headers = [],
+    ) {}
+
+    public function offsetExists(mixed $offset): bool
+    {
+        $offset = strtolower($offset);
+
+        return array_key_exists($offset, $this->headers);
+    }
+
+    public function offsetGet(mixed $offset): ?string
+    {
+        return $this->get((string) $offset);
+    }
+
+    public function get(string $name, ?string $default = null): ?string
+    {
+        $name = strtolower($name);
+
+        return array_key_exists($name, $this->headers)
+            ? $this->headers[$name]
+            : $default;
+    }
+
+    public function has(string $name): bool
+    {
+        return $this->offsetExists($name);
+    }
+
+    public function getHeader(string $name): Header
+    {
+        return new Header(mb_strtolower($name), array_filter([$this->get($name)]));
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        throw new LogicException('Unable to alter request headers.');
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        throw new LogicException('Unable to alter request headers.');
+    }
+
+    public function toArray(): array
+    {
+        return $this->headers;
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->headers);
+    }
+}

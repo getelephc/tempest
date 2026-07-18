@@ -1,0 +1,52 @@
+name: "Sub-split packages"
+
+on:
+  push:
+    branches:
+      - "[0-9]+.x"
+      - "v[0-9]+.[0-9]+-alpha.[0-9]+"
+      - "v[0-9]+.[0-9]+-beta.[0-9]+"
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  get_packages:
+    name: Get packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.5
+          coverage: none
+
+      - uses: actions/checkout@v4
+
+      - name: Get packages
+        id: get_json
+        run: echo "json=$(bin/get-packages)" >> $GITHUB_OUTPUT
+
+      - name: Output packages
+        run: echo "${{ steps.get_json.outputs.json }}"
+
+    outputs:
+      matrix: ${{ steps.get_json.outputs.json }}
+
+  packages_split:
+    name: Split package ${{ matrix.package.name }}
+    needs: get_packages
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.get_packages.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up git-filter-repo
+        run: pip install git-filter-repo
+
+      - name: Split Package
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: ./bin/split "${{ matrix.package.name }}"

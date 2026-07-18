@@ -1,0 +1,25 @@
+{
+    "name": "tempest/validation",
+    "description": "A component for data validation handling.",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.5",
+        "egulias/email-validator": "^4.0.2",
+        "giggsey/libphonenumber-for-php-lite": "^9.0",
+        "tempest/reflection": "3.x-dev",
+        "tempest/support": "3.x-dev",
+        "tempest/intl": "3.x-dev",
+        "tempest/datetime": "3.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tempest\\Validation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tempest\\Validation\\Tests\\": "tests"
+        }
+    }
+}

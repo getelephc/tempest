@@ -1,0 +1,34 @@
+{
+    "name": "tempest/intl",
+    "description": "A component for working with internationalization.",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.5",
+        "doctrine/inflector": "^2.0",
+        "symfony/yaml": "^7.3|^8.0",
+        "tempest/core": "3.x-dev",
+        "tempest/container": "3.x-dev",
+        "tempest/support": "3.x-dev",
+        "ext-intl": "*"
+    },
+    "suggest": {
+        "tempest/datetime": "In order to use the `datetime` function",
+        "tempest/icon": "In order to use the `icon` function",
+        "tempest/event-bus": "Enables dispatching translation miss and translation failure events."
+    },
+    "autoload": {
+        "files": [
+            "src/functions.php",
+            "src/Number/functions.php"
+        ],
+        "psr-4": {
+            "Tempest\\Intl\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tempest\\Intl\\Tests\\": "tests"
+        }
+    }
+}

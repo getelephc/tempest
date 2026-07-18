@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\EventBus;
+
+use Closure;
+use InvalidArgumentException;
+use Tempest\Core\Middleware;
+use Tempest\Reflection\FunctionReflector;
+use Tempest\Reflection\MethodReflector;
+use UnitEnum;
+
+final class EventBusConfig
+{
+    public function __construct(
+        /** @var array<string,array<\Tempest\EventBus\CallableEventHandler>> */
+        public array $handlers = [],
+
+        /** @var Middleware<\Tempest\EventBus\EventBusMiddleware> */
+        public Middleware $middleware = new Middleware(),
+
+        /** @var array<string,array<\Tempest\EventBus\CallableEventHandler>> */
+        public array $closureHandlers = [],
+    ) {}
+
+    public function addClosureHandler(Closure $handler, string|UnitEnum|null $event = null): self
+    {
+        if ($event instanceof UnitEnum) {
+            $event = $event::class . '::' . $event->name;
+        }
+
+        $event ??= new FunctionReflector($handler)
+            ->getParameter(key: 0)
+            ?->getType()
+            ->getName();
+
+        if (! $event) {
+            throw new InvalidArgumentException('The first parameter of the closure must be the event name or type.');
+        }
+
+        $handlerKey = spl_object_hash($handler);
+
+        $this->closureHandlers[$event][$handlerKey] = new CallableEventHandler(
+            event: $event,
+            handler: $handler,
+        );
+
+        return $this;
+    }
+
+    public function addClassMethodHandler(string $event, EventHandler $handler, MethodReflector $reflectionMethod): self
+    {
+        $handlerKey = $reflectionMethod->getDeclaringClass()->getName() . '::' . $reflectionMethod->getName();
+        $handler->setEventName($event)->setHandler($reflectionMethod);
+
+        $this->handlers[$event][$handlerKey] = new CallableEventHandler(
+            event: $event,
+            handler: $handler,
+        );
+
+        return $this;
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "tempest/cache",
+    "description": "The PHP framework that gets out of your way.",
+    "require": {
+        "php": "^8.5",
+        "psr/cache": "^3.0",
+        "symfony/cache": "^7.3",
+        "tempest/core": "3.x-dev",
+        "tempest/clock": "3.x-dev",
+        "tempest/kv-store": "3.x-dev",
+        "tempest/container": "3.x-dev"
+    },
+    "require-dev": {
+        "tempest/clock": "3.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tempest\\Cache\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tempest\\Cache\\Tests\\": "tests"
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev"
+}

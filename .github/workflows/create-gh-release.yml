@@ -1,0 +1,57 @@
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+  id-token: write
+
+name: Create a GitHub release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        id: generate_release_notes
+        with:
+          args: -v --latest --strip header
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Clean up release notes
+        run: |
+          cat ${{ steps.generate_release_notes.outputs.changelog }}
+          cat ${{ steps.generate_release_notes.outputs.changelog }} | sed '1,2d' > release_notes.txt
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release_notes.txt
+          tag_name: ${{ github.ref_name }}
+
+      - name: Broadcast release on Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
+          RELEASE_URL: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          processed_body=$(cat release_notes.txt | perl -0777 -pe 's/\n*### (\S+) (.+?)\n+/\n### `\1`  \2\n/g')
+          processed_body="${processed_body#$'\n'}"
+          final_content=$(printf "%s\n%s" "-# Read the [GitHub release](<${RELEASE_URL}>)." "$processed_body")
+          jq -n \
+            --arg content "$final_content" \
+            --arg username "Tempest ${RELEASE_TAG}" \
+            '{
+              content: $content,
+              username: $username
+            }' | curl -X POST "$DISCORD_WEBHOOK" \
+            -H "Content-Type: application/json" \
+            -d @-

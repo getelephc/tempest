@@ -1,0 +1,81 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\View\Elements;
+
+use Tempest\View\Element;
+use Tempest\View\Exceptions\ElementWasInvalid;
+use Tempest\View\WrapsElement;
+
+use function Tempest\Support\str;
+
+final class PhpForeachElement implements Element, WrapsElement
+{
+    use IsElement;
+
+    private ?Element $else = null;
+
+    public function __construct(
+        private readonly Element $wrappingElement,
+    ) {}
+
+    public function getWrappingElement(): Element
+    {
+        return $this->wrappingElement;
+    }
+
+    public function setElse(Element $element): self
+    {
+        if ($this->else instanceof Element) {
+            throw new ElementWasInvalid('There can only be one forelse element.');
+        }
+
+        $this->else = $element;
+
+        return $this;
+    }
+
+    public function compile(): string
+    {
+        $foreachAttribute = $this->wrappingElement->consumeAttribute(':foreach');
+
+        if (($viewComponent = $this->unwrap(ViewComponentElement::class)) instanceof ViewComponentElement) {
+            $name = trim(str($foreachAttribute)->explode('as')->last());
+
+            $viewComponent->addVariable($name);
+        }
+
+        $compiled = sprintf(
+            '<?php foreach (%s): ?>
+%s',
+            $foreachAttribute,
+            $this->wrappingElement->compile(),
+        );
+
+        $compiled = sprintf(
+            '%s
+<?php endforeach; ?>',
+            $compiled,
+        );
+
+        if ($this->else instanceof Element) {
+            $collectionName = str($foreachAttribute)->match('/^(?<match>.*)\s+as/', 'match');
+
+            $this->else->consumeAttribute(':forelse');
+
+            $compiled = sprintf(
+                '<?php if(iterator_count(%s ?? [])): ?>
+%s
+<?php else: ?>
+%s
+<?php endif ?>',
+                $collectionName,
+                $compiled,
+                $this->else->compile(),
+            );
+        }
+
+        return $compiled;
+    }
+}

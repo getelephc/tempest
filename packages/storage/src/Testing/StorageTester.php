@@ -1,0 +1,48 @@
+<?php
+
+namespace Tempest\Storage\Testing;
+
+use RuntimeException;
+use Tempest\Container\Container;
+use Tempest\Container\GenericContainer;
+use Tempest\Storage\Storage;
+use Tempest\Storage\StorageInitializer;
+use Tempest\Support\Str;
+use UnitEnum;
+
+final readonly class StorageTester
+{
+    public function __construct(
+        private Container $container,
+    ) {}
+
+    /**
+     * Forces the usage of a testing storage. When setting `$persist` to `true`, the disk is not erased.
+     */
+    public function fake(string|UnitEnum|null $tag = null, bool $persist = false): TestingStorage
+    {
+        $storage = new TestingStorage(
+            path: Str\to_kebab_case(Str\parse($tag, default: 'default')),
+        );
+
+        $this->container->singleton(Storage::class, $storage, $tag);
+
+        return $persist
+            ? $storage->createDirectory()
+            : $storage->cleanDirectory();
+    }
+
+    /**
+     * Prevents storage from being used without a fake.
+     */
+    public function preventUsageWithoutFake(): void
+    {
+        if (! $this->container instanceof GenericContainer) {
+            throw new RuntimeException('Container is not a GenericContainer, unable to prevent usage without fake.');
+        }
+
+        $this->container->unregister(Storage::class, tagged: true);
+        $this->container->removeInitializer(StorageInitializer::class);
+        $this->container->addInitializer(RestrictedStorageInitializer::class);
+    }
+}

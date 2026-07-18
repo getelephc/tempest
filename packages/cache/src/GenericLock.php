@@ -1,0 +1,86 @@
+<?php
+
+namespace Tempest\Cache;
+
+use Closure;
+use Stringable;
+use Tempest\DateTime\DateTime;
+use Tempest\DateTime\DateTimeInterface;
+use Tempest\DateTime\Duration;
+
+final class GenericLock implements Lock
+{
+    public function __construct(
+        private(set) string $key,
+        private(set) string $owner,
+        private readonly Cache $cache,
+        private(set) ?Duration $duration = null,
+    ) {}
+
+    public function locked(Stringable|string|null $by = null): bool
+    {
+        if ($by === null) {
+            return $this->cache->has($this->key);
+        }
+
+        return $this->cache->get($this->key) === (string) $by;
+    }
+
+    public function acquire(): bool
+    {
+        if ($this->locked()) {
+            return false;
+        }
+
+        $expiration = $this->duration instanceof Duration
+            ? DateTime::now()->plus($this->duration)
+            : null;
+
+        $this->cache->put(
+            key: $this->key,
+            value: $this->owner,
+            expiration: $expiration,
+        );
+
+        return $this->cache->get($this->key) === $this->owner;
+    }
+
+    public function execute(Closure $callback, DateTimeInterface|Duration|null $wait = null): mixed
+    {
+        $wait ??= Datetime::now();
+        $waitUntil = $wait instanceof Duration
+            ? DateTime::now()->plus($wait)
+            : $wait;
+
+        while (! $this->acquire()) {
+            if ($waitUntil->beforeOrAtTheSameTime(DateTime::now())) {
+                throw new LockAcquisitionTimedOut($this->key);
+            }
+
+            usleep(250); // TODO: sleep from clock?
+        }
+
+        try {
+            return $callback();
+        } finally {
+            $this->release();
+        }
+    }
+
+    public function release(bool $force = false): bool
+    {
+        if (! $this->locked()) {
+            return false;
+        }
+
+        $lock = $this->cache->get($this->key);
+
+        if ($lock !== $this->owner && ! $force) {
+            return false;
+        }
+
+        $this->cache->remove($this->key);
+
+        return true;
+    }
+}

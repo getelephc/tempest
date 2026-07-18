@@ -1,0 +1,24 @@
+{
+    "name": "tempest/mapper",
+    "description": "A component for data mapping.",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.5",
+        "tempest/validation": "3.x-dev",
+        "tempest/core": "3.x-dev"
+    },
+    "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
+        "psr-4": {
+            "Tempest\\Mapper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tempest\\Mapper\\Tests\\": "tests"
+        }
+    }
+}

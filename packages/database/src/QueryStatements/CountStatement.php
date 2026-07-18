@@ -1,0 +1,70 @@
+<?php
+
+namespace Tempest\Database\QueryStatements;
+
+use Tempest\Database\Builder\TableDefinition;
+use Tempest\Database\Config\DatabaseDialect;
+use Tempest\Database\QueryStatement;
+use Tempest\Support\Arr\ImmutableArray;
+
+use function Tempest\Support\arr;
+
+final class CountStatement implements QueryStatement, HasWhereStatements
+{
+    /**
+     * @param ImmutableArray<WhereStatement> $where
+     * @param ImmutableArray<JoinStatement> $joins
+     */
+    public function __construct(
+        public readonly TableDefinition $table,
+        public ?string $column = null,
+        public ImmutableArray $where = new ImmutableArray(),
+        public bool $distinct = false,
+        public ImmutableArray $joins = new ImmutableArray(),
+    ) {}
+
+    public function compile(DatabaseDialect $dialect): string
+    {
+        $countField = new FieldStatement(sprintf(
+            'COUNT(%s) AS %s',
+            $this->getCountArgument(),
+            $this->getKey(),
+        ));
+
+        $query = arr([
+            sprintf('SELECT %s', $countField->compile($dialect)),
+            sprintf('FROM %s', $dialect->quoteIdentifier($this->table->name)),
+        ]);
+
+        if ($this->joins->isNotEmpty()) {
+            foreach ($this->joins as $join) {
+                $query[] = $join->compile($dialect);
+            }
+        }
+
+        if ($this->where->isNotEmpty()) {
+            $query[] = 'WHERE ' . $this->where
+                ->map(fn (QueryStatement $where) => $where->compile($dialect))
+                ->filter(fn (string $compiled) => $compiled !== '')
+                ->implode(' ');
+        }
+
+        return $query->implode(' ');
+    }
+
+    public function getCountArgument(): string
+    {
+        return $this->column === null || $this->column === '*'
+            ? '*'
+            : sprintf(
+                '%s`%s`',
+                $this->distinct ? 'DISTINCT ' : '',
+                $this->column,
+            );
+    }
+
+    public function getKey(): string
+    {
+        return 'count';
+    }
+}

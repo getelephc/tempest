@@ -1,0 +1,49 @@
+includes:
+    - phpstan-baseline.neon
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+    - vendor/phpat/phpat/extension.neon
+services:
+    -
+        class: Tests\Tempest\Architecture\ArchitectureTestCase
+        tags:
+            - phpat.test
+    -
+        class: Tests\Tempest\PHPStan\LazyReadWritePropertiesExtension
+        tags:
+            - phpstan.properties.readWriteExtension
+    -
+        class: Tests\Tempest\PHPStan\QueryFunctionDynamicReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicFunctionReturnTypeExtension
+parameters:
+    level: 5
+    tmpDir: .cache/phpstan
+    tips:
+        treatPhpDocTypesAsCertain: false
+    paths:
+        - src
+        - packages
+        - tests
+    excludePaths:
+        analyse:
+            - packages/upgrade/tests/*/Fixtures/*.php
+            - packages/auth/src/Installer/basic-user
+    reportUnmatchedIgnoredErrors: true
+
+    disallowedFunctionCalls:
+        -
+            function: 'exec()'
+        -
+            function: 'eval()'
+        -
+            function: 'dd()'
+        -
+            function: 'dump()'
+        -
+            function: 'ld()'
+        -
+            function: 'lw()'
+        -
+            function: 'phpinfo()'
+        -
+            function: 'var_dump()'

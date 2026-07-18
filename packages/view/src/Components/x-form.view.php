@@ -1,0 +1,27 @@
+<?php
+/**
+ * @var string|null $action
+ * @var string|Method|null $method
+ * @var string|null $enctype
+ */
+
+use Tempest\Http\Method;
+
+$action ??= null;
+$method ??= Method::POST;
+
+if ($method instanceof Method) {
+    $method = $method->value;
+}
+
+$needsSpoofing = Method::trySpoofingFrom($method) instanceof Method;
+$formMethod = $needsSpoofing ? 'POST' : $method;
+?>
+
+<form :action="$action" :method="$formMethod" :enctype="$enctype">
+    <?php if ($needsSpoofing): ?>
+        <input type="hidden" name="_method" value="<?= htmlspecialchars($method) ?>">
+    <?php endif; ?>
+
+    <x-slot />
+</form>

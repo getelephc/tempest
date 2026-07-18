@@ -1,0 +1,22 @@
+{
+    "name": "tempest/cryptography",
+    "description": "A component for working with passwords, hashing, and cryptography.",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.5",
+        "tempest/container": "3.x-dev",
+        "tempest/support": "3.x-dev",
+        "tempest/clock": "3.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tempest\\Cryptography\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tempest\\Cryptography\\Tests\\": "tests"
+        }
+    }
+}

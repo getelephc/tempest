@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tempest\Container;
+
+use Closure;
+use Tempest\Container\Exceptions\CircularDependencyEncountered;
+use Tempest\Reflection\Reflector;
+
+final class DependencyChain
+{
+    /**
+     * @var \Tempest\Container\Dependency[]
+     */
+    private array $dependencies = [];
+
+    public function __construct(
+        private string $origin,
+    ) {}
+
+    public function add(Reflector|Closure|string $dependency): self
+    {
+        $dependency = new Dependency($dependency);
+
+        if (isset($this->dependencies[$dependency->getName()])) {
+            throw new CircularDependencyEncountered($this, $dependency);
+        }
+
+        $this->dependencies[$dependency->getName()] = $dependency;
+
+        return $this;
+    }
+
+    public function first(): Dependency
+    {
+        return array_first($this->dependencies);
+    }
+
+    public function last(): Dependency
+    {
+        return array_last($this->dependencies);
+    }
+
+    /** @return \Tempest\Container\Dependency[] */
+    public function all(): array
+    {
+        return $this->dependencies;
+    }
+
+    public function getOrigin(): string
+    {
+        return $this->origin;
+    }
+
+    public function clone(): self
+    {
+        return clone $this;
+    }
+}
