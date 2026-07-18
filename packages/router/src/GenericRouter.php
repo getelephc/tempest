@@ -26,7 +26,7 @@ final readonly class GenericRouter implements Router
     public function dispatch(Request|PsrRequest $request): Response
     {
         if (! $request instanceof Request) {
-            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->do();
+            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->execute();
         }
 
         $this->container->singleton(Request::class, fn () => $request);

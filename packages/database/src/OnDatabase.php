@@ -6,7 +6,7 @@ use UnitEnum;
 
 trait OnDatabase
 {
-    private(set) string|UnitEnum|null $onDatabase = null;
+    public string|UnitEnum|null $onDatabase = null;
 
     public function onDatabase(string|UnitEnum|null $databaseTag): self
     {

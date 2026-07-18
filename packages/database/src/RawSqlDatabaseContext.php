@@ -7,9 +7,9 @@ use Tempest\Mapper\Context;
 
 final class RawSqlDatabaseContext implements Context
 {
-    private(set) string $name = self::class;
+    public string $name = self::class;
 
     public function __construct(
-        private(set) DatabaseDialect $dialect,
+        public DatabaseDialect $dialect,
     ) {}
 }

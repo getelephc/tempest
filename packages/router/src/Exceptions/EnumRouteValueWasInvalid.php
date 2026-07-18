@@ -9,7 +9,7 @@ use Tempest\Reflection\ParameterReflector;
 final class EnumRouteValueWasInvalid extends Exception
 {
     public function __construct(
-        private(set) readonly MethodReflector $handler,
-        private(set) readonly ParameterReflector $parameter,
+        public readonly MethodReflector $handler,
+        public readonly ParameterReflector $parameter,
     ) {}
 }

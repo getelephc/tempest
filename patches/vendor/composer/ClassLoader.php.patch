@@ -1,0 +1,12 @@
+diff --git a/vendor/composer/ClassLoader.php b/vendor/composer/ClassLoader.php
+--- a/vendor/composer/ClassLoader.php
++++ b/vendor/composer/ClassLoader.php
+@@ -500 +500 @@ class ClassLoader
+-            while (false !== $lastPos = strrpos($subPath, '\\')) {
++            while (false !== ($lastPos = strrpos($subPath, '\\'))) {
+@@ -522 +522 @@ class ClassLoader
+-        if (false !== $pos = strrpos($class, '\\')) {
++        if (false !== ($pos = strrpos($class, '\\'))) {
+@@ -551 +551 @@ class ClassLoader
+-        if ($this->useIncludePath && $file = stream_resolve_include_path($logicalPathPsr0)) {
++        if ($this->useIncludePath && ($file = stream_resolve_include_path($logicalPathPsr0))) {

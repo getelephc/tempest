@@ -35,7 +35,7 @@ final class ArrayOfObjectsSerializer implements Serializer, DynamicSerializer
         $values = [];
 
         foreach ($input as $key => $object) {
-            $values[$key] = map($object)->with(ObjectToArrayMapper::class)->do();
+            $values[$key] = map($object)->with(ObjectToArrayMapper::class)->execute();
         }
 
         return $values;

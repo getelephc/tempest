@@ -38,9 +38,9 @@ final class ModelInspector
 
     private static array $inspectors = [];
 
-    private(set) ?ClassReflector $reflector = null;
+    public ?ClassReflector $reflector = null;
 
-    private(set) object|string|null $instance = null;
+    public object|string|null $instance = null;
 
     private Validator $validator {
         get => get(Validator::class);
@@ -73,7 +73,7 @@ final class ModelInspector
     }
 
     public function __construct(
-        private(set) object|string $model,
+        public object|string $model,
     ) {
         if ($model instanceof HasMany || $model instanceof HasManyThrough || $model instanceof BelongsToMany) {
             $model = $model->property->getIterableType()->asClass();

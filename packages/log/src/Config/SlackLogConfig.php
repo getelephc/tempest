@@ -37,13 +37,13 @@ final class SlackLogConfig implements LogConfig
      * @param null|UnitEnum|string $tag An optional tag to identify the logger instance associated to this configuration.
      */
     public function __construct(
-        private(set) string $webhookUrl,
-        private(set) ?string $channelId = null,
-        private(set) ?string $username = null,
-        private(set) PresentationMode $mode = PresentationMode::INLINE,
-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
-        private(set) array $channels = [],
-        private(set) ?string $prefix = null,
-        private(set) UnitEnum|string|null $tag = null,
+        public string $webhookUrl,
+        public ?string $channelId = null,
+        public ?string $username = null,
+        public PresentationMode $mode = PresentationMode::INLINE,
+        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
+        public array $channels = [],
+        public ?string $prefix = null,
+        public UnitEnum|string|null $tag = null,
     ) {}
 }

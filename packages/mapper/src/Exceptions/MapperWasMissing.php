@@ -10,6 +10,6 @@ final class MapperWasMissing extends Exception
 {
     public function __construct()
     {
-        parent::__construct('Cannot map using `do()` without calling `with()` first: `map()->with()->do()`');
+        parent::__construct('Cannot map using `execute()` without calling `with()` first: `map()->with()->execute()`');
     }
 }

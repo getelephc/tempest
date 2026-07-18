@@ -36,13 +36,13 @@ final class SysLogConfig implements LogConfig
      * @param null|UnitEnum|string $tag An optional tag to identify the logger instance associated to this configuration.
      */
     public function __construct(
-        private(set) string $identity,
-        private(set) int $facility = LOG_USER,
-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
-        private(set) bool $bubble = true,
-        private(set) int $flags = LOG_PID,
-        private(set) array $channels = [],
-        private(set) ?string $prefix = null,
-        private(set) UnitEnum|string|null $tag = null,
+        public string $identity,
+        public int $facility = LOG_USER,
+        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
+        public bool $bubble = true,
+        public int $flags = LOG_PID,
+        public array $channels = [],
+        public ?string $prefix = null,
+        public UnitEnum|string|null $tag = null,
     ) {}
 }

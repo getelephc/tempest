@@ -8,7 +8,7 @@ use Tempest\Process\ProcessExecutor;
 use Tempest\Support\Arr;
 use Tempest\Support\Arr\ImmutableArray;
 use Tempest\Support\Filesystem;
-use Tempest\Support\Namespace\Psr4Namespace;
+use Tempest\Support\NamespaceUtils\Psr4Namespace;
 use Tempest\Support\Path;
 use Tempest\Support\Str;
 

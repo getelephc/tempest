@@ -14,10 +14,10 @@ final readonly class FailingRule
      * @param null|string $key An optional key associated with the value, used for localization.
      */
     public function __construct(
-        private(set) Rule $rule,
-        private(set) ?string $field = null,
-        private(set) mixed $value = null,
-        private(set) ?string $key = null,
+        public Rule $rule,
+        public ?string $field = null,
+        public mixed $value = null,
+        public ?string $key = null,
     ) {}
 
     /**

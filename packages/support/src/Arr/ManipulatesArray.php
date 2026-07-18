@@ -24,14 +24,14 @@ use function Tempest\Support\tap;
 trait ManipulatesArray
 {
     /** @var array<TKey, TValue> */
-    private(set) array $value;
+    public array $value;
 
     /**
      * @param array<TKey, TValue>|self<TKey, TValue>|TValue $input
      */
     public function __construct(mixed $input = [])
     {
-        $this->value = namespace\wrap($input);
+        $this->value = wrap($input);
     }
 
     abstract protected function createOrModify(iterable $array): mixed;
@@ -65,7 +65,7 @@ trait ManipulatesArray
      */
     public static function createFrom(mixed $input): self
     {
-        return new static(namespace\to_array($input));
+        return new static(to_array($input));
     }
 
     /**
@@ -78,7 +78,7 @@ trait ManipulatesArray
      */
     public function findKey(mixed $value, bool $strict = false): int|string|null
     {
-        return namespace\find_key($this->value, $value, $strict);
+        return find_key($this->value, $value, $strict);
     }
 
     /**
@@ -91,7 +91,7 @@ trait ManipulatesArray
      */
     public function chunk(int $size, bool $preserveKeys = true): self
     {
-        return $this->createOrModify(array_map(fn (array $array) => new static($array), namespace\chunk($this->value, $size, $preserveKeys)));
+        return $this->createOrModify(array_map(fn (array $array) => new static($array), chunk($this->value, $size, $preserveKeys)));
     }
 
     /**
@@ -107,7 +107,7 @@ trait ManipulatesArray
      */
     public function reduce(callable $callback, mixed $initial = null): mixed
     {
-        return namespace\reduce($this->value, $callback, $initial);
+        return reduce($this->value, $callback, $initial);
     }
 
     /**
@@ -117,7 +117,7 @@ trait ManipulatesArray
      */
     public function shuffle(): self
     {
-        return $this->createOrModify(namespace\shuffle($this->value));
+        return $this->createOrModify(shuffle($this->value));
     }
 
     /**
@@ -129,7 +129,7 @@ trait ManipulatesArray
      */
     public function removeKeys(string|int|array $keys): self
     {
-        return $this->createOrModify(namespace\remove_keys($this->value, $keys));
+        return $this->createOrModify(remove_keys($this->value, $keys));
     }
 
     /**
@@ -141,7 +141,7 @@ trait ManipulatesArray
      */
     public function removeKeysExcept(string|int|array $keys): self
     {
-        return $this->createOrModify(namespace\remove_keys_except($this->value, $keys));
+        return $this->createOrModify(remove_keys_except($this->value, $keys));
     }
 
     /**
@@ -174,7 +174,7 @@ trait ManipulatesArray
      */
     public function isList(): bool
     {
-        return namespace\is_list($this->value);
+        return is_list($this->value);
     }
 
     /**
@@ -183,7 +183,7 @@ trait ManipulatesArray
      */
     public function isAssociative(): bool
     {
-        return namespace\is_associative($this->value);
+        return is_associative($this->value);
     }
 
     /**
@@ -196,7 +196,7 @@ trait ManipulatesArray
      */
     public function random(int $number = 1, bool $preserveKey = false): mixed
     {
-        return namespace\random($this->value, $number, $preserveKey);
+        return random($this->value, $number, $preserveKey);
     }
 
     /**
@@ -208,7 +208,7 @@ trait ManipulatesArray
      */
     public function pluck(string $value, ?string $key = null): self
     {
-        return $this->createOrModify(namespace\pluck($this->value, $value, $key));
+        return $this->createOrModify(pluck($this->value, $value, $key));
     }
 
     /**
@@ -220,7 +220,7 @@ trait ManipulatesArray
      */
     public function prepend(mixed ...$values): self
     {
-        return $this->createOrModify(namespace\prepend($this->value, ...$values));
+        return $this->createOrModify(prepend($this->value, ...$values));
     }
 
     /**
@@ -232,7 +232,7 @@ trait ManipulatesArray
      */
     public function append(mixed ...$values): self
     {
-        return $this->createOrModify(namespace\append($this->value, ...$values));
+        return $this->createOrModify(append($this->value, ...$values));
     }
 
     /**
@@ -242,7 +242,7 @@ trait ManipulatesArray
      */
     public function add(mixed $value): self
     {
-        return $this->createOrModify(namespace\push($this->value, $value));
+        return $this->createOrModify(push($this->value, $value));
     }
 
     /**
@@ -252,7 +252,7 @@ trait ManipulatesArray
      */
     public function push(mixed $value): self
     {
-        return $this->createOrModify(namespace\push($this->value, $value));
+        return $this->createOrModify(push($this->value, $value));
     }
 
     /**
@@ -262,7 +262,7 @@ trait ManipulatesArray
      */
     public function pad(int $size, mixed $value): self
     {
-        return $this->createOrModify(namespace\pad($this->value, $size, $value));
+        return $this->createOrModify(pad($this->value, $size, $value));
     }
 
     /**
@@ -272,7 +272,7 @@ trait ManipulatesArray
      */
     public function flip(): self
     {
-        return $this->createOrModify(namespace\flip($this->value));
+        return $this->createOrModify(flip($this->value));
     }
 
     /**
@@ -285,7 +285,7 @@ trait ManipulatesArray
      */
     public function unique(Closure|string|null $key = null, bool $shouldBeStrict = false): self
     {
-        return $this->createOrModify(namespace\unique($this->value, $key, $shouldBeStrict));
+        return $this->createOrModify(unique($this->value, $key, $shouldBeStrict));
     }
 
     /**
@@ -297,7 +297,7 @@ trait ManipulatesArray
      */
     public function diff(array|self ...$arrays): self
     {
-        return $this->createOrModify(namespace\diff($this->value, ...$arrays));
+        return $this->createOrModify(diff($this->value, ...$arrays));
     }
 
     /**
@@ -309,7 +309,7 @@ trait ManipulatesArray
      */
     public function diffKeys(array|self ...$arrays): self
     {
-        return $this->createOrModify(namespace\diff_keys($this->value, ...$arrays));
+        return $this->createOrModify(diff_keys($this->value, ...$arrays));
     }
 
     /**
@@ -321,7 +321,7 @@ trait ManipulatesArray
      */
     public function intersect(array|self ...$arrays): self
     {
-        return $this->createOrModify(namespace\intersect($this->value, ...$arrays));
+        return $this->createOrModify(intersect($this->value, ...$arrays));
     }
 
     /**
@@ -333,7 +333,7 @@ trait ManipulatesArray
      */
     public function intersectKeys(array|self ...$arrays): self
     {
-        return $this->createOrModify(namespace\intersect_keys($this->value, ...$arrays));
+        return $this->createOrModify(intersect_keys($this->value, ...$arrays));
     }
 
     /**
@@ -345,7 +345,7 @@ trait ManipulatesArray
      */
     public function merge(iterable ...$arrays): self
     {
-        return $this->createOrModify(namespace\merge($this->value, ...$arrays));
+        return $this->createOrModify(merge($this->value, ...$arrays));
     }
 
     /**
@@ -359,7 +359,7 @@ trait ManipulatesArray
      */
     public function combine(array|self $values): self
     {
-        return $this->createOrModify(namespace\combine($this->value, $values));
+        return $this->createOrModify(combine($this->value, $values));
     }
 
     /**
@@ -367,7 +367,7 @@ trait ManipulatesArray
      */
     public function equals(array|self $other): bool
     {
-        return namespace\equals($this->value, $other);
+        return equals($this->value, $other);
     }
 
     /**
@@ -383,7 +383,7 @@ trait ManipulatesArray
      */
     public function first(?Closure $filter = null, mixed $default = null): mixed
     {
-        return namespace\first($this->value, $filter, $default);
+        return first($this->value, $filter, $default);
     }
 
     /**
@@ -399,7 +399,7 @@ trait ManipulatesArray
      */
     public function last(?Closure $filter = null, mixed $default = null): mixed
     {
-        return namespace\last($this->value, $filter, $default);
+        return last($this->value, $filter, $default);
     }
 
     /**
@@ -420,7 +420,7 @@ trait ManipulatesArray
      */
     public function at(int $index, mixed $default = null): mixed
     {
-        return namespace\at($this->value, $index, $default);
+        return at($this->value, $index, $default);
     }
 
     /**
@@ -432,7 +432,7 @@ trait ManipulatesArray
      */
     public function pop(mixed &$value = null): self
     {
-        return $this->createOrModify(namespace\pop($this->value, $value));
+        return $this->createOrModify(pop($this->value, $value));
     }
 
     /**
@@ -444,7 +444,7 @@ trait ManipulatesArray
      */
     public function unshift(mixed &$value = null): self
     {
-        return $this->createOrModify(namespace\unshift($this->value, $value));
+        return $this->createOrModify(unshift($this->value, $value));
     }
 
     /**
@@ -454,7 +454,7 @@ trait ManipulatesArray
      */
     public function reverse(): self
     {
-        return $this->createOrModify(namespace\reverse($this->value));
+        return $this->createOrModify(reverse($this->value));
     }
 
     /**
@@ -462,7 +462,7 @@ trait ManipulatesArray
      */
     public function isEmpty(): bool
     {
-        return namespace\is_empty($this->value);
+        return is_empty($this->value);
     }
 
     /**
@@ -478,7 +478,7 @@ trait ManipulatesArray
      */
     public function implode(string $glue): ImmutableString
     {
-        return namespace\implode($this->value, $glue);
+        return implode($this->value, $glue);
     }
 
     /**
@@ -488,7 +488,7 @@ trait ManipulatesArray
      */
     public function keys(): self
     {
-        return $this->createOrModify(namespace\keys($this->value));
+        return $this->createOrModify(keys($this->value));
     }
 
     /**
@@ -498,7 +498,7 @@ trait ManipulatesArray
      */
     public function values(): self
     {
-        return $this->createOrModify(namespace\values($this->value));
+        return $this->createOrModify(values($this->value));
     }
 
     /**
@@ -511,7 +511,7 @@ trait ManipulatesArray
      */
     public function filter(?Closure $filter = null): self
     {
-        return $this->createOrModify(namespace\filter($this->value, $filter));
+        return $this->createOrModify(filter($this->value, $filter));
     }
 
     /**
@@ -523,7 +523,7 @@ trait ManipulatesArray
      */
     public function each(Closure $each): self
     {
-        return $this->createOrModify(namespace\each($this->value, $each));
+        return $this->createOrModify(each($this->value, $each));
     }
 
     /**
@@ -558,7 +558,7 @@ trait ManipulatesArray
      */
     public function mapWithKeys(Closure $map): self
     {
-        return $this->createOrModify(namespace\map_with_keys($this->value, $map));
+        return $this->createOrModify(map_with_keys($this->value, $map));
     }
 
     /**
@@ -568,7 +568,7 @@ trait ManipulatesArray
      */
     public function get(int|string $key, mixed $default = null): mixed
     {
-        return namespace\get_by_key($this->value, $key, $default);
+        return get_by_key($this->value, $key, $default);
     }
 
     /**
@@ -599,7 +599,7 @@ trait ManipulatesArray
      */
     public function contains(mixed $search): bool
     {
-        return namespace\contains($this->value, $search);
+        return contains($this->value, $search);
     }
 
     /**
@@ -607,7 +607,7 @@ trait ManipulatesArray
      */
     public function hasKey(int|string $key): bool
     {
-        return namespace\has_key($this->value, $key);
+        return has_key($this->value, $key);
     }
 
     /**
@@ -617,7 +617,7 @@ trait ManipulatesArray
      */
     public function hasValue(mixed $search): bool
     {
-        return namespace\contains($this->value, $search);
+        return contains($this->value, $search);
     }
 
     /**
@@ -640,7 +640,7 @@ trait ManipulatesArray
      */
     public function every(?Closure $callback = null): bool
     {
-        return namespace\every($this->value, $callback);
+        return every($this->value, $callback);
     }
 
     /**
@@ -650,7 +650,7 @@ trait ManipulatesArray
      */
     public function undot(): self
     {
-        return $this->createOrModify(namespace\undot($this->value));
+        return $this->createOrModify(undot($this->value));
     }
 
     /**
@@ -660,7 +660,7 @@ trait ManipulatesArray
      */
     public function dot(): self
     {
-        return $this->createOrModify(namespace\dot($this->value));
+        return $this->createOrModify(dot($this->value));
     }
 
     /**
@@ -668,7 +668,7 @@ trait ManipulatesArray
      */
     public function join(string $glue = ', ', ?string $finalGlue = ' and '): ImmutableString
     {
-        return namespace\join($this->value, $glue, $finalGlue);
+        return join($this->value, $glue, $finalGlue);
     }
 
     /**
@@ -680,7 +680,7 @@ trait ManipulatesArray
      */
     public function groupBy(Closure $keyExtractor): self
     {
-        return $this->createOrModify(namespace\group_by($this->value, $keyExtractor));
+        return $this->createOrModify(group_by($this->value, $keyExtractor));
     }
 
     /**
@@ -693,7 +693,7 @@ trait ManipulatesArray
      */
     public function flatten(int|float $depth = INF): self
     {
-        return $this->createOrModify(namespace\flatten($this->value, $depth));
+        return $this->createOrModify(flatten($this->value, $depth));
     }
 
     /**
@@ -707,7 +707,7 @@ trait ManipulatesArray
      */
     public function flatMap(Closure $map, int|float $depth = 1): self
     {
-        return $this->createOrModify(namespace\flat_map($this->value, $map, $depth));
+        return $this->createOrModify(flat_map($this->value, $map, $depth));
     }
 
     /**
@@ -721,7 +721,7 @@ trait ManipulatesArray
      */
     public function mapTo(string $to): self
     {
-        return $this->createOrModify(namespace\map_to($this->value, $to));
+        return $this->createOrModify(map_to($this->value, $to));
     }
 
     /**
@@ -763,7 +763,7 @@ trait ManipulatesArray
      */
     public function sort(bool $desc = false, ?bool $preserveKeys = null, int $flags = SORT_REGULAR): self
     {
-        return $this->createOrModify(namespace\sort($this->value, $desc, $preserveKeys, $flags));
+        return $this->createOrModify(sort($this->value, $desc, $preserveKeys, $flags));
     }
 
     /**
@@ -779,7 +779,7 @@ trait ManipulatesArray
      */
     public function sortByCallback(callable $callback, ?bool $preserveKeys = null): self
     {
-        return $this->createOrModify(namespace\sort_by_callback($this->value, $callback, $preserveKeys));
+        return $this->createOrModify(sort_by_callback($this->value, $callback, $preserveKeys));
     }
 
     /**
@@ -791,7 +791,7 @@ trait ManipulatesArray
      */
     public function sortKeys(bool $desc = false, int $flags = SORT_REGULAR): self
     {
-        return $this->createOrModify(namespace\sort_keys($this->value, $desc, $flags));
+        return $this->createOrModify(sort_keys($this->value, $desc, $flags));
     }
 
     /**
@@ -805,7 +805,7 @@ trait ManipulatesArray
      */
     public function sortKeysByCallback(callable $callback): self
     {
-        return $this->createOrModify(namespace\sort_keys_by_callback($this->value, $callback));
+        return $this->createOrModify(sort_keys_by_callback($this->value, $callback));
     }
 
     /**
@@ -820,7 +820,7 @@ trait ManipulatesArray
      */
     public function slice(int $offset, ?int $length = null): self
     {
-        return $this->createOrModify(namespace\slice($this->value, $offset, $length));
+        return $this->createOrModify(slice($this->value, $offset, $length));
     }
 
     /**

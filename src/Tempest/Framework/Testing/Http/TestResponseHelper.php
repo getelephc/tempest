@@ -34,10 +34,10 @@ final class TestResponseHelper
      * @param null|Throwable $throwable The exception thrown during the request, if any.
      */
     public function __construct(
-        private(set) Response $response,
-        private(set) Request $request,
+        public Response $response,
+        public Request $request,
         private ?Container $container = null,
-        private(set) ?Throwable $throwable = null,
+        public ?Throwable $throwable = null,
     ) {}
 
     public Status $status {
@@ -367,7 +367,7 @@ final class TestResponseHelper
         Assert::assertEmpty(
             actual: $validationErrors,
             message: arr($validationErrors)
-                ->map(fn (array $failingRules, string $key) => $key . ': ' . arr($failingRules)->map(fn (Rule $rule) => $rule::class)->implode(', '))
+                ->map(fn (array $failingRules, string $key) => $key . ': ' . arr($failingRules)->map(fn (Rule $rule) => get_class($rule))->implode(', '))
                 ->implode(', ')
                 ->prepend('There should be no validation errors, but there were: ')
                 ->toString(),

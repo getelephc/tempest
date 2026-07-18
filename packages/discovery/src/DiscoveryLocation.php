@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tempest\Discovery;
 
 use Tempest\Support\Filesystem;
-use Tempest\Support\Namespace\Psr4Namespace;
+use Tempest\Support\NamespaceUtils\Psr4Namespace;
 
 final class DiscoveryLocation
 {
@@ -18,7 +18,7 @@ final class DiscoveryLocation
     public function __construct(
         public readonly string $namespace,
         string $path,
-        private(set) array $ignore = [],
+        public array $ignore = [],
     ) {
         $this->path = Filesystem\normalize_path(rtrim($path, '\\/'));
     }

@@ -80,7 +80,7 @@ final readonly class PolicyBasedAccessControl implements AccessControl
     private function findPoliciesForResourceAction(object|string $resource, UnitEnum|string $action): ImmutableArray
     {
         $resource = is_object($resource)
-            ? $resource::class
+            ? get_class($resource)
             : $resource;
 
         $actionBeingEvaluated = Str\parse($action);

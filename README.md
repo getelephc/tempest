@@ -12,6 +12,18 @@
 <br />
 <br />
 
+## Elephc AOT profile
+
+This repository tracks the Tempest 3.x framework plus a finite native web profile for [Elephc](https://elephc.dev). The upstream source is preserved while compatibility rewrites document the compiler gaps found during the port.
+
+```bash
+npm run build:elephc
+npm run test:elephc
+./elephc/server --listen 127.0.0.1:8080 --workers 1
+```
+
+The verified profile serves `/`, `/health`, `/hello/:name`, and `/elephc`, with a real `404` fallback. It keeps Tempest-style controllers, `#[Get]` attributes, request/response objects, and routing; runtime discovery and container reflection are replaced by a static manifest. See [the porting log](docs/elephc/porting-log.md) for the exact boundary and the full-framework probe.
+
 ## Introduction
 
 Tempest is a PHP framework that _gets out of your way_.

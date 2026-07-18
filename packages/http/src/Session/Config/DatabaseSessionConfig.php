@@ -17,8 +17,8 @@ final class DatabaseSessionConfig implements SessionConfig
      * @param CleanupStrategy $cleanupStrategy Strategy for cleaning up expired sessions. Defaults to `RANDOM_REQUESTS`, which provides a good balance between performance and cleanup frequency.
      */
     public function __construct(
-        private(set) Duration $expiration,
-        private(set) CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,
+        public Duration $expiration,
+        public CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,
     ) {}
 
     public function createManager(Container $container): DatabaseSessionManager

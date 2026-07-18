@@ -15,7 +15,7 @@ use function Tempest\Support\str;
 
 final class AlterTableStatement implements QueryStatement, HasTrailingStatements
 {
-    private(set) array $trailingStatements = [];
+    public array $trailingStatements = [];
 
     public function __construct(
         private readonly string $tableName,

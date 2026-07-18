@@ -12,7 +12,7 @@ use Tempest\Console\Enums\ConfigType;
 use Tempest\Database\Config\MysqlConfig;
 use Tempest\EventBus\EventBusConfig;
 use Tempest\Log\Config\SimpleLogConfig;
-use Tempest\Support\Namespace\Psr4Namespace;
+use Tempest\Support\NamespaceUtils\Psr4Namespace;
 use Tempest\View\Renderers\BladeConfig;
 use Tempest\View\Renderers\TwigConfig;
 use Tempest\View\ViewConfig;

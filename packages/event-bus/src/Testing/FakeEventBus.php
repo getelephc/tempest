@@ -24,8 +24,8 @@ final class FakeEventBus implements EventBus
     }
 
     public function __construct(
-        private(set) EventBus $eventBus,
-        private(set) EventBusConfig $eventBusConfig,
+        public EventBus $eventBus,
+        public EventBusConfig $eventBusConfig,
         public bool $preventHandling = true,
     ) {}
 

@@ -14,7 +14,7 @@ final class ViewObjectExporter
 
         return sprintf(
             '\%s::restore(%s);',
-            $object::class,
+            get_class($object),
             $object
                 ->exportData
                 ->map(function (mixed $value, string $key) {

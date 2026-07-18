@@ -17,7 +17,7 @@ use Tempest\Support\Regex;
 final class TestingProcessExecutor implements ProcessExecutor
 {
     /** @var array<string,array<array{PendingProcess,ProcessResult}>> */
-    private(set) array $executions = [];
+    public array $executions = [];
 
     /**
      * @param array<string, string|ProcessResult|InvokedProcessDescription> $mocks

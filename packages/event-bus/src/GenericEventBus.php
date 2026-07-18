@@ -15,7 +15,7 @@ final readonly class GenericEventBus implements EventBus
 {
     public function __construct(
         private Container $container,
-        private(set) EventBusConfig $eventBusConfig,
+        public EventBusConfig $eventBusConfig,
     ) {}
 
     public function listen(Closure $handler, string|UnitEnum|null $event = null): void
@@ -35,10 +35,10 @@ final readonly class GenericEventBus implements EventBus
     /** @return \Tempest\EventBus\CallableEventHandler[] */
     private function resolveHandlers(string|object $event): array
     {
-        $eventName = Str\parse($event) ?: $event::class;
+        $eventName = Str\parse($event) ?: get_class($event);
 
         if ($event instanceof UnitEnum) {
-            $eventName = $event::class . '::' . $eventName;
+            $eventName = get_class($event) . '::' . $eventName;
         }
 
         $handlers = [

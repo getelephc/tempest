@@ -10,7 +10,7 @@ final class ValueWasMissing extends Exception
 {
     public function __construct(object $model, string $field)
     {
-        $modelClass = $model::class;
+        $modelClass = get_class($model);
 
         parent::__construct("Could not access {$modelClass}::{$field}, it's not initialized");
     }

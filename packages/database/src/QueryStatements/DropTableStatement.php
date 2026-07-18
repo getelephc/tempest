@@ -14,7 +14,7 @@ final class DropTableStatement implements QueryStatement, HasLeadingStatements
 {
     use CanExecuteStatement;
 
-    private(set) array $leadingStatements;
+    public array $leadingStatements;
 
     public function __construct(
         private readonly string $tableName,

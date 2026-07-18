@@ -10,7 +10,7 @@ final class ClassWithLazySlowPropertyDependency
 {
     #[Inject]
     #[Proxy]
-    private(set) SlowDependency $dependency;
+    public SlowDependency $dependency;
 
     public function __construct() {}
 }

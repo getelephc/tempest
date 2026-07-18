@@ -70,7 +70,7 @@ final readonly class ExecuteConsoleCommand
 
         $middleware = $this->consoleConfig
             ->middleware
-            ->clone()
+            ->copy()
             ->add(...$commandMiddleware);
 
         foreach ($middleware->unwrap() as $middlewareClass) {

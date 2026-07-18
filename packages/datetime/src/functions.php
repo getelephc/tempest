@@ -64,7 +64,7 @@ function format_rfc3339(Timestamp $timestamp, ?SecondsStyle $secondsStyle = null
         false => "yyyy-MM-dd'T'HH:mm:ss@xxx",
     };
 
-    $formatter = namespace\create_intl_date_formatter(
+    $formatter = create_intl_date_formatter(
         pattern: $pattern,
         timezone: $timezone,
     );
@@ -113,7 +113,7 @@ function create_intl_date_formatter(
             TimeStyle::LONG => IntlDateFormatter::LONG,
             TimeStyle::FULL => IntlDateFormatter::FULL,
         },
-        timezone: namespace\to_intl_timezone($timezone),
+        timezone: to_intl_timezone($timezone),
         calendar: IntlDateFormatter::GREGORIAN,
         pattern: $pattern,
     );
@@ -192,7 +192,7 @@ function intl_parse(
     ?Timezone $timezone = null,
     ?Locale $locale = null,
 ): int {
-    $formatter = namespace\create_intl_date_formatter($dateStyle, $timeStyle, $pattern, $timezone, $locale);
+    $formatter = create_intl_date_formatter($dateStyle, $timeStyle, $pattern, $timezone, $locale);
 
     $timestamp = $formatter->parse($rawString);
 

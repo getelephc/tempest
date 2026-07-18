@@ -33,27 +33,27 @@ final class GenericContainer implements Container
 
     public function __construct(
         /** @var ArrayIterator<array-key, mixed> $definitions */
-        private(set) ArrayIterator $definitions = new ArrayIterator(),
+        public ArrayIterator $definitions = new ArrayIterator(),
 
         /** @var ArrayIterator<array-key, mixed> $singletonDefinitions */
-        private(set) ArrayIterator $singletonDefinitions = new ArrayIterator(),
+        public ArrayIterator $singletonDefinitions = new ArrayIterator(),
 
         /** @var ArrayIterator<array-key, object> $resolvedSingletons */
-        private(set) ArrayIterator $resolvedSingletons = new ArrayIterator(),
+        public ArrayIterator $resolvedSingletons = new ArrayIterator(),
 
         /** @var ArrayIterator<array-key, class-string> $initializers */
-        private(set) ArrayIterator $initializers = new ArrayIterator(),
+        public ArrayIterator $initializers = new ArrayIterator(),
 
         /** @var ArrayIterator<array-key, class-string> $dynamicInitializers */
-        private(set) ArrayIterator $dynamicInitializers = new ArrayIterator(),
+        public ArrayIterator $dynamicInitializers = new ArrayIterator(),
 
         /** @var ArrayIterator<array-key, class-string[]> $decorators */
-        private(set) ArrayIterator $decorators = new ArrayIterator(),
+        public ArrayIterator $decorators = new ArrayIterator(),
 
         /** @var ArrayIterator<array-key, class-string<\Tempest\Container\Resettable>> $resettables */
-        private(set) ArrayIterator $resettables = new ArrayIterator(),
+        public ArrayIterator $resettables = new ArrayIterator(),
 
-        private(set) ?DependencyChain $chain = null,
+        public ?DependencyChain $chain = null,
     ) {
         $this->singleton(Container::class, $this);
         $this->singleton(ContainerInterface::class, $this);
@@ -189,7 +189,7 @@ final class GenericContainer implements Container
 
     public function config(object $config): self
     {
-        $this->singleton($config::class, $config);
+        $this->singleton(get_class($config), $config);
 
         foreach (new ClassReflector($config)->getInterfaces() as $interface) {
             $this->singleton($interface->getName(), $config);
@@ -235,7 +235,7 @@ final class GenericContainer implements Container
         }
 
         if (is_array($method) && count($method) === 2) {
-            return $this->invokeClosure($method(...), ...$params);
+            return $this->invokeClosure(Closure::fromCallable($method), ...$params);
         }
 
         if (method_exists($method, '__invoke')) {
@@ -403,8 +403,8 @@ final class GenericContainer implements Container
             $this->resolveChain()->add($initializerClass);
 
             $object = match (true) {
-                $initializer instanceof Initializer => $initializer->initialize($this->clone()),
-                $initializer instanceof DynamicInitializer => $initializer->initialize($class, $tag, $this->clone()),
+                $initializer instanceof Initializer => $initializer->initialize($this->copy()),
+                $initializer instanceof DynamicInitializer => $initializer->initialize($class, $tag, $this->copy()),
             };
 
             $singleton = $initializerClass->getAttribute(Singleton::class) ?? $initializerClass->getMethod('initialize')->getAttribute(Singleton::class);
@@ -526,7 +526,7 @@ final class GenericContainer implements Container
         // Build the class by iterating through its
         // dependencies and resolving them.
         foreach ($method->getParameters() as $parameter) {
-            $dependencies[] = $this->clone()->autowireDependency(
+            $dependencies[] = $this->copy()->autowireDependency(
                 parameter: $parameter,
                 tag: $parameter->getAttribute(Tag::class)?->name,
                 providedValue: $parameters[$parameter->getName()] ?? null,
@@ -604,7 +604,7 @@ final class GenericContainer implements Container
         if ($tag !== null && ($initializer = $this->initializerForBuiltin($parameter->getType(), $tag->name))) {
             $initializerClass = new ClassReflector($initializer);
 
-            $object = $initializer->initialize($this->clone());
+            $object = $initializer->initialize($this->copy());
 
             $singleton = $initializerClass->getAttribute(Singleton::class) ?? $initializerClass->getMethod('initialize')->getAttribute(Singleton::class);
 
@@ -645,7 +645,7 @@ final class GenericContainer implements Container
         throw new DependencyCouldNotBeAutowired($this->chain, new Dependency($parameter));
     }
 
-    private function clone(): self
+    private function copy(): self
     {
         return clone $this;
     }
@@ -668,7 +668,7 @@ final class GenericContainer implements Container
 
     public function __clone(): void
     {
-        $this->chain = $this->chain?->clone();
+        $this->chain = $this->chain?->copy();
     }
 
     private function resolveTaggedName(string $className, string|UnitEnum|null $tag): string

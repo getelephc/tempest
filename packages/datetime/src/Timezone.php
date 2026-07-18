@@ -491,7 +491,7 @@ enum Timezone: string
      */
     public static function default(): self
     {
-        return namespace\default_timezone();
+        return default_timezone();
     }
 
     /**
@@ -505,7 +505,7 @@ enum Timezone: string
      */
     public function getOffset(TemporalInterface $temporal, bool $local = false): Duration
     {
-        $intl_timezone = namespace\to_intl_timezone($this);
+        $intl_timezone = to_intl_timezone($this);
         $timestamp_millis = $temporal->getTimestamp()->getSeconds() * MILLISECONDS_PER_SECOND;
         $intl_timezone->getOffset($timestamp_millis, $local, $raw_offset, $dst_offset);
 
@@ -520,7 +520,7 @@ enum Timezone: string
      */
     public function getRawOffset(): Duration
     {
-        return Duration::milliseconds(namespace\to_intl_timezone($this)->getRawOffset());
+        return Duration::milliseconds(to_intl_timezone($this)->getRawOffset());
     }
 
     /**
@@ -534,7 +534,7 @@ enum Timezone: string
      */
     public function getDaylightSavingTimeOffset(TemporalInterface $temporal, bool $local = false): Duration
     {
-        $intl_timezone = namespace\to_intl_timezone($this);
+        $intl_timezone = to_intl_timezone($this);
         $timestamp_millis = $temporal->getTimestamp()->getSeconds() * MILLISECONDS_PER_SECOND;
         $intl_timezone->getOffset($timestamp_millis, $local, $_, $dst_offset);
 
@@ -550,7 +550,7 @@ enum Timezone: string
      */
     public function usesDaylightSavingTime(): bool
     {
-        return namespace\to_intl_timezone($this)->useDaylightTime();
+        return to_intl_timezone($this)->useDaylightTime();
     }
 
     /**
@@ -563,7 +563,7 @@ enum Timezone: string
      */
     public function getDaylightSavingTimeSavings(): Duration
     {
-        return Duration::milliseconds(namespace\to_intl_timezone($this)->getDSTSavings());
+        return Duration::milliseconds(to_intl_timezone($this)->getDSTSavings());
     }
 
     /**
@@ -571,6 +571,6 @@ enum Timezone: string
      */
     public function hasTheSameRulesAs(Timezone $other): bool
     {
-        return namespace\to_intl_timezone($this)->hasSameRules(namespace\to_intl_timezone($other));
+        return to_intl_timezone($this)->hasSameRules(to_intl_timezone($other));
     }
 }

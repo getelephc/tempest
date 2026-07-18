@@ -33,11 +33,11 @@ use function Tempest\Mapper\map;
 
 final class HttpRouterTester
 {
-    private(set) ?ContentType $contentType = null;
+    public ?ContentType $contentType = null;
 
-    private(set) bool $includeSecFetchHeaders = true;
+    public bool $includeSecFetchHeaders = true;
 
-    private(set) bool $throwExceptions = false;
+    public bool $throwExceptions = false;
 
     public function __construct(
         private Container $container,
@@ -245,10 +245,10 @@ final class HttpRouterTester
         $router = $this->container->get(Router::class);
 
         if ($this->throwExceptions) {
-            $response = $router->dispatch(map($request)->with(RequestToPsrRequestMapper::class)->do());
+            $response = $router->dispatch(map($request)->with(RequestToPsrRequestMapper::class)->execute());
         } else {
             try {
-                $response = $router->dispatch(map($request)->with(RequestToPsrRequestMapper::class)->do());
+                $response = $router->dispatch(map($request)->with(RequestToPsrRequestMapper::class)->execute());
             } catch (Throwable $throwable) {
                 return new TestResponseHelper(
                     response: $this->container->get(HttpExceptionHandler::class)->renderResponse($request, $throwable),

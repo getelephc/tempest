@@ -23,11 +23,11 @@ final class Session
     private array $expiredKeys = [];
 
     public function __construct(
-        private(set) SessionId $id,
-        private(set) DateTimeInterface $createdAt,
+        public SessionId $id,
+        public DateTimeInterface $createdAt,
         public DateTimeInterface $lastActiveAt,
         /** @var array<array-key,mixed> */
-        private(set) array $data = [],
+        public array $data = [],
     ) {}
 
     /**

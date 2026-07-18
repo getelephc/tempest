@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Tempest\Integration\Console\Installer;
 
-use Tempest\Support\Namespace\Psr4Namespace;
+use Tempest\Support\NamespaceUtils\Psr4Namespace;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 
 /**

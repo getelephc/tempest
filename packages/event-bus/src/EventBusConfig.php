@@ -27,7 +27,7 @@ final class EventBusConfig
     public function addClosureHandler(Closure $handler, string|UnitEnum|null $event = null): self
     {
         if ($event instanceof UnitEnum) {
-            $event = $event::class . '::' . $event->name;
+            $event = get_class($event) . '::' . $event->name;
         }
 
         $event ??= new FunctionReflector($handler)

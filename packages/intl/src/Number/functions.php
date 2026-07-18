@@ -60,11 +60,11 @@ function spell_out(int|float $number, ?Locale $locale = null, ?int $after = null
     $locale ??= Locale::ENGLISH;
 
     if (! is_null($after) && $number <= $after) {
-        return namespace\format($number, locale: $locale);
+        return format($number, locale: $locale);
     }
 
     if (! is_null($until) && $number >= $until) {
-        return namespace\format($number, locale: $locale);
+        return format($number, locale: $locale);
     }
 
     $formatter = new NumberFormatter($locale->value, NumberFormatter::SPELLOUT);
@@ -145,7 +145,7 @@ function to_file_size(int|float $bytes, int $precision = 0, ?int $maxPrecision =
         $bytes /= $base;
     }
 
-    return sprintf('%s %s', namespace\format($bytes, $precision, $maxPrecision), $units[$i]);
+    return sprintf('%s %s', format($bytes, $precision, $maxPrecision), $units[$i]);
 }
 
 /**
@@ -164,20 +164,20 @@ function to_human_readable(int|float $number, int $precision = 0, ?int $maxPreci
     }
 
     if (floatval($number) === 0.0) {
-        return $precision > 0 ? namespace\format(0, $precision, $maxPrecision) : '0';
+        return $precision > 0 ? format(0, $precision, $maxPrecision) : '0';
     }
 
     if ($number < 0) {
-        return sprintf('-%s', namespace\to_human_readable(Math\abs($number), $precision, $maxPrecision, $units));
+        return sprintf('-%s', to_human_readable(Math\abs($number), $precision, $maxPrecision, $units));
     }
 
     if ($number >= 1e15) {
-        return sprintf('%s' . end($units), namespace\to_human_readable($number / 1e15, $precision, $maxPrecision, $units));
+        return sprintf('%s' . end($units), to_human_readable($number / 1e15, $precision, $maxPrecision, $units));
     }
 
     $numberExponent = (int) Math\floor(Math\log($number, base: 10));
     $displayExponent = $numberExponent - ($numberExponent % 3);
     $number /= 10 ** $displayExponent;
 
-    return trim(sprintf('%s%s', namespace\format($number, $precision, $maxPrecision), $units[$displayExponent] ?? ''));
+    return trim(sprintf('%s%s', format($number, $precision, $maxPrecision), $units[$displayExponent] ?? ''));
 }

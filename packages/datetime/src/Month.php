@@ -94,7 +94,7 @@ enum Month: int
      */
     public function getDaysForYear(int $year): int
     {
-        if (namespace\is_leap_year($year)) {
+        if (is_leap_year($year)) {
             return $this->getLeapYearDays();
         }
 

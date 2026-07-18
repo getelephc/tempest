@@ -177,7 +177,7 @@ final class IdempotentCommandMiddlewareTest extends TestCase
         );
 
         $store->savePending(
-            scope: 'command:' . $command::class,
+            scope: 'command:' . get_class($command),
             key: $fingerprint,
             fingerprint: $fingerprint,
             ttlInSeconds: 120,
@@ -218,7 +218,7 @@ final class IdempotentCommandMiddlewareTest extends TestCase
         );
 
         $store->savePending(
-            scope: 'command:' . $command::class,
+            scope: 'command:' . get_class($command),
             key: $fingerprint,
             fingerprint: $fingerprint,
             ttlInSeconds: 120,
@@ -259,7 +259,7 @@ final class IdempotentCommandMiddlewareTest extends TestCase
         );
 
         $store->savePending(
-            scope: 'command:' . $command::class,
+            scope: 'command:' . get_class($command),
             key: $fingerprint,
             fingerprint: $fingerprint,
             ttlInSeconds: 120,

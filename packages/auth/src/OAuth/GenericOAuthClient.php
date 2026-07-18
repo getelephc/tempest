@@ -26,7 +26,7 @@ final class GenericOAuthClient implements OAuthClient
     private AbstractProvider $provider;
 
     public function __construct(
-        private(set) readonly OAuthConfig $config,
+        public readonly OAuthConfig $config,
         private readonly UriGenerator $uri,
         private readonly ObjectFactory $factory,
         private readonly Session $session,

@@ -17,7 +17,7 @@ final class FileSessionConfig implements SessionConfig
      */
     public function __construct(
         public Duration $expiration,
-        private(set) CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,
+        public CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,
         public string $path = 'sessions',
     ) {}
 

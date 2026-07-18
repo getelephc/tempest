@@ -19,14 +19,14 @@ final class ValidationFailed extends Exception implements ProvidesContext
      * @param class-string|null $targetClass
      */
     public function __construct(
-        private(set) array $failingRules,
-        private(set) object|string|null $subject = null,
-        private(set) array $errorMessages = [],
-        private(set) ?string $targetClass = null,
+        public array $failingRules,
+        public object|string|null $subject = null,
+        public array $errorMessages = [],
+        public ?string $targetClass = null,
     ) {
         $message = match (true) {
             is_null($subject) => 'Validation failed.',
-            default => sprintf('Validation failed for %s.', is_object($subject) ? $subject::class : $subject),
+            default => sprintf('Validation failed for %s.', is_object($subject) ? get_class($subject) : $subject),
         };
 
         foreach ($errorMessages as $field => $messages) {

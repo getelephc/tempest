@@ -14,10 +14,10 @@ final class EnvironmentVariableValidationFailed extends Exception
      * @param FailingRule[] $failingRules
      */
     public function __construct(
-        private(set) string $name,
-        private(set) mixed $value,
-        private(set) array $failingRules,
-        private(set) Validator $validator,
+        public string $name,
+        public mixed $value,
+        public array $failingRules,
+        public Validator $validator,
     ) {
         parent::__construct(vsprintf("Environment variable [%s] is not valid:\n- %s", [
             $name,

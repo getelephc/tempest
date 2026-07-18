@@ -207,7 +207,7 @@ final class SelectQueryBuilder implements BuildsQuery, SupportsWhereStatements, 
 
         do {
             $data = $this
-                ->clone()
+                ->copy()
                 ->limit($amountPerChunk)
                 ->offset($offset)
                 ->all();
@@ -461,7 +461,7 @@ final class SelectQueryBuilder implements BuildsQuery, SupportsWhereStatements, 
         };
     }
 
-    private function clone(): self
+    private function copy(): self
     {
         return clone $this;
     }

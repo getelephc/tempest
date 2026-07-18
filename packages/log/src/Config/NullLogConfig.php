@@ -15,7 +15,7 @@ final class NullLogConfig implements LogConfig
      * A logging configuration that does not log anything.
      */
     public function __construct(
-        private(set) ?string $prefix = null,
-        private(set) UnitEnum|string|null $tag = null,
+        public ?string $prefix = null,
+        public UnitEnum|string|null $tag = null,
     ) {}
 }

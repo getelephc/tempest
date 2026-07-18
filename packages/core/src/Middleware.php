@@ -14,7 +14,7 @@ use function Tempest\Support\arr;
 /** @template MiddlewareInterface */
 final class Middleware implements IteratorAggregate
 {
-    private(set) array $middlewareClasses = [];
+    public array $middlewareClasses = [];
 
     public function __construct(
         /** @var class-string<MiddlewareInterface> ...$middlewareClasses */
@@ -23,7 +23,7 @@ final class Middleware implements IteratorAggregate
         $this->add(...$middlewareClasses);
     }
 
-    public function clone(): self
+    public function copy(): self
     {
         return clone $this;
     }

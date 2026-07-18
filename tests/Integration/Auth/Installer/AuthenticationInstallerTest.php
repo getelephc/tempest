@@ -3,7 +3,7 @@
 namespace Integration\Auth\Installer;
 
 use PHPUnit\Framework\Attributes\Test;
-use Tempest\Support\Namespace\Psr4Namespace;
+use Tempest\Support\NamespaceUtils\Psr4Namespace;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 
 final class AuthenticationInstallerTest extends FrameworkIntegrationTestCase

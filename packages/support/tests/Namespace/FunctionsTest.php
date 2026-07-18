@@ -5,14 +5,14 @@ namespace Tempest\Support\Tests\Namespace;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
-use Tempest\Support\Namespace\PathCouldNotBeMappedToNamespace;
-use Tempest\Support\Namespace\Psr4Namespace;
+use Tempest\Support\NamespaceUtils\PathCouldNotBeMappedToNamespace;
+use Tempest\Support\NamespaceUtils\Psr4Namespace;
 use Tempest\Vite\Vite;
 
-use function Tempest\Support\Namespace\to_base_class_name;
-use function Tempest\Support\Namespace\to_fqcn;
-use function Tempest\Support\Namespace\to_namespace;
-use function Tempest\Support\Namespace\to_psr4_namespace;
+use function Tempest\Support\NamespaceUtils\to_base_class_name;
+use function Tempest\Support\NamespaceUtils\to_fqcn;
+use function Tempest\Support\NamespaceUtils\to_namespace;
+use function Tempest\Support\NamespaceUtils\to_psr4_namespace;
 
 final class FunctionsTest extends TestCase
 {

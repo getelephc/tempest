@@ -19,7 +19,7 @@ use function Tempest\Support\str;
 
 final class CreateTableStatement implements QueryStatement, HasTrailingStatements
 {
-    private(set) array $trailingStatements = [];
+    public array $trailingStatements = [];
 
     public function __construct(
         private readonly string $tableName,

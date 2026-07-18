@@ -17,7 +17,7 @@ use Tempest\Support\Arr;
 #[Singleton]
 final class ProcessTester
 {
-    private(set) ?TestingProcessExecutor $executor = null;
+    public ?TestingProcessExecutor $executor = null;
 
     private bool $allowRunningActualProcesses = false;
 

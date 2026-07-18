@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tempest\Support\Namespace;
+namespace Tempest\Support\NamespaceUtils;
 
 use Exception;
 

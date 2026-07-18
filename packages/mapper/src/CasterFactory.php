@@ -19,9 +19,9 @@ final class CasterFactory
     /**
      * @var array<string, array{class-string<\Tempest\Mapper\Caster>, int}[]>
      */
-    private(set) array $casters = [];
+    public array $casters = [];
 
-    private(set) Context|UnitEnum|string|null $context = null;
+    public Context|UnitEnum|string|null $context = null;
 
     public function __construct(
         private readonly Container $container,

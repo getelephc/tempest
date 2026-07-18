@@ -17,29 +17,29 @@ use function Tempest\Support\str;
 trait IsRequest
 {
     #[SkipValidation]
-    private(set) Method $method;
+    public Method $method;
 
     #[SkipValidation]
-    private(set) string $uri;
+    public string $uri;
 
     #[SkipValidation]
-    private(set) ?string $raw = null;
+    public ?string $raw = null;
 
     #[SkipValidation]
-    private(set) array $body = [];
+    public array $body = [];
 
     #[SkipValidation]
-    private(set) RequestHeaders $headers;
+    public RequestHeaders $headers;
 
     #[SkipValidation]
-    private(set) string $path;
+    public string $path;
 
     #[SkipValidation]
-    private(set) array $query;
+    public array $query;
 
     /** @var \Tempest\Http\Upload[] */
     #[SkipValidation]
-    private(set) array $files;
+    public array $files;
 
     #[SkipValidation]
     public Session $session {

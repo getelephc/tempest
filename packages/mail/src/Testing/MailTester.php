@@ -32,7 +32,7 @@ final class MailTester
     {
         $this->mailer->send($email);
 
-        $this->sentSymfonyEmail = map($email)->with(EmailToSymfonyEmailMapper::class)->do();
+        $this->sentSymfonyEmail = map($email)->with(EmailToSymfonyEmailMapper::class)->execute();
 
         return $this;
     }

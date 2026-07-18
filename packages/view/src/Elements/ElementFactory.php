@@ -18,7 +18,7 @@ final class ElementFactory
 {
     private TempestViewCompiler $compiler;
 
-    private(set) bool $isHtml = false;
+    public bool $isHtml = false;
 
     public function __construct(
         private readonly ViewConfig $viewConfig,
@@ -35,7 +35,7 @@ final class ElementFactory
 
     public function withIsHtml(bool $isHtml): self
     {
-        $clone = $this->clone();
+        $clone = $this->copy();
 
         $clone->isHtml = $isHtml;
 
@@ -117,7 +117,7 @@ final class ElementFactory
         $element->setParent($parent);
 
         foreach ($token->children as $child) {
-            $this->clone()->make(
+            $this->copy()->make(
                 token: $child,
                 parent: $element,
             );
@@ -126,7 +126,7 @@ final class ElementFactory
         return $element;
     }
 
-    private function clone(): self
+    private function copy(): self
     {
         return clone $this;
     }

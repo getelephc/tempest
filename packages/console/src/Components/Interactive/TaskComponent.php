@@ -39,7 +39,7 @@ final class TaskComponent implements InteractiveConsoleComponent, HasStaticCompo
 
     private array $log = [];
 
-    private(set) array $extensions = ['pcntl'];
+    public array $extensions = ['pcntl'];
 
     public StaticConsoleComponent $staticComponent {
         get => new StaticTaskComponent(

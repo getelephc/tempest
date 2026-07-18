@@ -73,7 +73,7 @@ final readonly class Timestamp implements TemporalInterface
      */
     public static function now(): self
     {
-        return self::resolveFromContainer() ?? self::fromParts(...namespace\system_time());
+        return self::resolveFromContainer() ?? self::fromParts(...system_time());
     }
 
     /**
@@ -86,7 +86,7 @@ final readonly class Timestamp implements TemporalInterface
      */
     public static function monotonic(): self
     {
-        [$seconds, $nanoseconds] = namespace\high_resolution_time();
+        [$seconds, $nanoseconds] = high_resolution_time();
 
         return self::fromParts($seconds, $nanoseconds);
     }

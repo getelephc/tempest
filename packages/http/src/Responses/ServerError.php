@@ -17,7 +17,7 @@ final class ServerError implements Response
 
     public function __construct(
         View|Generator|string|array|null $body = null,
-        private(set) ?Exception $exception = null,
+        public ?Exception $exception = null,
     ) {
         $this->status = Status::INTERNAL_SERVER_ERROR;
         $this->body = $body;

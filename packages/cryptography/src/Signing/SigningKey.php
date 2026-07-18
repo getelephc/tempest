@@ -8,7 +8,7 @@ use Tempest\Cryptography\Signing\Exceptions\SigningKeyWasInvalid;
 final readonly class SigningKey implements Stringable
 {
     public function __construct(
-        private(set) string $value,
+        public string $value,
     ) {
         if (trim($value) === '') {
             throw SigningKeyWasInvalid::becauseItIsMissing();

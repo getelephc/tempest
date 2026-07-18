@@ -22,7 +22,7 @@ final readonly class GenericMailer implements Mailer
     {
         $symfonyMail = map($email)
             ->with(EmailToSymfonyEmailMapper::class)
-            ->do();
+            ->execute();
 
         try {
             $this->transport->send($symfonyMail);

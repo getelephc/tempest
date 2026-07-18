@@ -12,7 +12,7 @@ final class DataCouldNotBeMapped extends Exception
     {
         $from = get_debug_type($data);
 
-        $to = is_object($objectOrClass) ? $objectOrClass::class : $objectOrClass;
+        $to = is_object($objectOrClass) ? get_class($objectOrClass) : $objectOrClass;
 
         parent::__construct("Cannot map {$from} to {$to}");
     }

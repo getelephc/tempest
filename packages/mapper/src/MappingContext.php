@@ -8,7 +8,7 @@ use UnitEnum;
 final class MappingContext implements Context, Stringable
 {
     public function __construct(
-        private(set) string $name,
+        public string $name,
     ) {}
 
     public static function default(): Context

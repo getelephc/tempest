@@ -8,8 +8,8 @@ use Tempest\Cryptography\Encryption\Exceptions\EncryptionKeyWasInvalid;
 final readonly class EncryptionKey implements Stringable
 {
     public function __construct(
-        private(set) string $value,
-        private(set) EncryptionAlgorithm $algorithm,
+        public string $value,
+        public EncryptionAlgorithm $algorithm,
     ) {
         if (trim($value) === '') {
             throw EncryptionKeyWasInvalid::becauseItIsMissing($algorithm);

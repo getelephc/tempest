@@ -394,7 +394,7 @@ final class ContainerTest extends TestCase
         $container->singleton(SingletonClass::class, fn () => new SingletonClass());
 
         $result = $container->invoke(
-            method: fn (SingletonClass $class, string $prefix) => $prefix . $class::class,
+            method: fn (SingletonClass $class, string $prefix) => $prefix . get_class($class),
             prefix: 'My resolved class is ',
         );
 
@@ -433,7 +433,7 @@ final class ContainerTest extends TestCase
         GenericContainer::setInstance($container = new GenericContainer());
         $container->singleton(SingletonClass::class, fn () => new SingletonClass());
 
-        $result = Container\invoke(fn (SingletonClass $class) => $class::class);
+        $result = Container\invoke(fn (SingletonClass $class) => get_class($class));
 
         $this->assertEquals(SingletonClass::class, $result);
     }

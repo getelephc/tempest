@@ -42,12 +42,13 @@ final class ModelFactory
      */
     public function with(mixed ...$fields): self
     {
-        return clone($this, [
-            'fields' => [
-                ...$this->fields,
-                ...$fields,
-            ],
-        ]);
+        $clone = clone $this;
+        $clone->fields = [
+            ...$this->fields,
+            ...$fields,
+        ];
+
+        return $clone;
     }
 
     /**

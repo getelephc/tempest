@@ -8,7 +8,7 @@ use Tempest\Router\ResponseSender;
 final class TestingResponseSender implements ResponseSender
 {
     /** @var Response[] */
-    private(set) array $responses = [];
+    public array $responses = [];
 
     public function send(Response $response): Response
     {

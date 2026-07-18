@@ -10,6 +10,8 @@
 build/
 sessions/
 vendor/
+!patches/vendor/
+!patches/vendor/**
 # @TODO(aidan-casey): clean this up
 packages/database.sqlite
 packages/database/src/database.sqlite
@@ -20,6 +22,7 @@ tests/Unit/Console/test-console.log
 src/Tempest/Database/src/database.sqlite
 .env
 composer.lock
+!composer.lock
 debug.log
 tempest.log
 public/static
@@ -31,3 +34,8 @@ profile/
 db-main.sqlite
 db-tenant-1.sqlite
 db-tenant-2.sqlite
+
+# Elephc build artifacts
+/elephc/server
+/elephc/server.s
+/elephc/server.o

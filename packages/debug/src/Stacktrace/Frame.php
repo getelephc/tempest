@@ -17,16 +17,16 @@ final class Frame
      * @param array<Argument> $arguments
      */
     public function __construct(
-        private(set) int $line,
-        private(set) ?string $class,
-        private(set) ?string $function,
-        private(set) ?string $type,
-        private(set) bool $isVendor,
-        private(set) ?CodeSnippet $snippet,
-        private(set) string $absoluteFile,
-        private(set) string $relativeFile,
-        private(set) array $arguments,
-        private(set) int $index,
+        public int $line,
+        public ?string $class,
+        public ?string $function,
+        public ?string $type,
+        public bool $isVendor,
+        public ?CodeSnippet $snippet,
+        public string $absoluteFile,
+        public string $relativeFile,
+        public array $arguments,
+        public int $index,
     ) {}
 
     public static function fromArray(array $frame, int $contextLines = 5, ?string $rootPath = null, int $index = 1): self

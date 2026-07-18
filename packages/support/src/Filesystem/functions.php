@@ -50,25 +50,25 @@ function get_directory(string $node, int $levels = 1): string
  */
 function copy_file(string $source, string $destination, bool $overwrite = false): void
 {
-    $destination_exists = namespace\is_file($destination);
+    $destination_exists = is_file($destination);
 
     if (! $overwrite && $destination_exists) {
         return;
     }
 
-    if (namespace\is_directory($source)) {
+    if (is_directory($source)) {
         throw new PathWasNotAFile($source);
     }
 
-    if (! namespace\is_file($source)) {
+    if (! is_file($source)) {
         throw PathWasNotFound::forFile($source);
     }
 
-    if (! namespace\is_readable($source)) {
+    if (! is_readable($source)) {
         throw PathWasNotReadable::forFile($source);
     }
 
-    namespace\create_directory_for_file($destination);
+    create_directory_for_file($destination);
 
     [$result, $errorMessage] = box(static fn (): bool => php_copy($source, $destination));
 
@@ -84,26 +84,26 @@ function copy_file(string $source, string $destination, bool $overwrite = false)
  */
 function copy_directory(string $source, string $destination, bool $overwrite = false): void
 {
-    if (! namespace\exists($source)) {
+    if (! exists($source)) {
         throw PathWasNotFound::forDirectory($source);
     }
 
-    if (! namespace\is_directory($source)) {
+    if (! is_directory($source)) {
         throw new PathWasNotADirectory($source);
     }
 
-    if (! namespace\is_readable($source)) {
+    if (! is_readable($source)) {
         throw PathWasNotReadable::forDirectory($source);
     }
 
-    if (! $overwrite && namespace\is_directory($destination)) {
+    if (! $overwrite && is_directory($destination)) {
         return;
     }
 
-    namespace\create_directory($destination);
+    create_directory($destination);
 
-    foreach (namespace\list_directory($source) as $node) {
-        namespace\copy(
+    foreach (list_directory($source) as $node) {
+        copy(
             source: $node,
             destination: $destination . '/' . basename($node),
             overwrite: $overwrite,
@@ -116,10 +116,10 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
  */
 function copy(string $source, string $destination, bool $overwrite = false): void
 {
-    if (namespace\is_directory($source)) {
-        namespace\copy_directory($source, $destination, $overwrite);
+    if (is_directory($source)) {
+        copy_directory($source, $destination, $overwrite);
     } else {
-        namespace\copy_file($source, $destination, $overwrite);
+        copy_file($source, $destination, $overwrite);
     }
 }
 
@@ -133,7 +133,7 @@ function write_json(string $filename, mixed $content, bool $pretty = true): void
         default => Json\encode($content, $pretty),
     };
 
-    namespace\write_file($filename, $json);
+    write_file($filename, $json);
 }
 
 /**
@@ -141,7 +141,7 @@ function write_json(string $filename, mixed $content, bool $pretty = true): void
  */
 function write_file(string $filename, mixed $content, int $flags = 0): void
 {
-    namespace\create_directory_for_file($filename);
+    create_directory_for_file($filename);
 
     [$result, $errorMessage] = box(static fn (): int|false => file_put_contents($filename, $content, $flags));
 
@@ -159,7 +159,7 @@ function write_file(string $filename, mixed $content, int $flags = 0): void
  */
 function read_json(string $filename, bool $associative = true): array
 {
-    return Json\decode(namespace\read_file($filename), $associative);
+    return Json\decode(read_file($filename), $associative);
 }
 
 /**
@@ -167,11 +167,11 @@ function read_json(string $filename, bool $associative = true): array
  */
 function read_file(string $filename): string
 {
-    if (! namespace\exists($filename)) {
+    if (! exists($filename)) {
         throw PathWasNotFound::forFile($filename);
     }
 
-    if (! namespace\is_readable($filename)) {
+    if (! is_readable($filename)) {
         throw PathWasNotReadable::forFile($filename);
     }
 
@@ -193,11 +193,11 @@ function read_file(string $filename): string
  */
 function read_locked_file(string $filename, LockType $type = LockType::SHARED): string
 {
-    if (! namespace\exists($filename)) {
+    if (! exists($filename)) {
         throw PathWasNotFound::forFile($filename);
     }
 
-    if (! namespace\is_readable($filename)) {
+    if (! is_readable($filename)) {
         throw PathWasNotReadable::forFile($filename);
     }
 
@@ -241,8 +241,8 @@ function read_locked_file(string $filename, LockType $type = LockType::SHARED): 
  */
 function ensure_directory_exists(string $directory): void
 {
-    if (! namespace\exists($directory)) {
-        namespace\create_directory($directory);
+    if (! exists($directory)) {
+        create_directory($directory);
     }
 }
 
@@ -251,13 +251,13 @@ function ensure_directory_exists(string $directory): void
  */
 function create_directory(string $directory, int $permissions = 0o777): void
 {
-    if (namespace\is_directory($directory)) {
+    if (is_directory($directory)) {
         return;
     }
 
     [$result, $errorMessage] = box(static fn (): bool => mkdir($directory, $permissions, recursive: true));
 
-    if ($result === false && ! namespace\is_directory($directory)) { // @phpstan-ignore booleanNot.alwaysTrue
+    if ($result === false && ! is_directory($directory)) { // @phpstan-ignore booleanNot.alwaysTrue
         throw new RuntimeException(sprintf(
             'Failed to create directory "%s": %s.',
             $directory,
@@ -276,8 +276,8 @@ function create_temporary_directory(?string $prefix = null): string
     $temporaryDirectory = sys_get_temp_dir();
     $uniqueDirectory = $temporaryDirectory . '/' . uniqid(prefix: $prefix ?? '');
 
-    namespace\ensure_directory_exists($uniqueDirectory);
-    namespace\ensure_directory_empty($uniqueDirectory);
+    ensure_directory_exists($uniqueDirectory);
+    ensure_directory_empty($uniqueDirectory);
 
     return $uniqueDirectory;
 }
@@ -289,8 +289,8 @@ function create_temporary_directory(?string $prefix = null): string
  */
 function create_directory_for_file(string $filename, int $permissions = 0o777): string
 {
-    $directory = namespace\get_directory($filename);
-    namespace\create_directory($directory, $permissions);
+    $directory = get_directory($filename);
+    create_directory($directory, $permissions);
 
     return $directory;
 }
@@ -309,11 +309,11 @@ function create_file(string $filename, ?int $time = null, ?int $accessTime = nul
         $fun = static fn (): bool => touch($filename, $time, max($accessTime, $time));
     }
 
-    namespace\create_directory_for_file($filename);
+    create_directory_for_file($filename);
 
     [$result, $errorMessage] = box($fun);
 
-    if (false === $result && ! namespace\is_file($filename)) {
+    if (false === $result && ! is_file($filename)) {
         throw new RuntimeException(sprintf(
             'Failed to create file "%s": %s.',
             $filename,
@@ -335,14 +335,14 @@ function exists(string $path): bool
  */
 function delete(string $path, bool $recursive = true): void
 {
-    if (! namespace\exists($path)) {
+    if (! exists($path)) {
         return;
     }
 
-    if (namespace\is_file($path) || namespace\is_symbolic_link($path)) {
-        namespace\delete_file($path);
-    } elseif (namespace\is_directory($path)) {
-        namespace\delete_directory($path, $recursive);
+    if (is_file($path) || is_symbolic_link($path)) {
+        delete_file($path);
+    } elseif (is_directory($path)) {
+        delete_directory($path, $recursive);
     }
 }
 
@@ -351,10 +351,10 @@ function delete(string $path, bool $recursive = true): void
  */
 function delete_file(string $file): void
 {
-    if (namespace\is_symbolic_link($file)) {
+    if (is_symbolic_link($file)) {
         [$result, $errorMessage] = box(static fn (): bool => unlink($file));
 
-        if ($result === false && namespace\is_symbolic_link($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
+        if ($result === false && is_symbolic_link($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
             throw new RuntimeException(sprintf(
                 'Failed to delete symbolic link "%s": %s.',
                 $file,
@@ -365,17 +365,17 @@ function delete_file(string $file): void
         return;
     }
 
-    if (! namespace\exists($file)) {
+    if (! exists($file)) {
         throw PathWasNotFound::forFile($file);
     }
 
-    if (! namespace\is_file($file)) {
+    if (! is_file($file)) {
         throw new PathWasNotAFile($file);
     }
 
     [$result, $errorMessage] = box(static fn (): bool => unlink($file));
 
-    if ($result === false && namespace\is_file($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
+    if ($result === false && is_file($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
         throw new RuntimeException(sprintf(
             'Failed to delete file "%s": %s.',
             $file,
@@ -389,7 +389,7 @@ function delete_file(string $file): void
  */
 function get_permissions(string $path): int
 {
-    if (! namespace\exists($path)) {
+    if (! exists($path)) {
         throw PathWasNotFound::forPath($path);
     }
 
@@ -411,21 +411,21 @@ function get_permissions(string $path): int
  */
 function ensure_directory_empty(string $directory): void
 {
-    if (namespace\exists($directory) && ! namespace\is_directory($directory)) {
+    if (exists($directory) && ! is_directory($directory)) {
         throw new PathWasNotADirectory($directory);
     }
 
-    if (! namespace\is_directory($directory)) {
-        namespace\create_directory($directory);
+    if (! is_directory($directory)) {
+        create_directory($directory);
         return;
     }
 
     $permissions = PHP_OS_FAMILY === 'Windows'
-        ? namespace\get_permissions($directory)
+        ? get_permissions($directory)
         : 0o777;
 
-    namespace\delete_directory($directory, recursive: true);
-    namespace\create_directory($directory, $permissions);
+    delete_directory($directory, recursive: true);
+    create_directory($directory, $permissions);
 }
 
 /**
@@ -433,36 +433,36 @@ function ensure_directory_empty(string $directory): void
  */
 function delete_directory(string $directory, bool $recursive = true): void
 {
-    if ($recursive && ! namespace\is_symbolic_link($directory)) {
+    if ($recursive && ! is_symbolic_link($directory)) {
         [$symbolicLinks, $files] = partition(
             iterable: list_directory($directory),
-            predicate: static fn (string $node): bool => namespace\is_symbolic_link($node),
+            predicate: static fn (string $node): bool => is_symbolic_link($node),
         );
 
         foreach ($symbolicLinks as $symbolicLink) {
-            namespace\delete_file($symbolicLink);
+            delete_file($symbolicLink);
         }
 
         foreach ($files as $node) {
-            if (! namespace\is_directory($node)) {
-                namespace\delete_file($node);
+            if (! is_directory($node)) {
+                delete_file($node);
             } else {
-                namespace\delete_directory($node, recursive: true);
+                delete_directory($node, recursive: true);
             }
         }
     } else {
-        if (! namespace\exists($directory)) {
+        if (! exists($directory)) {
             throw PathWasNotFound::forDirectory($directory);
         }
 
-        if (! namespace\is_directory($directory)) {
+        if (! is_directory($directory)) {
             throw new PathWasNotADirectory($directory);
         }
     }
 
     [$result, $errorMessage] = box(static fn (): bool => rmdir($directory));
 
-    if (false === $result && namespace\is_directory($directory)) {
+    if (false === $result && is_directory($directory)) {
         throw new RuntimeException(sprintf(
             'Failed to delete directory "%s": %s.',
             $directory,
@@ -480,9 +480,9 @@ function rename(string $source, string $name, bool $overwrite = false): void
         throw NameWasInvalid::forName($name);
     }
 
-    namespace\move(
+    move(
         source: $source,
-        destination: namespace\get_directory($source) . '/' . $name,
+        destination: get_directory($source) . '/' . $name,
         overwrite: $overwrite,
     );
 }
@@ -492,22 +492,22 @@ function rename(string $source, string $name, bool $overwrite = false): void
  */
 function move(string $source, string $destination, bool $overwrite = false): void
 {
-    if (! namespace\exists($source)) {
+    if (! exists($source)) {
         throw PathWasNotFound::forPath($source);
     }
 
-    if (! namespace\is_readable($source)) {
+    if (! is_readable($source)) {
         throw PathWasNotReadable::forFile($source);
     }
 
-    if (namespace\exists($destination) && $overwrite === false) {
+    if (exists($destination) && $overwrite === false) {
         return;
     }
 
-    if (namespace\is_directory($destination)) {
-        namespace\ensure_directory_empty($destination);
+    if (is_directory($destination)) {
+        ensure_directory_empty($destination);
     } else {
-        namespace\create_directory_for_file($destination);
+        create_directory_for_file($destination);
     }
 
     [$result, $errorMessage] = box(static fn (): bool => php_rename($source, $destination));
@@ -578,15 +578,15 @@ function is_directory(string $path): bool
  */
 function list_directory(string $directory): array
 {
-    if (! namespace\exists($directory)) {
+    if (! exists($directory)) {
         throw PathWasNotFound::forDirectory($directory);
     }
 
-    if (! namespace\is_directory($directory)) {
+    if (! is_directory($directory)) {
         throw new PathWasNotADirectory($directory);
     }
 
-    if (! namespace\is_readable($directory)) {
+    if (! is_readable($directory)) {
         throw PathWasNotReadable::forDirectory($directory);
     }
 
@@ -602,11 +602,11 @@ function list_directory(string $directory): array
  */
 function read_symbolic_link(string $path): string
 {
-    if (! namespace\exists($path)) {
+    if (! exists($path)) {
         throw PathWasNotFound::forSymbolicLink($path);
     }
 
-    if (! namespace\is_symbolic_link($path)) {
+    if (! is_symbolic_link($path)) {
         throw new PathWasNotASymbolicLink($path);
     }
 

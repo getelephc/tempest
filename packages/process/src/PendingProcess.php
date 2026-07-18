@@ -21,14 +21,14 @@ final class PendingProcess
      * @param array<string,mixed> $options Underlying `proc_open` options.
      */
     public function __construct(
-        private(set) array|string $command = [],
-        private(set) ?Duration $timeout = null,
-        private(set) ?Duration $idleTimeout = null,
-        private(set) ?string $path = null,
-        private(set) ?string $input = null,
-        private(set) bool $quietly = false,
-        private(set) bool $tty = false,
-        private(set) array $environment = [],
-        private(set) array $options = [],
+        public array|string $command = [],
+        public ?Duration $timeout = null,
+        public ?Duration $idleTimeout = null,
+        public ?string $path = null,
+        public ?string $input = null,
+        public bool $quietly = false,
+        public bool $tty = false,
+        public array $environment = [],
+        public array $options = [],
     ) {}
 }

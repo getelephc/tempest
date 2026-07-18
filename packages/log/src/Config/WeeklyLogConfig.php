@@ -36,13 +36,13 @@ final class WeeklyLogConfig implements LogConfig
      * @param null|UnitEnum|string $tag An optional tag to identify the logger instance associated to this configuration.
      */
     public function __construct(
-        private(set) string $path,
-        private(set) int $maxFiles = 5,
-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
-        private(set) array $channels = [],
-        private(set) ?string $prefix = null,
-        private(set) bool $lockFilesDuringWrites = false,
-        private(set) ?int $filePermission = null,
-        private(set) UnitEnum|string|null $tag = null,
+        public string $path,
+        public int $maxFiles = 5,
+        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
+        public array $channels = [],
+        public ?string $prefix = null,
+        public bool $lockFilesDuringWrites = false,
+        public ?int $filePermission = null,
+        public UnitEnum|string|null $tag = null,
     ) {}
 }

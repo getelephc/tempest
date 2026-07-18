@@ -11,7 +11,7 @@ use function Tempest\Support\Arr\is_associative;
 final class ConsoleArgumentBag
 {
     /** @var ConsoleInputArgument[] */
-    private(set) array $arguments = [];
+    public array $arguments = [];
 
     /** @var string[] */
     private array $path = [];

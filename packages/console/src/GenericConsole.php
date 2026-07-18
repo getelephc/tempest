@@ -38,7 +38,7 @@ final class GenericConsole implements Console
 
     private ?string $label = null;
 
-    private(set) bool $isForced = false;
+    public bool $isForced = false;
 
     private bool $supportsPrompting = true;
 
