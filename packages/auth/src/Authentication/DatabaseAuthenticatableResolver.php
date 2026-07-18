@@ -22,13 +22,13 @@ final readonly class DatabaseAuthenticatableResolver implements AuthenticatableR
         $inspector = inspect($authenticatable);
 
         if (! $inspector->hasPrimaryKey()) {
-            throw AuthenticatableModelWasInvalid::didNotHavePrimaryKey(get_class($authenticatable));
+            throw AuthenticatableModelWasInvalid::didNotHavePrimaryKey($authenticatable::class);
         }
 
         $id = $inspector->getPrimaryKeyValue()?->value;
 
         if ($id === null) {
-            throw AuthenticatableModelWasInvalid::primaryKeyWasNotInitialized(get_class($authenticatable));
+            throw AuthenticatableModelWasInvalid::primaryKeyWasNotInitialized($authenticatable::class);
         }
 
         return $id;

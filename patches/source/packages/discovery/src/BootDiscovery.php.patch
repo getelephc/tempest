@@ -1,0 +1,19 @@
+diff --git a/packages/discovery/src/BootDiscovery.php b/packages/discovery/src/BootDiscovery.php
+index de15cafca9a0bb9b668ec6a930e8fd7263580865..4b71c1c3a78247c325e846f44d45c99df9439f76 100644
+--- a/packages/discovery/src/BootDiscovery.php
++++ b/packages/discovery/src/BootDiscovery.php
+@@ -119 +119 @@ private function restoreFromCache(array $discoveries, DiscoveryLocation $locatio
+-                $discovery->getItems()->addForLocation($location, $cachedForLocation[$discovery::class]),
++                $discovery->getItems()->addForLocation($location, $cachedForLocation[get_class($discovery)]),
+@@ -132 +132 @@ private function isCachedLocationUsable(array $discoveries, ?array $cachedForLoc
+-                callback: static fn (Discovery $discovery): bool => array_key_exists($discovery::class, $cachedForLocation) && is_iterable($cachedForLocation[$discovery::class]),
++                callback: static fn (Discovery $discovery): bool => array_key_exists(get_class($discovery), $cachedForLocation) && is_iterable($cachedForLocation[get_class($discovery)]),
+@@ -250 +250 @@ private function discoverPath(string $input, DiscoveryLocation $location, array
+-                if (is_array($skipForClass) && ! isset($skipForClass[$discovery::class])) {
++                if (is_array($skipForClass) && ! isset($skipForClass[get_class($discovery)])) {
+@@ -306 +306 @@ private function applyDiscovery(Discovery $discovery): void
+-        if ($this->appliedDiscovery[$discovery::class] ?? null) {
++        if ($this->appliedDiscovery[get_class($discovery)] ?? null) {
+@@ -312 +312 @@ private function applyDiscovery(Discovery $discovery): void
+-        $this->appliedDiscovery[$discovery::class] = true;
++        $this->appliedDiscovery[get_class($discovery)] = true;

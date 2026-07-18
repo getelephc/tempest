@@ -9,10 +9,10 @@ use Traversable;
 final class TempestViewAst implements IteratorAggregate, ArrayAccess
 {
     public function __construct(
-        public TokenCollection $tokens = new TokenCollection(),
+        private(set) TokenCollection $tokens = new TokenCollection(),
     ) {}
 
-    public bool $isHtml = true;
+    private(set) bool $isHtml = true;
 
     public function add(Token $token): self
     {

@@ -7,10 +7,10 @@ use Tempest\Support\Paginator\Exceptions\ArgumentWasInvalid;
 final class Paginator
 {
     public function __construct(
-        public int $totalItems,
-        public int $itemsPerPage = 20,
-        public int $currentPage = 1,
-        public int $maxLinks = 10,
+        private(set) int $totalItems,
+        private(set) int $itemsPerPage = 20,
+        private(set) int $currentPage = 1,
+        private(set) int $maxLinks = 10,
     ) {
         if ($this->totalItems < 0) {
             throw new ArgumentWasInvalid('Total items cannot be negative');

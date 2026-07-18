@@ -1,0 +1,11 @@
+diff --git a/packages/log/src/Config/MultipleChannelsLogConfig.php b/packages/log/src/Config/MultipleChannelsLogConfig.php
+index 47a56a433a0ad9a61b3e90c3487faaf2df658b9c..3ddaea1eca755f60a7789e7b78fcaa7a0c352a5c 100644
+--- a/packages/log/src/Config/MultipleChannelsLogConfig.php
++++ b/packages/log/src/Config/MultipleChannelsLogConfig.php
+@@ -23,3 +23,3 @@ public function __construct(
+-        private(set) array $channels,
+-        private(set) ?string $prefix,
+-        private(set) UnitEnum|string|null $tag = null,
++        public array $channels,
++        public ?string $prefix,
++        public UnitEnum|string|null $tag = null,

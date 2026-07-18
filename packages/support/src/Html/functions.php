@@ -197,7 +197,7 @@ function format_attributes(array $attributes = []): string
  */
 function create_tag(string $tag, array $attributes = [], ?string $content = null): HtmlString
 {
-    $attributes = format_attributes($attributes);
+    $attributes = namespace\format_attributes($attributes);
 
     if ($content || ! is_void_tag($tag)) {
         return new HtmlString(sprintf('<%s%s>%s</%s>', $tag, $attributes, $content ?? '', $tag));

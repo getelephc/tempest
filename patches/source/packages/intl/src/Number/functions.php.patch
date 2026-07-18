@@ -1,0 +1,25 @@
+diff --git a/packages/intl/src/Number/functions.php b/packages/intl/src/Number/functions.php
+index 6f8b4ad576561c02e227792077168a08e4b91380..b4c8055c211c285e7f1f02c3429ac0bde42947c9 100644
+--- a/packages/intl/src/Number/functions.php
++++ b/packages/intl/src/Number/functions.php
+@@ -63 +63 @@ function spell_out(int|float $number, ?Locale $locale = null, ?int $after = null
+-        return namespace\format($number, locale: $locale);
++        return format($number, locale: $locale);
+@@ -67 +67 @@ function spell_out(int|float $number, ?Locale $locale = null, ?int $after = null
+-        return namespace\format($number, locale: $locale);
++        return format($number, locale: $locale);
+@@ -148 +148 @@ function to_file_size(int|float $bytes, int $precision = 0, ?int $maxPrecision =
+-    return sprintf('%s %s', namespace\format($bytes, $precision, $maxPrecision), $units[$i]);
++    return sprintf('%s %s', format($bytes, $precision, $maxPrecision), $units[$i]);
+@@ -167 +167 @@ function to_human_readable(int|float $number, int $precision = 0, ?int $maxPreci
+-        return $precision > 0 ? namespace\format(0, $precision, $maxPrecision) : '0';
++        return $precision > 0 ? format(0, $precision, $maxPrecision) : '0';
+@@ -171 +171 @@ function to_human_readable(int|float $number, int $precision = 0, ?int $maxPreci
+-        return sprintf('-%s', namespace\to_human_readable(Math\abs($number), $precision, $maxPrecision, $units));
++        return sprintf('-%s', to_human_readable(Math\abs($number), $precision, $maxPrecision, $units));
+@@ -175 +175 @@ function to_human_readable(int|float $number, int $precision = 0, ?int $maxPreci
+-        return sprintf('%s' . end($units), namespace\to_human_readable($number / 1e15, $precision, $maxPrecision, $units));
++        return sprintf('%s' . end($units), to_human_readable($number / 1e15, $precision, $maxPrecision, $units));
+@@ -182 +182 @@ function to_human_readable(int|float $number, int $precision = 0, ?int $maxPreci
+-    return trim(sprintf('%s%s', namespace\format($number, $precision, $maxPrecision), $units[$displayExponent] ?? ''));
++    return trim(sprintf('%s%s', format($number, $precision, $maxPrecision), $units[$displayExponent] ?? ''));

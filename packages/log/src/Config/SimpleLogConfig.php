@@ -34,12 +34,12 @@ final class SimpleLogConfig implements LogConfig
      * @param null|UnitEnum|string $tag An optional tag to identify the logger instance associated to this configuration.
      */
     public function __construct(
-        public string $path,
-        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
-        public array $channels = [],
-        public bool $useLocking = false,
-        public ?int $filePermission = null,
-        public ?string $prefix = null,
-        public UnitEnum|string|null $tag = null,
+        private(set) string $path,
+        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
+        private(set) array $channels = [],
+        private(set) bool $useLocking = false,
+        private(set) ?int $filePermission = null,
+        private(set) ?string $prefix = null,
+        private(set) UnitEnum|string|null $tag = null,
     ) {}
 }

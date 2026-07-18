@@ -465,7 +465,7 @@ trait TemporalConvenienceMethods
     {
         $timestamp = $this->getTimestamp();
 
-        return create_intl_date_formatter(null, null, $pattern, $timezone, $locale)->format(
+        return namespace\create_intl_date_formatter(null, null, $pattern, $timezone, $locale)->format(
             $timestamp->getSeconds() + ($timestamp->getNanoseconds() / NANOSECONDS_PER_SECOND),
         );
     }
@@ -497,7 +497,7 @@ trait TemporalConvenienceMethods
      */
     public function toRfc3339(?SecondsStyle $secondsStyle = null, bool $useZ = false): string
     {
-        return format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ);
+        return namespace\format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ);
     }
 
     /**
@@ -529,7 +529,7 @@ trait TemporalConvenienceMethods
     {
         $timestamp = $this->getTimestamp();
 
-        return create_intl_date_formatter($dateStyle, $timeStyle, null, $timezone, $locale)->format(
+        return namespace\create_intl_date_formatter($dateStyle, $timeStyle, null, $timezone, $locale)->format(
             $timestamp->getSeconds() + ($timestamp->getNanoseconds() / NANOSECONDS_PER_SECOND),
         );
     }

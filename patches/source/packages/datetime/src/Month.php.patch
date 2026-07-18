@@ -1,0 +1,7 @@
+diff --git a/packages/datetime/src/Month.php b/packages/datetime/src/Month.php
+index 5177fc5bbdd7148068acdafabfd3e6ccff7eedfa..9aefc8757bd9264d0e5747d4325f3b42369f55df 100644
+--- a/packages/datetime/src/Month.php
++++ b/packages/datetime/src/Month.php
+@@ -97 +97 @@ public function getDaysForYear(int $year): int
+-        if (namespace\is_leap_year($year)) {
++        if (is_leap_year($year)) {

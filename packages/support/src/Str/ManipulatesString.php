@@ -25,7 +25,7 @@ use function Tempest\Support\tap;
  */
 trait ManipulatesString
 {
-    public string $value;
+    private(set) string $value;
 
     public function __construct(Stringable|int|string|null $string = '')
     {
@@ -379,7 +379,7 @@ trait ManipulatesString
      */
     public function replaceEvery(array $replacements): self
     {
-        return $this->createOrModify(replace_every($this->value, $replacements));
+        return $this->createOrModify(namespace\replace_every($this->value, $replacements));
     }
 
     /**
@@ -624,7 +624,7 @@ trait ManipulatesString
      */
     public function padLeft(int $totalLength, string $padString = ' '): self
     {
-        return $this->createOrModify(pad_left($this->value, $totalLength, $padString));
+        return $this->createOrModify(namespace\pad_left($this->value, $totalLength, $padString));
     }
 
     /**
@@ -652,7 +652,7 @@ trait ManipulatesString
      */
     public function padRight(int $totalLength, string $padString = ' '): self
     {
-        return $this->createOrModify(pad_right($this->value, $totalLength, $padString));
+        return $this->createOrModify(namespace\pad_right($this->value, $totalLength, $padString));
     }
 
     /**

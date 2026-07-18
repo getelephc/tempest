@@ -81,7 +81,7 @@ final class ObjectFactoryTest extends FrameworkIntegrationTestCase
             fn (ArrayToObjectMapper $mapper, mixed $from) => $mapper->map($from, ObjectA::class),
             ObjectToArrayMapper::class,
             ArrayToJsonMapper::class,
-        )->execute();
+        )->do();
 
         $this->assertSame('{"a":"a","b":"b"}', $result);
     }
@@ -90,7 +90,7 @@ final class ObjectFactoryTest extends FrameworkIntegrationTestCase
     {
         $this->expectException(MapperWasMissing::class);
 
-        map([])->execute();
+        map([])->do();
     }
 
     public function test_map_with_to(): void

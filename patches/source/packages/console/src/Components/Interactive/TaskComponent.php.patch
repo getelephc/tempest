@@ -1,0 +1,7 @@
+diff --git a/packages/console/src/Components/Interactive/TaskComponent.php b/packages/console/src/Components/Interactive/TaskComponent.php
+index 5d39118c3fa12a2b1f4c1c3a1f4275f4768e56d7..c4075f4cea2b38cf3099d8d9bc0a234b4e1b9b7c 100644
+--- a/packages/console/src/Components/Interactive/TaskComponent.php
++++ b/packages/console/src/Components/Interactive/TaskComponent.php
+@@ -42 +42 @@ final class TaskComponent implements InteractiveConsoleComponent, HasStaticCompo
+-    private(set) array $extensions = ['pcntl'];
++    public array $extensions = ['pcntl'];

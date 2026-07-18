@@ -1,0 +1,9 @@
+diff --git a/packages/event-bus/src/Testing/FakeEventBus.php b/packages/event-bus/src/Testing/FakeEventBus.php
+index 56482f225450784782f033b0a57b753770c19a57..2cd8687fafbcc0ede86eb1af9b5e3d687e42f625 100644
+--- a/packages/event-bus/src/Testing/FakeEventBus.php
++++ b/packages/event-bus/src/Testing/FakeEventBus.php
+@@ -27,2 +27,2 @@ public function __construct(
+-        private(set) EventBus $eventBus,
+-        private(set) EventBusConfig $eventBusConfig,
++        public EventBus $eventBus,
++        public EventBusConfig $eventBusConfig,

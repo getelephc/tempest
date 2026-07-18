@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Http/MakeControllerCommandTest.php b/tests/Integration/Http/MakeControllerCommandTest.php
+index 36229d907621d01b9225da70752b0bfd5cd008e2..444e29f34f203ca3deb92ac1a4088d1727d5a1d9 100644
+--- a/tests/Integration/Http/MakeControllerCommandTest.php
++++ b/tests/Integration/Http/MakeControllerCommandTest.php
+@@ -9 +9 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

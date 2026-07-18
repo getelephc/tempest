@@ -166,7 +166,7 @@ final readonly class DateTime implements DateTimeInterface
             $month = $month->value;
         }
 
-        $calendar = create_intl_calendar_from_date_time(
+        $calendar = namespace\create_intl_calendar_from_date_time(
             $timezone,
             $year,
             $month,
@@ -238,7 +238,7 @@ final readonly class DateTime implements DateTimeInterface
         }
 
         /** @var IntlCalendar $calendar */
-        $calendar = IntlCalendar::createInstance(to_intl_timezone($timezone));
+        $calendar = IntlCalendar::createInstance(namespace\to_intl_timezone($timezone));
 
         $calendar->setTime($timestamp->getSeconds() * MILLISECONDS_PER_SECOND);
 

@@ -562,7 +562,7 @@ final class InsertQueryBuilder implements BuildsQuery
         $resolvedValue = match (true) {
             $value === null => null,
             isset($value->{$primaryKey}) => $value->{$primaryKey}->value,
-            default => new InsertQueryBuilder(get_class($value), [$value], $this->serializerFactory)->build(),
+            default => new InsertQueryBuilder($value::class, [$value], $this->serializerFactory)->build(),
         };
 
         return [$column, $resolvedValue];

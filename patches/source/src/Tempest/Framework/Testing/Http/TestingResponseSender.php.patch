@@ -1,0 +1,7 @@
+diff --git a/src/Tempest/Framework/Testing/Http/TestingResponseSender.php b/src/Tempest/Framework/Testing/Http/TestingResponseSender.php
+index e255902dae7f81c6c57347490961ee2a8ed0cdbf..bf239e14c03bfacd5a53e6f9a3b9b85bc4324b67 100644
+--- a/src/Tempest/Framework/Testing/Http/TestingResponseSender.php
++++ b/src/Tempest/Framework/Testing/Http/TestingResponseSender.php
+@@ -11 +11 @@ final class TestingResponseSender implements ResponseSender
+-    private(set) array $responses = [];
++    public array $responses = [];

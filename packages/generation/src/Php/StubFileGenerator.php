@@ -13,7 +13,7 @@ use Tempest\Support\Str\ImmutableString;
 use Throwable;
 
 use function Tempest\src_namespace;
-use function Tempest\Support\NamespaceUtils\to_base_class_name;
+use function Tempest\Support\Namespace\to_base_class_name;
 use function Tempest\Support\str;
 
 /**

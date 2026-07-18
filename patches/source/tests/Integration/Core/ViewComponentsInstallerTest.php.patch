@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Core/ViewComponentsInstallerTest.php b/tests/Integration/Core/ViewComponentsInstallerTest.php
+index 7ebbb5bcb64aa82cf948a98c5db81a37d8f2219c..1caab412dfbbe7e0868bc598f04eabad5510d26e 100644
+--- a/tests/Integration/Core/ViewComponentsInstallerTest.php
++++ b/tests/Integration/Core/ViewComponentsInstallerTest.php
+@@ -5 +5 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

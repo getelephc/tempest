@@ -4,6 +4,8 @@ set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 
+"$ROOT/scripts/apply-elephc-patches.sh" --check
+
 if [[ -n "${ELEPHC_BIN:-}" ]]; then
     compiler="$ELEPHC_BIN"
 elif [[ -x "$ROOT/../../illegalstudio/elephc/target/debug/elephc" ]]; then

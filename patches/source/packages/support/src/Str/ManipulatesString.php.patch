@@ -1,0 +1,16 @@
+diff --git a/packages/support/src/Str/ManipulatesString.php b/packages/support/src/Str/ManipulatesString.php
+index 7bd5cad51b62e825d2c516009f783222729fff42..3f78d14dde2a7205cc35faee1f04196aa7cecec9 100644
+--- a/packages/support/src/Str/ManipulatesString.php
++++ b/packages/support/src/Str/ManipulatesString.php
+@@ -28 +28 @@ trait ManipulatesString
+-    private(set) string $value;
++    public string $value;
+@@ -382 +382 @@ public function replaceEvery(array $replacements): self
+-        return $this->createOrModify(namespace\replace_every($this->value, $replacements));
++        return $this->createOrModify(replace_every($this->value, $replacements));
+@@ -627 +627 @@ public function padLeft(int $totalLength, string $padString = ' '): self
+-        return $this->createOrModify(namespace\pad_left($this->value, $totalLength, $padString));
++        return $this->createOrModify(pad_left($this->value, $totalLength, $padString));
+@@ -655 +655 @@ public function padRight(int $totalLength, string $padString = ' '): self
+-        return $this->createOrModify(namespace\pad_right($this->value, $totalLength, $padString));
++        return $this->createOrModify(pad_right($this->value, $totalLength, $padString));

@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\PostCondition;
 use PHPUnit\Framework\Attributes\PreCondition;
 use PHPUnit\Framework\Attributes\Test;
 use Tempest\Http\Session\Installer\SessionInstaller;
-use Tempest\Support\NamespaceUtils\Psr4Namespace;
+use Tempest\Support\Namespace\Psr4Namespace;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 
 /**

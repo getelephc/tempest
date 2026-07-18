@@ -20,8 +20,8 @@ final class MultipleChannelsLogConfig implements LogConfig
      * @param null|UnitEnum|string $tag An optional tag to identify the logger instance associated to this configuration.
      */
     public function __construct(
-        public array $channels,
-        public ?string $prefix,
-        public UnitEnum|string|null $tag = null,
+        private(set) array $channels,
+        private(set) ?string $prefix,
+        private(set) UnitEnum|string|null $tag = null,
     ) {}
 }

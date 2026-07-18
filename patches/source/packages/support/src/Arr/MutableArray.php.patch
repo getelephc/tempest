@@ -1,0 +1,7 @@
+diff --git a/packages/support/src/Arr/MutableArray.php b/packages/support/src/Arr/MutableArray.php
+index 56f7b5ee508acbd77160724945f65f534e527123..93b4e335d3b5e277ee7c48567eddc382696943b7 100644
+--- a/packages/support/src/Arr/MutableArray.php
++++ b/packages/support/src/Arr/MutableArray.php
+@@ -35 +35 @@ public function pull(string|int $key, mixed $default = null): mixed
+-        return namespace\pull($this->value, $key, $default);
++        return pull($this->value, $key, $default);

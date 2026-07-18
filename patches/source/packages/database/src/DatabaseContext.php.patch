@@ -1,0 +1,10 @@
+diff --git a/packages/database/src/DatabaseContext.php b/packages/database/src/DatabaseContext.php
+index c92b1514ec111ee07b4b857c50ea1f6c9bb3ed52..56611b51bd35901958a7903622e68c9ab4533936 100644
+--- a/packages/database/src/DatabaseContext.php
++++ b/packages/database/src/DatabaseContext.php
+@@ -10 +10 @@ final class DatabaseContext implements Context
+-    private(set) string $name = self::class;
++    public string $name = self::class;
+@@ -13 +13 @@ public function __construct(
+-        private(set) DatabaseDialect $dialect,
++        public DatabaseDialect $dialect,

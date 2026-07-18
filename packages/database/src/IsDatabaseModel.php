@@ -325,7 +325,7 @@ trait IsDatabaseModel
 
         // Models without primary keys always insert
         if (! $model->hasPrimaryKey()) {
-            query(get_class($this))
+            query($this::class)
                 ->onDatabase($this->onDatabase)
                 ->insert($this)
                 ->execute();
@@ -340,7 +340,7 @@ trait IsDatabaseModel
         // If there is a primary key property but it's not set, we insert the model
         // to generate the id and populate the model instance with it
         if ($primaryKeyValue === null) {
-            $id = query(get_class($this))
+            $id = query($this::class)
                 ->onDatabase($this->onDatabase)
                 ->insert($this)
                 ->execute();

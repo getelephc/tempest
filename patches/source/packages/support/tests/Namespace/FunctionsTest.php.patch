@@ -1,0 +1,18 @@
+diff --git a/packages/support/tests/Namespace/FunctionsTest.php b/packages/support/tests/Namespace/FunctionsTest.php
+index e0057a6b2efd3dfae2f00cb52df668721b48f565..c57ea0e177165685b0675e91266286a46bce2f54 100644
+--- a/packages/support/tests/Namespace/FunctionsTest.php
++++ b/packages/support/tests/Namespace/FunctionsTest.php
+@@ -8,2 +8,2 @@
+-use Tempest\Support\Namespace\PathCouldNotBeMappedToNamespace;
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\PathCouldNotBeMappedToNamespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;
+@@ -12,4 +12,4 @@
+-use function Tempest\Support\Namespace\to_base_class_name;
+-use function Tempest\Support\Namespace\to_fqcn;
+-use function Tempest\Support\Namespace\to_namespace;
+-use function Tempest\Support\Namespace\to_psr4_namespace;
++use function Tempest\Support\NamespaceUtils\to_base_class_name;
++use function Tempest\Support\NamespaceUtils\to_fqcn;
++use function Tempest\Support\NamespaceUtils\to_namespace;
++use function Tempest\Support\NamespaceUtils\to_psr4_namespace;

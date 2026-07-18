@@ -1,0 +1,7 @@
+diff --git a/packages/event-bus/src/Testing/EventBusTester.php b/packages/event-bus/src/Testing/EventBusTester.php
+index 869f0935457d10c5d1c38e1a401691ff973ce4f0..7d386479510503dc546c631e0f8038d78272dc04 100644
+--- a/packages/event-bus/src/Testing/EventBusTester.php
++++ b/packages/event-bus/src/Testing/EventBusTester.php
+@@ -125 +125 @@ private function findHandlersFor(string|object $event): array
+-        $eventName = Str\parse($event) ?: $event::class;
++        $eventName = Str\parse($event) ?: get_class($event);

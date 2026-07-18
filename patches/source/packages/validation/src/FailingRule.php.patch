@@ -1,0 +1,13 @@
+diff --git a/packages/validation/src/FailingRule.php b/packages/validation/src/FailingRule.php
+index 7a956d183858a99a258d17cbe2396f3b29c122b5..321fce21d5230e2538e3d93d347a34c17c64d3e1 100644
+--- a/packages/validation/src/FailingRule.php
++++ b/packages/validation/src/FailingRule.php
+@@ -17,4 +17,4 @@ public function __construct(
+-        private(set) Rule $rule,
+-        private(set) ?string $field = null,
+-        private(set) mixed $value = null,
+-        private(set) ?string $key = null,
++        public Rule $rule,
++        public ?string $field = null,
++        public mixed $value = null,
++        public ?string $key = null,

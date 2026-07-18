@@ -53,7 +53,7 @@ final readonly class ArrayToObjectCollectionCaster implements Caster, DynamicCas
         $values = [];
 
         foreach ($input as $key => $item) {
-            $values[$key] = is_object($item) && $iterableType->matches(get_class($item)) ? $item : $caster->cast($item);
+            $values[$key] = is_object($item) && $iterableType->matches($item::class) ? $item : $caster->cast($item);
         }
 
         return $values;

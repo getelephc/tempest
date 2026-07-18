@@ -1,0 +1,7 @@
+diff --git a/packages/container/src/DependencyChain.php b/packages/container/src/DependencyChain.php
+index 210cfb4c4e02c4ca6a6051b35dcbea3479f01e1e..71e53bbd2b8953eb17bdd241fcdab78db7e0d0a5 100644
+--- a/packages/container/src/DependencyChain.php
++++ b/packages/container/src/DependencyChain.php
+@@ -56 +56 @@ public function getOrigin(): string
+-    public function clone(): self
++    public function copy(): self

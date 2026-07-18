@@ -1,0 +1,10 @@
+diff --git a/packages/database/src/RawSqlDatabaseContext.php b/packages/database/src/RawSqlDatabaseContext.php
+index 3e6ec3404dd193be85814b4d885bc3d850b037cd..0770e53a156d2c88d2f34f36616b282d561943c7 100644
+--- a/packages/database/src/RawSqlDatabaseContext.php
++++ b/packages/database/src/RawSqlDatabaseContext.php
+@@ -10 +10 @@ final class RawSqlDatabaseContext implements Context
+-    private(set) string $name = self::class;
++    public string $name = self::class;
+@@ -13 +13 @@ public function __construct(
+-        private(set) DatabaseDialect $dialect,
++        public DatabaseDialect $dialect,

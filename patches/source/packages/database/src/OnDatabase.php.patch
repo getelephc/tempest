@@ -1,0 +1,7 @@
+diff --git a/packages/database/src/OnDatabase.php b/packages/database/src/OnDatabase.php
+index 71fc92a4db9853350c589a725b776b2157d7992a..3e00d94972c3d3c0d9abe681f919e737aa7fe07c 100644
+--- a/packages/database/src/OnDatabase.php
++++ b/packages/database/src/OnDatabase.php
+@@ -9 +9 @@ trait OnDatabase
+-    private(set) string|UnitEnum|null $onDatabase = null;
++    public string|UnitEnum|null $onDatabase = null;

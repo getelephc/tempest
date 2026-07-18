@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Console/Commands/MakeConfigCommandTest.php b/tests/Integration/Console/Commands/MakeConfigCommandTest.php
+index 66ebae005a401d4997a4e0ec7de56a221375e9c3..4b5d092412a79a380fe7645d009891d8bdace374 100644
+--- a/tests/Integration/Console/Commands/MakeConfigCommandTest.php
++++ b/tests/Integration/Console/Commands/MakeConfigCommandTest.php
+@@ -15 +15 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

@@ -1,0 +1,51 @@
+diff --git a/packages/container/src/GenericContainer.php b/packages/container/src/GenericContainer.php
+index 8ee0c5acbf9dacd23698ccd37d634b1e232cbec3..f0587f427c5f16c69675c1f1337c1d1aa91cd070 100644
+--- a/packages/container/src/GenericContainer.php
++++ b/packages/container/src/GenericContainer.php
+@@ -36 +36 @@ public function __construct(
+-        private(set) ArrayIterator $definitions = new ArrayIterator(),
++        public ArrayIterator $definitions = new ArrayIterator(),
+@@ -39 +39 @@ public function __construct(
+-        private(set) ArrayIterator $singletonDefinitions = new ArrayIterator(),
++        public ArrayIterator $singletonDefinitions = new ArrayIterator(),
+@@ -42 +42 @@ public function __construct(
+-        private(set) ArrayIterator $resolvedSingletons = new ArrayIterator(),
++        public ArrayIterator $resolvedSingletons = new ArrayIterator(),
+@@ -45 +45 @@ public function __construct(
+-        private(set) ArrayIterator $initializers = new ArrayIterator(),
++        public ArrayIterator $initializers = new ArrayIterator(),
+@@ -48 +48 @@ public function __construct(
+-        private(set) ArrayIterator $dynamicInitializers = new ArrayIterator(),
++        public ArrayIterator $dynamicInitializers = new ArrayIterator(),
+@@ -51 +51 @@ public function __construct(
+-        private(set) ArrayIterator $decorators = new ArrayIterator(),
++        public ArrayIterator $decorators = new ArrayIterator(),
+@@ -54 +54 @@ public function __construct(
+-        private(set) ArrayIterator $resettables = new ArrayIterator(),
++        public ArrayIterator $resettables = new ArrayIterator(),
+@@ -56 +56 @@ public function __construct(
+-        private(set) ?DependencyChain $chain = null,
++        public ?DependencyChain $chain = null,
+@@ -192 +192 @@ public function config(object $config): self
+-        $this->singleton($config::class, $config);
++        $this->singleton(get_class($config), $config);
+@@ -238 +238 @@ public function invoke(ClassReflector|MethodReflector|FunctionReflector|callable
+-            return $this->invokeClosure($method(...), ...$params);
++            return $this->invokeClosure(Closure::fromCallable($method), ...$params);
+@@ -406,2 +406,2 @@ private function resolveDependency(string $className, string|UnitEnum|null $tag
+-                $initializer instanceof Initializer => $initializer->initialize($this->clone()),
+-                $initializer instanceof DynamicInitializer => $initializer->initialize($class, $tag, $this->clone()),
++                $initializer instanceof Initializer => $initializer->initialize($this->copy()),
++                $initializer instanceof DynamicInitializer => $initializer->initialize($class, $tag, $this->copy()),
+@@ -529 +529 @@ private function autowireDependencies(MethodReflector|FunctionReflector $method,
+-            $dependencies[] = $this->clone()->autowireDependency(
++            $dependencies[] = $this->copy()->autowireDependency(
+@@ -607 +607 @@ private function autowireBuiltinDependency(ParameterReflector $parameter, mixed
+-            $object = $initializer->initialize($this->clone());
++            $object = $initializer->initialize($this->copy());
+@@ -648 +648 @@ private function autowireBuiltinDependency(ParameterReflector $parameter, mixed
+-    private function clone(): self
++    private function copy(): self
+@@ -671 +671 @@ public function __clone(): void
+-        $this->chain = $this->chain?->clone();
++        $this->chain = $this->chain?->copy();

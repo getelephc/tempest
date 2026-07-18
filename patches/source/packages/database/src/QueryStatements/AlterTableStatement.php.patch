@@ -1,0 +1,7 @@
+diff --git a/packages/database/src/QueryStatements/AlterTableStatement.php b/packages/database/src/QueryStatements/AlterTableStatement.php
+index 7250ee7542c9278872336f9d2bfb336d6f79f49b..bec7fcf5dece7a768aea13085fc17c057e076e4e 100644
+--- a/packages/database/src/QueryStatements/AlterTableStatement.php
++++ b/packages/database/src/QueryStatements/AlterTableStatement.php
+@@ -18 +18 @@ final class AlterTableStatement implements QueryStatement, HasTrailingStatements
+-    private(set) array $trailingStatements = [];
++    public array $trailingStatements = [];

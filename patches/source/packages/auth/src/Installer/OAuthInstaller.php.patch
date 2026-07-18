@@ -1,0 +1,10 @@
+diff --git a/packages/auth/src/Installer/OAuthInstaller.php b/packages/auth/src/Installer/OAuthInstaller.php
+index b52ff812e1d8b4ae176a7d5eafa6f03b4d8202a8..773188a0c7d14ce2b67e8ea2747e7ab8c95ee1ba 100644
+--- a/packages/auth/src/Installer/OAuthInstaller.php
++++ b/packages/auth/src/Installer/OAuthInstaller.php
+@@ -18 +18 @@
+-use function Tempest\Support\Namespace\to_fqcn;
++use function Tempest\Support\NamespaceUtils\to_fqcn;
+@@ -105 +105 @@ private function publishController(SupportedOAuthProvider $provider): void
+-                $providerFqcn = $provider::class;
++                $providerFqcn = get_class($provider);

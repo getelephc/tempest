@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Vite/ViteInstallerTest.php b/tests/Integration/Vite/ViteInstallerTest.php
+index 6aaf9eb012bfdbe1016c176754193b37427d0fd4..7b4ec9472d64d7ad48997f88797fb86435ae8f5e 100644
+--- a/tests/Integration/Vite/ViteInstallerTest.php
++++ b/tests/Integration/Vite/ViteInstallerTest.php
+@@ -10 +10 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

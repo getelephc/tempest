@@ -333,7 +333,7 @@ trait DateTimeConvenienceMethods
      */
     public function isLeapYear(): bool
     {
-        return is_leap_year($this->getYear());
+        return namespace\is_leap_year($this->getYear());
     }
 
     /**
@@ -931,7 +931,7 @@ trait DateTimeConvenienceMethods
     {
         $timestamp = $this->getTimestamp();
 
-        return create_intl_date_formatter(
+        return namespace\create_intl_date_formatter(
             null,
             null,
             $pattern,
@@ -968,7 +968,7 @@ trait DateTimeConvenienceMethods
     #[Override]
     public function toRfc3339(?SecondsStyle $secondsStyle = null, bool $useZ = false): string
     {
-        return format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ, $this->getTimezone());
+        return namespace\format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ, $this->getTimezone());
     }
 
     /**
@@ -1006,7 +1006,7 @@ trait DateTimeConvenienceMethods
     ): string {
         $timestamp = $this->getTimestamp();
 
-        return create_intl_date_formatter(
+        return namespace\create_intl_date_formatter(
             dateStyle: $dateStyle,
             timeStyle: $timeStyle,
             pattern: null,

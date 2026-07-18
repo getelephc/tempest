@@ -1,0 +1,25 @@
+diff --git a/packages/datetime/src/Timezone.php b/packages/datetime/src/Timezone.php
+index c29fc7ad37cad88ff2b7202ff03cc5ed70c0ebea..8ac4f4110ed6840e1b25b05c86ceb98861b75308 100644
+--- a/packages/datetime/src/Timezone.php
++++ b/packages/datetime/src/Timezone.php
+@@ -494 +494 @@ public static function default(): self
+-        return namespace\default_timezone();
++        return default_timezone();
+@@ -508 +508 @@ public function getOffset(TemporalInterface $temporal, bool $local = false): Dur
+-        $intl_timezone = namespace\to_intl_timezone($this);
++        $intl_timezone = to_intl_timezone($this);
+@@ -523 +523 @@ public function getRawOffset(): Duration
+-        return Duration::milliseconds(namespace\to_intl_timezone($this)->getRawOffset());
++        return Duration::milliseconds(to_intl_timezone($this)->getRawOffset());
+@@ -537 +537 @@ public function getDaylightSavingTimeOffset(TemporalInterface $temporal, bool $l
+-        $intl_timezone = namespace\to_intl_timezone($this);
++        $intl_timezone = to_intl_timezone($this);
+@@ -553 +553 @@ public function usesDaylightSavingTime(): bool
+-        return namespace\to_intl_timezone($this)->useDaylightTime();
++        return to_intl_timezone($this)->useDaylightTime();
+@@ -566 +566 @@ public function getDaylightSavingTimeSavings(): Duration
+-        return Duration::milliseconds(namespace\to_intl_timezone($this)->getDSTSavings());
++        return Duration::milliseconds(to_intl_timezone($this)->getDSTSavings());
+@@ -574 +574 @@ public function hasTheSameRulesAs(Timezone $other): bool
+-        return namespace\to_intl_timezone($this)->hasSameRules(namespace\to_intl_timezone($other));
++        return to_intl_timezone($this)->hasSameRules(to_intl_timezone($other));

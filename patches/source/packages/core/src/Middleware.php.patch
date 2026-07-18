@@ -1,0 +1,10 @@
+diff --git a/packages/core/src/Middleware.php b/packages/core/src/Middleware.php
+index d805b3611973c3b64c30e4fa0b337ae8be189a6b..20b1a1ba852653044faa35419188e1594c873f4a 100644
+--- a/packages/core/src/Middleware.php
++++ b/packages/core/src/Middleware.php
+@@ -17 +17 @@ final class Middleware implements IteratorAggregate
+-    private(set) array $middlewareClasses = [];
++    public array $middlewareClasses = [];
+@@ -26 +26 @@ public function __construct(
+-    public function clone(): self
++    public function copy(): self

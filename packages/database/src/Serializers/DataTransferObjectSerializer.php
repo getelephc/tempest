@@ -70,7 +70,7 @@ final readonly class DataTransferObjectSerializer implements Serializer, Dynamic
                 $data[$key] = $this->serializeWithType($value);
             }
 
-            $type = $this->mapperConfig->serializationMap[get_class($input)] ?? get_class($input);
+            $type = $this->mapperConfig->serializationMap[$input::class] ?? $input::class;
 
             return [
                 'type' => $type,

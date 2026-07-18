@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/View/Commands/MakeViewCommandTest.php b/tests/Integration/View/Commands/MakeViewCommandTest.php
+index e970d3946c970f4fe2018b9ca45812f23182ea6c..106e197889f3a23935e384d46d2798de2a9d3e90 100644
+--- a/tests/Integration/View/Commands/MakeViewCommandTest.php
++++ b/tests/Integration/View/Commands/MakeViewCommandTest.php
+@@ -8 +8 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

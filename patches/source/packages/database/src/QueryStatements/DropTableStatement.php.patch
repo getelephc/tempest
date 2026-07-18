@@ -1,0 +1,7 @@
+diff --git a/packages/database/src/QueryStatements/DropTableStatement.php b/packages/database/src/QueryStatements/DropTableStatement.php
+index 259b374cd2121c358ec2fea08595595fc2b8f123..71e8d649ba411a732d04bbe97cf76b26cda852e8 100644
+--- a/packages/database/src/QueryStatements/DropTableStatement.php
++++ b/packages/database/src/QueryStatements/DropTableStatement.php
+@@ -17 +17 @@ final class DropTableStatement implements QueryStatement, HasLeadingStatements
+-    private(set) array $leadingStatements;
++    public array $leadingStatements;

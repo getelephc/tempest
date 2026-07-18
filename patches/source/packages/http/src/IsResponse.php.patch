@@ -1,0 +1,16 @@
+diff --git a/packages/http/src/IsResponse.php b/packages/http/src/IsResponse.php
+index 0eda90fb79732b8a26859d7fc60be54576835ca6..a3571cad07d1807f9b026c599e5029c50c03573f 100644
+--- a/packages/http/src/IsResponse.php
++++ b/packages/http/src/IsResponse.php
+@@ -20 +20 @@ trait IsResponse
+-    private(set) Status $status = Status::OK;
++    public Status $status = Status::OK;
+@@ -22 +22 @@ trait IsResponse
+-    private(set) View|string|array|Generator|JsonSerializable|null $body = null;
++    public View|string|array|Generator|JsonSerializable|null $body = null;
+@@ -25 +25 @@ trait IsResponse
+-    private(set) array $headers = [];
++    public array $headers = [];
+@@ -35 +35 @@ trait IsResponse
+-    private(set) ?View $view = null;
++    public ?View $view = null;

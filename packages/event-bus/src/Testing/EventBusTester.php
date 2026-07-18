@@ -122,7 +122,7 @@ final class EventBusTester
     /** @return array<\Tempest\EventBus\CallableEventHandler> */
     private function findHandlersFor(string|object $event): array
     {
-        $eventName = Str\parse($event) ?: get_class($event);
+        $eventName = Str\parse($event) ?: $event::class;
 
         return $this->fakeEventBus->handlers[$eventName] ?? [];
     }

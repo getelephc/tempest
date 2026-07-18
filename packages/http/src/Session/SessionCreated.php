@@ -8,6 +8,6 @@ namespace Tempest\Http\Session;
 final class SessionCreated
 {
     public function __construct(
-        public Session $session,
+        private(set) Session $session,
     ) {}
 }

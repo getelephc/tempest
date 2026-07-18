@@ -1,0 +1,12 @@
+diff --git a/packages/http/src/Session/Session.php b/packages/http/src/Session/Session.php
+index 78846c4a92a1d2e1042e4710d96c941a3f332b61..e78fecfbfe17c3115175a66c2b524968a8e04ed1 100644
+--- a/packages/http/src/Session/Session.php
++++ b/packages/http/src/Session/Session.php
+@@ -26,2 +26,2 @@ public function __construct(
+-        private(set) SessionId $id,
+-        private(set) DateTimeInterface $createdAt,
++        public SessionId $id,
++        public DateTimeInterface $createdAt,
+@@ -30 +30 @@ public function __construct(
+-        private(set) array $data = [],
++        public array $data = [],

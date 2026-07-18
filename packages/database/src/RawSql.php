@@ -16,9 +16,9 @@ final class RawSql implements Stringable
     }
 
     public function __construct(
-        public DatabaseDialect $dialect,
-        public string $sql,
-        public array $bindings,
+        private(set) DatabaseDialect $dialect,
+        private(set) string $sql,
+        private(set) array $bindings,
         private SerializerFactory $serializerFactory,
     ) {}
 

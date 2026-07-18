@@ -1,0 +1,7 @@
+diff --git a/packages/http/src/Session/FormSession.php b/packages/http/src/Session/FormSession.php
+index a6cc7da406d50cfe794e213e3248c45f1a9096ca..0b1b5d8a5e554b037902dd4a515c76267af58ec2 100644
+--- a/packages/http/src/Session/FormSession.php
++++ b/packages/http/src/Session/FormSession.php
+@@ -21 +21 @@ public function __construct(
+-        private(set) Session $session,
++        public Session $session,

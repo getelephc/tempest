@@ -1,0 +1,175 @@
+diff --git a/packages/support/src/Arr/ManipulatesArray.php b/packages/support/src/Arr/ManipulatesArray.php
+index 8e2bd52504b1d2f130cb76f39bd294f3d2d547d8..9121d100aeaa83ea421d6b4ba0f72c6bb963c32f 100644
+--- a/packages/support/src/Arr/ManipulatesArray.php
++++ b/packages/support/src/Arr/ManipulatesArray.php
+@@ -27 +27 @@ trait ManipulatesArray
+-    private(set) array $value;
++    public array $value;
+@@ -34 +34 @@ public function __construct(mixed $input = [])
+-        $this->value = namespace\wrap($input);
++        $this->value = wrap($input);
+@@ -68 +68 @@ public static function createFrom(mixed $input): self
+-        return new static(namespace\to_array($input));
++        return new static(to_array($input));
+@@ -81 +81 @@ public function findKey(mixed $value, bool $strict = false): int|string|null
+-        return namespace\find_key($this->value, $value, $strict);
++        return find_key($this->value, $value, $strict);
+@@ -94 +94 @@ public function chunk(int $size, bool $preserveKeys = true): self
+-        return $this->createOrModify(array_map(fn (array $array) => new static($array), namespace\chunk($this->value, $size, $preserveKeys)));
++        return $this->createOrModify(array_map(fn (array $array) => new static($array), chunk($this->value, $size, $preserveKeys)));
+@@ -110 +110 @@ public function reduce(callable $callback, mixed $initial = null): mixed
+-        return namespace\reduce($this->value, $callback, $initial);
++        return reduce($this->value, $callback, $initial);
+@@ -120 +120 @@ public function shuffle(): self
+-        return $this->createOrModify(namespace\shuffle($this->value));
++        return $this->createOrModify(shuffle($this->value));
+@@ -132 +132 @@ public function removeKeys(string|int|array $keys): self
+-        return $this->createOrModify(namespace\remove_keys($this->value, $keys));
++        return $this->createOrModify(remove_keys($this->value, $keys));
+@@ -144 +144 @@ public function removeKeysExcept(string|int|array $keys): self
+-        return $this->createOrModify(namespace\remove_keys_except($this->value, $keys));
++        return $this->createOrModify(remove_keys_except($this->value, $keys));
+@@ -177 +177 @@ public function isList(): bool
+-        return namespace\is_list($this->value);
++        return is_list($this->value);
+@@ -186 +186 @@ public function isAssociative(): bool
+-        return namespace\is_associative($this->value);
++        return is_associative($this->value);
+@@ -199 +199 @@ public function random(int $number = 1, bool $preserveKey = false): mixed
+-        return namespace\random($this->value, $number, $preserveKey);
++        return random($this->value, $number, $preserveKey);
+@@ -211 +211 @@ public function pluck(string $value, ?string $key = null): self
+-        return $this->createOrModify(namespace\pluck($this->value, $value, $key));
++        return $this->createOrModify(pluck($this->value, $value, $key));
+@@ -223 +223 @@ public function prepend(mixed ...$values): self
+-        return $this->createOrModify(namespace\prepend($this->value, ...$values));
++        return $this->createOrModify(prepend($this->value, ...$values));
+@@ -235 +235 @@ public function append(mixed ...$values): self
+-        return $this->createOrModify(namespace\append($this->value, ...$values));
++        return $this->createOrModify(append($this->value, ...$values));
+@@ -245 +245 @@ public function add(mixed $value): self
+-        return $this->createOrModify(namespace\push($this->value, $value));
++        return $this->createOrModify(push($this->value, $value));
+@@ -255 +255 @@ public function push(mixed $value): self
+-        return $this->createOrModify(namespace\push($this->value, $value));
++        return $this->createOrModify(push($this->value, $value));
+@@ -265 +265 @@ public function pad(int $size, mixed $value): self
+-        return $this->createOrModify(namespace\pad($this->value, $size, $value));
++        return $this->createOrModify(pad($this->value, $size, $value));
+@@ -275 +275 @@ public function flip(): self
+-        return $this->createOrModify(namespace\flip($this->value));
++        return $this->createOrModify(flip($this->value));
+@@ -288 +288 @@ public function unique(Closure|string|null $key = null, bool $shouldBeStrict = f
+-        return $this->createOrModify(namespace\unique($this->value, $key, $shouldBeStrict));
++        return $this->createOrModify(unique($this->value, $key, $shouldBeStrict));
+@@ -300 +300 @@ public function diff(array|self ...$arrays): self
+-        return $this->createOrModify(namespace\diff($this->value, ...$arrays));
++        return $this->createOrModify(diff($this->value, ...$arrays));
+@@ -312 +312 @@ public function diffKeys(array|self ...$arrays): self
+-        return $this->createOrModify(namespace\diff_keys($this->value, ...$arrays));
++        return $this->createOrModify(diff_keys($this->value, ...$arrays));
+@@ -324 +324 @@ public function intersect(array|self ...$arrays): self
+-        return $this->createOrModify(namespace\intersect($this->value, ...$arrays));
++        return $this->createOrModify(intersect($this->value, ...$arrays));
+@@ -336 +336 @@ public function intersectKeys(array|self ...$arrays): self
+-        return $this->createOrModify(namespace\intersect_keys($this->value, ...$arrays));
++        return $this->createOrModify(intersect_keys($this->value, ...$arrays));
+@@ -348 +348 @@ public function merge(iterable ...$arrays): self
+-        return $this->createOrModify(namespace\merge($this->value, ...$arrays));
++        return $this->createOrModify(merge($this->value, ...$arrays));
+@@ -362 +362 @@ public function combine(array|self $values): self
+-        return $this->createOrModify(namespace\combine($this->value, $values));
++        return $this->createOrModify(combine($this->value, $values));
+@@ -370 +370 @@ public function equals(array|self $other): bool
+-        return namespace\equals($this->value, $other);
++        return equals($this->value, $other);
+@@ -386 +386 @@ public function first(?Closure $filter = null, mixed $default = null): mixed
+-        return namespace\first($this->value, $filter, $default);
++        return first($this->value, $filter, $default);
+@@ -402 +402 @@ public function last(?Closure $filter = null, mixed $default = null): mixed
+-        return namespace\last($this->value, $filter, $default);
++        return last($this->value, $filter, $default);
+@@ -423 +423 @@ public function at(int $index, mixed $default = null): mixed
+-        return namespace\at($this->value, $index, $default);
++        return at($this->value, $index, $default);
+@@ -435 +435 @@ public function pop(mixed &$value = null): self
+-        return $this->createOrModify(namespace\pop($this->value, $value));
++        return $this->createOrModify(pop($this->value, $value));
+@@ -447 +447 @@ public function unshift(mixed &$value = null): self
+-        return $this->createOrModify(namespace\unshift($this->value, $value));
++        return $this->createOrModify(unshift($this->value, $value));
+@@ -457 +457 @@ public function reverse(): self
+-        return $this->createOrModify(namespace\reverse($this->value));
++        return $this->createOrModify(reverse($this->value));
+@@ -465 +465 @@ public function isEmpty(): bool
+-        return namespace\is_empty($this->value);
++        return is_empty($this->value);
+@@ -481 +481 @@ public function implode(string $glue): ImmutableString
+-        return namespace\implode($this->value, $glue);
++        return implode($this->value, $glue);
+@@ -491 +491 @@ public function keys(): self
+-        return $this->createOrModify(namespace\keys($this->value));
++        return $this->createOrModify(keys($this->value));
+@@ -501 +501 @@ public function values(): self
+-        return $this->createOrModify(namespace\values($this->value));
++        return $this->createOrModify(values($this->value));
+@@ -514 +514 @@ public function filter(?Closure $filter = null): self
+-        return $this->createOrModify(namespace\filter($this->value, $filter));
++        return $this->createOrModify(filter($this->value, $filter));
+@@ -526 +526 @@ public function each(Closure $each): self
+-        return $this->createOrModify(namespace\each($this->value, $each));
++        return $this->createOrModify(each($this->value, $each));
+@@ -561 +561 @@ public function mapWithKeys(Closure $map): self
+-        return $this->createOrModify(namespace\map_with_keys($this->value, $map));
++        return $this->createOrModify(map_with_keys($this->value, $map));
+@@ -571 +571 @@ public function get(int|string $key, mixed $default = null): mixed
+-        return namespace\get_by_key($this->value, $key, $default);
++        return get_by_key($this->value, $key, $default);
+@@ -602 +602 @@ public function contains(mixed $search): bool
+-        return namespace\contains($this->value, $search);
++        return contains($this->value, $search);
+@@ -610 +610 @@ public function hasKey(int|string $key): bool
+-        return namespace\has_key($this->value, $key);
++        return has_key($this->value, $key);
+@@ -620 +620 @@ public function hasValue(mixed $search): bool
+-        return namespace\contains($this->value, $search);
++        return contains($this->value, $search);
+@@ -643 +643 @@ public function every(?Closure $callback = null): bool
+-        return namespace\every($this->value, $callback);
++        return every($this->value, $callback);
+@@ -653 +653 @@ public function undot(): self
+-        return $this->createOrModify(namespace\undot($this->value));
++        return $this->createOrModify(undot($this->value));
+@@ -663 +663 @@ public function dot(): self
+-        return $this->createOrModify(namespace\dot($this->value));
++        return $this->createOrModify(dot($this->value));
+@@ -671 +671 @@ public function join(string $glue = ', ', ?string $finalGlue = ' and '): Immutab
+-        return namespace\join($this->value, $glue, $finalGlue);
++        return join($this->value, $glue, $finalGlue);
+@@ -683 +683 @@ public function groupBy(Closure $keyExtractor): self
+-        return $this->createOrModify(namespace\group_by($this->value, $keyExtractor));
++        return $this->createOrModify(group_by($this->value, $keyExtractor));
+@@ -696 +696 @@ public function flatten(int|float $depth = INF): self
+-        return $this->createOrModify(namespace\flatten($this->value, $depth));
++        return $this->createOrModify(flatten($this->value, $depth));
+@@ -710 +710 @@ public function flatMap(Closure $map, int|float $depth = 1): self
+-        return $this->createOrModify(namespace\flat_map($this->value, $map, $depth));
++        return $this->createOrModify(flat_map($this->value, $map, $depth));
+@@ -724 +724 @@ public function mapTo(string $to): self
+-        return $this->createOrModify(namespace\map_to($this->value, $to));
++        return $this->createOrModify(map_to($this->value, $to));
+@@ -766 +766 @@ public function sort(bool $desc = false, ?bool $preserveKeys = null, int $flags
+-        return $this->createOrModify(namespace\sort($this->value, $desc, $preserveKeys, $flags));
++        return $this->createOrModify(sort($this->value, $desc, $preserveKeys, $flags));
+@@ -782 +782 @@ public function sortByCallback(callable $callback, ?bool $preserveKeys = null):
+-        return $this->createOrModify(namespace\sort_by_callback($this->value, $callback, $preserveKeys));
++        return $this->createOrModify(sort_by_callback($this->value, $callback, $preserveKeys));
+@@ -794 +794 @@ public function sortKeys(bool $desc = false, int $flags = SORT_REGULAR): self
+-        return $this->createOrModify(namespace\sort_keys($this->value, $desc, $flags));
++        return $this->createOrModify(sort_keys($this->value, $desc, $flags));
+@@ -808 +808 @@ public function sortKeysByCallback(callable $callback): self
+-        return $this->createOrModify(namespace\sort_keys_by_callback($this->value, $callback));
++        return $this->createOrModify(sort_keys_by_callback($this->value, $callback));
+@@ -823 +823 @@ public function slice(int $offset, ?int $length = null): self
+-        return $this->createOrModify(namespace\slice($this->value, $offset, $length));
++        return $this->createOrModify(slice($this->value, $offset, $length));

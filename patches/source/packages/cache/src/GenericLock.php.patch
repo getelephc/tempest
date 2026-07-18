@@ -1,0 +1,12 @@
+diff --git a/packages/cache/src/GenericLock.php b/packages/cache/src/GenericLock.php
+index 6f2da2f56441a65ba2aa2d5f0a2498de11f1ca07..d0b52b21f778d7ab3b561ef4b71745f84c353754 100644
+--- a/packages/cache/src/GenericLock.php
++++ b/packages/cache/src/GenericLock.php
+@@ -14,2 +14,2 @@ public function __construct(
+-        private(set) string $key,
+-        private(set) string $owner,
++        public string $key,
++        public string $owner,
+@@ -17 +17 @@ public function __construct(
+-        private(set) ?Duration $duration = null,
++        public ?Duration $duration = null,

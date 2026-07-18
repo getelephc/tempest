@@ -20,7 +20,7 @@ final readonly class AsyncCommandMiddleware implements CommandBusMiddleware
     {
         $reflector = new ClassReflector($command);
 
-        if ($reflector->hasAttribute(Async::class) || ($this->commandBusConfig->handlers[get_class($command)] ?? null)?->handler->hasAttribute(Async::class)) {
+        if ($reflector->hasAttribute(Async::class) || ($this->commandBusConfig->handlers[$command::class] ?? null)?->handler->hasAttribute(Async::class)) {
             $this->repository->store(Random\uuid(), $command);
 
             return;

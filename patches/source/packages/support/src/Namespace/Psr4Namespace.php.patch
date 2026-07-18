@@ -1,0 +1,7 @@
+diff --git a/packages/support/src/Namespace/Psr4Namespace.php b/packages/support/src/Namespace/Psr4Namespace.php
+index eb7349009bd21a8f22902f116b7df8d464dda0a1..7252331044aad31ac05d4ae6362f79254dbac3f8 100644
+--- a/packages/support/src/Namespace/Psr4Namespace.php
++++ b/packages/support/src/Namespace/Psr4Namespace.php
+@@ -3 +3 @@
+-namespace Tempest\Support\Namespace;
++namespace Tempest\Support\NamespaceUtils;

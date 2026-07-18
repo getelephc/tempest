@@ -1,4 +1,5 @@
 diff --git a/vendor/symfony/uid/Uuid.php b/vendor/symfony/uid/Uuid.php
+index 9bf7c20960e3edabcf1551534de23d48ef5ffd96..63ee3686f7f4679467340672e41d5e2174904368 100644
 --- a/vendor/symfony/uid/Uuid.php
 +++ b/vendor/symfony/uid/Uuid.php
 @@ -66 +66 @@ class Uuid extends AbstractUid

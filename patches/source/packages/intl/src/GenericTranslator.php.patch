@@ -1,0 +1,9 @@
+diff --git a/packages/intl/src/GenericTranslator.php b/packages/intl/src/GenericTranslator.php
+index ccf0df00a577e593890a23e8f8c4d4ef5c0e0e64..abb25f98dae1ccc11ca16117ba8019cd63982db9 100644
+--- a/packages/intl/src/GenericTranslator.php
++++ b/packages/intl/src/GenericTranslator.php
+@@ -13,2 +13,2 @@ public function __construct(
+-        private(set) IntlConfig $config,
+-        private(set) Catalog $catalog,
++        public IntlConfig $config,
++        public Catalog $catalog,

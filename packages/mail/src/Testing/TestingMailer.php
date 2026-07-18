@@ -23,19 +23,19 @@ final class TestingMailer implements Mailer
      *
      * @var array<Email>
      */
-    public array $sent = [];
+    private(set) array $sent = [];
 
     /**
      * List of emails that would have failed to send.
      *
      * @var array<FailedEmail>
      */
-    public array $failed = [];
+    private(set) array $failed = [];
 
     /**
      * If set, the next send call will fail with this exception.
      */
-    public ?Throwable $exception = null;
+    private(set) ?Throwable $exception = null;
 
     public function send(Email $email): void
     {

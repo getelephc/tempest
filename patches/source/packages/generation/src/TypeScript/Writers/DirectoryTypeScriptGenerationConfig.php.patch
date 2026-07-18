@@ -1,0 +1,7 @@
+diff --git a/packages/generation/src/TypeScript/Writers/DirectoryTypeScriptGenerationConfig.php b/packages/generation/src/TypeScript/Writers/DirectoryTypeScriptGenerationConfig.php
+index 98fccddae46d1351bfbb77d18d951e6167ba2f04..27eaa1df9ce00645d58b51ec15dff40d361c9197 100644
+--- a/packages/generation/src/TypeScript/Writers/DirectoryTypeScriptGenerationConfig.php
++++ b/packages/generation/src/TypeScript/Writers/DirectoryTypeScriptGenerationConfig.php
+@@ -15 +15 @@ final class DirectoryTypeScriptGenerationConfig implements TypeScriptGenerationC
+-    private(set) string $writer = DirectoryWriter::class;
++    public string $writer = DirectoryWriter::class;

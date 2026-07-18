@@ -1,0 +1,7 @@
+diff --git a/packages/cache/src/GenericCache.php b/packages/cache/src/GenericCache.php
+index 3750d06fd909e59a240d06bcdb4b073d83d04e86..6e5ac34be39ec0556376e7ee8a99a3260b9db039 100644
+--- a/packages/cache/src/GenericCache.php
++++ b/packages/cache/src/GenericCache.php
+@@ -20 +20 @@ public function __construct(
+-        private(set) CacheItemPoolInterface $adapter,
++        public CacheItemPoolInterface $adapter,

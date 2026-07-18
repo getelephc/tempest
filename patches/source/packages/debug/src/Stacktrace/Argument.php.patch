@@ -1,0 +1,7 @@
+diff --git a/packages/debug/src/Stacktrace/Argument.php b/packages/debug/src/Stacktrace/Argument.php
+index c20ecb5f0d5e422a87acb815484ccac3bfb8a4da..43f1b9c3720f7b1d109341fc4b512c39b938d1fd 100644
+--- a/packages/debug/src/Stacktrace/Argument.php
++++ b/packages/debug/src/Stacktrace/Argument.php
+@@ -31 +31 @@ private static function serializeToCompactString(mixed $value): string
+-            is_object($value) => sprintf('object<%s>', $value::class),
++            is_object($value) => sprintf('object<%s>', get_class($value)),

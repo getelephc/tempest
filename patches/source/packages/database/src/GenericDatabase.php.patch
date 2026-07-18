@@ -1,0 +1,11 @@
+diff --git a/packages/database/src/GenericDatabase.php b/packages/database/src/GenericDatabase.php
+index c0382568e5a21f3f616e08da507aca8ba904789d..2dc46852d9dd8ba58bb6f203f6bd13c485a765f3 100644
+--- a/packages/database/src/GenericDatabase.php
++++ b/packages/database/src/GenericDatabase.php
+@@ -44,3 +44,3 @@ public function __construct(
+-        private(set) readonly Connection $connection,
+-        private(set) readonly TransactionManager $transactionManager,
+-        private(set) readonly SerializerFactory $serializerFactory,
++        public readonly Connection $connection,
++        public readonly TransactionManager $transactionManager,
++        public readonly SerializerFactory $serializerFactory,

@@ -1,0 +1,7 @@
+diff --git a/packages/validation/src/TranslationKey.php b/packages/validation/src/TranslationKey.php
+index 5d49c00ff2ff4c328a8400e4240a52736ca7d378..5c661089b39e2d8b08171284419f80a25e1e833e 100644
+--- a/packages/validation/src/TranslationKey.php
++++ b/packages/validation/src/TranslationKey.php
+@@ -11 +11 @@ public function __construct(
+-        private(set) string $key,
++        public string $key,

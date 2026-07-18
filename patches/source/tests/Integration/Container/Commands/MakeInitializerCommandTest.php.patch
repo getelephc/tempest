@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Container/Commands/MakeInitializerCommandTest.php b/tests/Integration/Container/Commands/MakeInitializerCommandTest.php
+index 70a0a5066f84591e641dc2f41eba2079056e2e46..d566bd771d619224132bbf0d4772e0bc6c6bf750 100644
+--- a/tests/Integration/Container/Commands/MakeInitializerCommandTest.php
++++ b/tests/Integration/Container/Commands/MakeInitializerCommandTest.php
+@@ -9 +9 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

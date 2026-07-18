@@ -1,0 +1,7 @@
+diff --git a/packages/support/src/Namespace/PathCouldNotBeMappedToNamespace.php b/packages/support/src/Namespace/PathCouldNotBeMappedToNamespace.php
+index 32f35f5348cf6e1f23ed0fcab6da9fed9cc66be4..8d55dbd0233873e6b004d6b327199af35e9874f0 100644
+--- a/packages/support/src/Namespace/PathCouldNotBeMappedToNamespace.php
++++ b/packages/support/src/Namespace/PathCouldNotBeMappedToNamespace.php
+@@ -5 +5 @@
+-namespace Tempest\Support\Namespace;
++namespace Tempest\Support\NamespaceUtils;

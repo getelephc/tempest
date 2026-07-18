@@ -1,0 +1,10 @@
+diff --git a/packages/database/src/IsDatabaseModel.php b/packages/database/src/IsDatabaseModel.php
+index f94a1dd774ee624c1539199c139dacf11cfcc3b0..1ff4c166ebac0b2f41c99fa25d522d5bd1291f06 100644
+--- a/packages/database/src/IsDatabaseModel.php
++++ b/packages/database/src/IsDatabaseModel.php
+@@ -328 +328 @@ public function save(): self
+-            query($this::class)
++            query(get_class($this))
+@@ -343 +343 @@ public function save(): self
+-            $id = query($this::class)
++            $id = query(get_class($this))

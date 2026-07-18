@@ -1,0 +1,25 @@
+diff --git a/packages/debug/src/Stacktrace/Frame.php b/packages/debug/src/Stacktrace/Frame.php
+index 8d86f24a1eda093dbbe31a929d84551f79865df8..8751ca641d971709ff00c503e91d8e8557f0da59 100644
+--- a/packages/debug/src/Stacktrace/Frame.php
++++ b/packages/debug/src/Stacktrace/Frame.php
+@@ -20,10 +20,10 @@ public function __construct(
+-        private(set) int $line,
+-        private(set) ?string $class,
+-        private(set) ?string $function,
+-        private(set) ?string $type,
+-        private(set) bool $isVendor,
+-        private(set) ?CodeSnippet $snippet,
+-        private(set) string $absoluteFile,
+-        private(set) string $relativeFile,
+-        private(set) array $arguments,
+-        private(set) int $index,
++        public int $line,
++        public ?string $class,
++        public ?string $function,
++        public ?string $type,
++        public bool $isVendor,
++        public ?CodeSnippet $snippet,
++        public string $absoluteFile,
++        public string $relativeFile,
++        public array $arguments,
++        public int $index,

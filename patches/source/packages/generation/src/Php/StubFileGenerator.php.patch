@@ -1,0 +1,7 @@
+diff --git a/packages/generation/src/Php/StubFileGenerator.php b/packages/generation/src/Php/StubFileGenerator.php
+index 32fac0ba85da60f0f196901fc370d80a8515d5db..1fcf9bb4b1804a851c252a9be36133cc0e11f19b 100644
+--- a/packages/generation/src/Php/StubFileGenerator.php
++++ b/packages/generation/src/Php/StubFileGenerator.php
+@@ -16 +16 @@
+-use function Tempest\Support\Namespace\to_base_class_name;
++use function Tempest\Support\NamespaceUtils\to_base_class_name;

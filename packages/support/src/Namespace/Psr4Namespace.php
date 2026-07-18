@@ -1,6 +1,6 @@
 <?php
 
-namespace Tempest\Support\NamespaceUtils;
+namespace Tempest\Support\Namespace;
 
 final readonly class Psr4Namespace
 {

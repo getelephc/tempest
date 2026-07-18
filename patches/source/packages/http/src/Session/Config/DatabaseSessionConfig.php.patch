@@ -1,0 +1,9 @@
+diff --git a/packages/http/src/Session/Config/DatabaseSessionConfig.php b/packages/http/src/Session/Config/DatabaseSessionConfig.php
+index b2e17ac570833fded67da5c1019a7016206b4c61..ed2adc639564ed8db0f48ab2d686b9dc4aadbd32 100644
+--- a/packages/http/src/Session/Config/DatabaseSessionConfig.php
++++ b/packages/http/src/Session/Config/DatabaseSessionConfig.php
+@@ -20,2 +20,2 @@ public function __construct(
+-        private(set) Duration $expiration,
+-        private(set) CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,
++        public Duration $expiration,
++        public CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,

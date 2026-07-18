@@ -1,0 +1,10 @@
+diff --git a/packages/core/src/functions.php b/packages/core/src/functions.php
+index 30845336c44dd85227a8bebf6cfbe7e021a3de9a..e9e9a608c2cd39e1c1e27230e799e88e6b671c6c 100644
+--- a/packages/core/src/functions.php
++++ b/packages/core/src/functions.php
+@@ -14 +14 @@
+-use Tempest\Support\Namespace\PathCouldNotBeMappedToNamespace;
++use Tempest\Support\NamespaceUtils\PathCouldNotBeMappedToNamespace;
+@@ -18 +18 @@
+-use function Tempest\Support\Namespace\to_psr4_namespace;
++use function Tempest\Support\NamespaceUtils\to_psr4_namespace;

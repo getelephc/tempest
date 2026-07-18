@@ -16,7 +16,7 @@ final class Redirect implements Response
     use IsResponse;
 
     public function __construct(
-        public string $to,
+        private(set) string $to,
         bool $permanent = false,
     ) {
         $this->status = $permanent

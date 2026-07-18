@@ -132,7 +132,7 @@ final class MessageFormatter
             }
         }
 
-        throw new FormattingException('Unknown message type: ' . get_class($message));
+        throw new FormattingException('Unknown message type: ' . $message::class);
     }
 
     private function formatComplexBody(ComplexBody $body): string
@@ -149,7 +149,7 @@ final class MessageFormatter
             return $this->formatMatcher($body);
         }
 
-        throw new FormattingException('Unknown complex body type: ' . get_class($body));
+        throw new FormattingException('Unknown complex body type: ' . $body::class);
     }
 
     private function formatMatcher(Matcher $matcher): string
@@ -260,7 +260,7 @@ final class MessageFormatter
             return $this->formatPattern($placeholder->pattern);
         }
 
-        throw new FormattingException('Unknown placeholder type: ' . get_class($placeholder));
+        throw new FormattingException('Unknown placeholder type: ' . $placeholder::class);
     }
 
     private function evaluateExpression(Expression $expression): FormattedValue

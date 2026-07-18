@@ -41,9 +41,9 @@ final class GenericDatabase implements Database
     }
 
     public function __construct(
-        public readonly Connection $connection,
-        public readonly TransactionManager $transactionManager,
-        public readonly SerializerFactory $serializerFactory,
+        private(set) readonly Connection $connection,
+        private(set) readonly TransactionManager $transactionManager,
+        private(set) readonly SerializerFactory $serializerFactory,
         private readonly EventBus $eventBus,
     ) {}
 

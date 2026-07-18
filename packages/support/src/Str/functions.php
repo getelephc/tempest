@@ -72,7 +72,7 @@ function to_snake_case(Stringable|string $string, Stringable|string $delimiter =
     $string = preg_replace('/\s+/u', $delimiter, $string);
     $string = trim($string, $delimiter);
 
-    return deduplicate($string, $delimiter);
+    return namespace\deduplicate($string, $delimiter);
 }
 
 /**
@@ -86,7 +86,7 @@ function to_words(Stringable|string $string): array
     // Remove one-letter 'words' that consist only of punctuation
     $words = trim(preg_replace("#\s*[(\'|\"|\.|\!|\?|;|,|\\|\/|\-|:|\&|@)]\s*#", ' ', $words));
 
-    return array_values(array_filter(explode(' ', deduplicate($words))));
+    return array_values(array_filter(explode(' ', namespace\deduplicate($words))));
 }
 
 /**
@@ -499,7 +499,7 @@ function replace_every(Stringable|string $haystack, array $replacements): string
     $string = (string) $haystack;
 
     foreach ($replacements as $needle => $replacement) {
-        $string = replace($string, $needle, (string) $replacement);
+        $string = namespace\replace($string, $needle, (string) $replacement);
     }
 
     return $string;
@@ -644,7 +644,7 @@ function reverse(Stringable|string $string): string
  */
 function slice(Stringable|string $string, int $start, ?int $length = null): string
 {
-    $stringLength = length($string);
+    $stringLength = namespace\length($string);
 
     if (0 === $start && (null === $length || $stringLength <= $length)) {
         return $string;
@@ -775,7 +775,7 @@ function align_left(Stringable|string $string, ?int $width, int $padding = 0): s
 function pad_left(string $string, int $totalLength, string $padString = ' '): string
 {
     do {
-        $length = length($string);
+        $length = namespace\length($string);
 
         if ($length >= $totalLength) {
             return $string;
@@ -784,8 +784,8 @@ function pad_left(string $string, int $totalLength, string $padString = ' '): st
         /** @var int<0, max> $remaining */
         $remaining = $totalLength - $length;
 
-        if ($remaining <= length($padString)) {
-            $padString = slice($padString, 0, $remaining);
+        if ($remaining <= namespace\length($padString)) {
+            $padString = namespace\slice($padString, 0, $remaining);
         }
 
         $string = $padString . $string;
@@ -818,7 +818,7 @@ function pad_left(string $string, int $totalLength, string $padString = ' '): st
 function pad_right(string $string, int $totalLength, string $padString = ' '): string
 {
     do {
-        $length = length($string);
+        $length = namespace\length($string);
 
         if ($length >= $totalLength) {
             return $string;
@@ -827,8 +827,8 @@ function pad_right(string $string, int $totalLength, string $padString = ' '): s
         /** @var int<0, max> $remaining */
         $remaining = $totalLength - $length;
 
-        if ($remaining <= length($padString)) {
-            $padString = slice($padString, 0, $remaining);
+        if ($remaining <= namespace\length($padString)) {
+            $padString = namespace\slice($padString, 0, $remaining);
         }
 
         $string .= $padString;

@@ -1,0 +1,16 @@
+diff --git a/packages/view/src/Elements/ElementFactory.php b/packages/view/src/Elements/ElementFactory.php
+index a2b50431d5130b724bf7b2cf8920ccc54a1e500e..1ad599624aaaea4dc775543e51da21577c6651ef 100644
+--- a/packages/view/src/Elements/ElementFactory.php
++++ b/packages/view/src/Elements/ElementFactory.php
+@@ -21 +21 @@ final class ElementFactory
+-    private(set) bool $isHtml = false;
++    public bool $isHtml = false;
+@@ -38 +38 @@ public function withIsHtml(bool $isHtml): self
+-        $clone = $this->clone();
++        $clone = $this->copy();
+@@ -120 +120 @@ public function make(Token $token, Element $parent): ?Element
+-            $this->clone()->make(
++            $this->copy()->make(
+@@ -129 +129 @@ public function make(Token $token, Element $parent): ?Element
+-    private function clone(): self
++    private function copy(): self

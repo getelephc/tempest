@@ -1,0 +1,9 @@
+diff --git a/packages/log/src/Config/NullLogConfig.php b/packages/log/src/Config/NullLogConfig.php
+index 94d82f95805f57762014fea98fdd87d67f1707f4..a677a98f2c5376a828acc908c81ff65fc37c2e78 100644
+--- a/packages/log/src/Config/NullLogConfig.php
++++ b/packages/log/src/Config/NullLogConfig.php
+@@ -18,2 +18,2 @@ public function __construct(
+-        private(set) ?string $prefix = null,
+-        private(set) UnitEnum|string|null $tag = null,
++        public ?string $prefix = null,
++        public UnitEnum|string|null $tag = null,

@@ -28,7 +28,7 @@ final class SessionAuthenticator implements Authenticator
     public function authenticate(Authenticatable $authenticatable): void
     {
         $id = $this->authenticatableResolver->resolveId($authenticatable);
-        $class = get_class($authenticatable);
+        $class = $authenticatable::class;
 
         $this->session->set(
             key: self::AUTHENTICATABLE_CLASS,

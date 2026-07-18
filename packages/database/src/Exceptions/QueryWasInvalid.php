@@ -12,8 +12,8 @@ use Tempest\Database\Query;
 final class QueryWasInvalid extends Exception implements ProvidesContext
 {
     public function __construct(
-        public Query $query,
-        public array $bindings,
+        private(set) Query $query,
+        private(set) array $bindings,
         public readonly PDOException $pdoException,
     ) {
         $message = $this->pdoException->getMessage();

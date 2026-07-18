@@ -19,7 +19,7 @@ final class Path implements StringInterface
 
     public function __construct(Stringable|string ...$paths)
     {
-        $this->value = normalize(...$paths);
+        $this->value = namespace\normalize(...$paths);
     }
 
     protected function createOrModify(Stringable|string $string): self
@@ -84,7 +84,7 @@ final class Path implements StringInterface
      */
     public function glob(string $pattern): ImmutableArray
     {
-        $paths = glob(normalize($this->value, $pattern));
+        $paths = glob(namespace\normalize($this->value, $pattern));
 
         if ($paths === false) {
             return new ImmutableArray();

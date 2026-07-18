@@ -107,7 +107,7 @@ if (class_exists(ConsoleCommand::class)) {
             }
 
             if (! is_string($class)) {
-                $class = get_class($class);
+                $class = $class::class;
             }
 
             if ($key === $class) {

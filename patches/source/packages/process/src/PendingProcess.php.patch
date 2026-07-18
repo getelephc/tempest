@@ -1,0 +1,23 @@
+diff --git a/packages/process/src/PendingProcess.php b/packages/process/src/PendingProcess.php
+index 4fd6a2e11840ff33ace0e0840140b70fc4294398..126218a0196fe88d4574de018038aac587ff06ca 100644
+--- a/packages/process/src/PendingProcess.php
++++ b/packages/process/src/PendingProcess.php
+@@ -24,9 +24,9 @@ public function __construct(
+-        private(set) array|string $command = [],
+-        private(set) ?Duration $timeout = null,
+-        private(set) ?Duration $idleTimeout = null,
+-        private(set) ?string $path = null,
+-        private(set) ?string $input = null,
+-        private(set) bool $quietly = false,
+-        private(set) bool $tty = false,
+-        private(set) array $environment = [],
+-        private(set) array $options = [],
++        public array|string $command = [],
++        public ?Duration $timeout = null,
++        public ?Duration $idleTimeout = null,
++        public ?string $path = null,
++        public ?string $input = null,
++        public bool $quietly = false,
++        public bool $tty = false,
++        public array $environment = [],
++        public array $options = [],

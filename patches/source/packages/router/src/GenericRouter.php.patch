@@ -1,0 +1,7 @@
+diff --git a/packages/router/src/GenericRouter.php b/packages/router/src/GenericRouter.php
+index 6bedfe0e0e82119a9cfc1df1628e8e4d8746a491..5659c8f454d6cb784162caddd4cb206166e42b06 100644
+--- a/packages/router/src/GenericRouter.php
++++ b/packages/router/src/GenericRouter.php
+@@ -29 +29 @@ public function dispatch(Request|PsrRequest $request): Response
+-            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->do();
++            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->execute();

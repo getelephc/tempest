@@ -1,0 +1,9 @@
+diff --git a/packages/router/src/Exceptions/EnumRouteValueWasInvalid.php b/packages/router/src/Exceptions/EnumRouteValueWasInvalid.php
+index a83b35ab77114ec6c280bec46a6fb4cea80e26ce..a0b1070662f806484dfe6df70732c6f9425b9d0d 100644
+--- a/packages/router/src/Exceptions/EnumRouteValueWasInvalid.php
++++ b/packages/router/src/Exceptions/EnumRouteValueWasInvalid.php
+@@ -12,2 +12,2 @@ public function __construct(
+-        private(set) readonly MethodReflector $handler,
+-        private(set) readonly ParameterReflector $parameter,
++        public readonly MethodReflector $handler,
++        public readonly ParameterReflector $parameter,

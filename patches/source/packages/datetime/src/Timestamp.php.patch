@@ -1,0 +1,10 @@
+diff --git a/packages/datetime/src/Timestamp.php b/packages/datetime/src/Timestamp.php
+index a49d7b2f4028f9a2dc5b0e08d100e8b604d733d8..c2ac265bc9923263f7b950448b6cb9df7d77ef66 100644
+--- a/packages/datetime/src/Timestamp.php
++++ b/packages/datetime/src/Timestamp.php
+@@ -76 +76 @@ public static function now(): self
+-        return self::resolveFromContainer() ?? self::fromParts(...namespace\system_time());
++        return self::resolveFromContainer() ?? self::fromParts(...system_time());
+@@ -89 +89 @@ public static function monotonic(): self
+-        [$seconds, $nanoseconds] = namespace\high_resolution_time();
++        [$seconds, $nanoseconds] = high_resolution_time();

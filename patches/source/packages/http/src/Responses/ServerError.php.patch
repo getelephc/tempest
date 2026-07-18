@@ -1,0 +1,7 @@
+diff --git a/packages/http/src/Responses/ServerError.php b/packages/http/src/Responses/ServerError.php
+index 024fb4ead44122698588454057225ab8302d8cf9..03fb6fbc32f3332849fcc8ae8f862a46318b1bf1 100644
+--- a/packages/http/src/Responses/ServerError.php
++++ b/packages/http/src/Responses/ServerError.php
+@@ -20 +20 @@ public function __construct(
+-        private(set) ?Exception $exception = null,
++        public ?Exception $exception = null,

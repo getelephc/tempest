@@ -8,6 +8,6 @@ use Attribute;
 final class TranslationKey
 {
     public function __construct(
-        public string $key,
+        private(set) string $key,
     ) {}
 }

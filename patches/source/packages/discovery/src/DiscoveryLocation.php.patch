@@ -1,0 +1,10 @@
+diff --git a/packages/discovery/src/DiscoveryLocation.php b/packages/discovery/src/DiscoveryLocation.php
+index e27e00aab4a11209faa740a5a73f21f70d1c7ce2..8b421fd88231e9c32d35ceab940881421facad9e 100644
+--- a/packages/discovery/src/DiscoveryLocation.php
++++ b/packages/discovery/src/DiscoveryLocation.php
+@@ -8 +8 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;
+@@ -21 +21 @@ public function __construct(
+-        private(set) array $ignore = [],
++        public array $ignore = [],

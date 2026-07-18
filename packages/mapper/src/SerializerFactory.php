@@ -20,9 +20,9 @@ final class SerializerFactory
     /**
      * @var array<string,array{class-string<\Tempest\Mapper\Serializer>,int}[]>
      */
-    public array $serializers = [];
+    private(set) array $serializers = [];
 
-    public Context|UnitEnum|string|null $context = null;
+    private(set) Context|UnitEnum|string|null $context = null;
 
     public function __construct(
         private readonly Container $container,

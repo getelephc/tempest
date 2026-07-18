@@ -1,0 +1,14 @@
+diff --git a/packages/view/src/Exceptions/ViewCompilationFailed.php b/packages/view/src/Exceptions/ViewCompilationFailed.php
+index 2b6e94782b1c8e5941541a7aaa458b6bfa2a2ec0..e838b2a25ef1f56ef0b3ae40f80cf0aae6db446a 100644
+--- a/packages/view/src/Exceptions/ViewCompilationFailed.php
++++ b/packages/view/src/Exceptions/ViewCompilationFailed.php
+@@ -14,2 +14,2 @@ public function __construct(
+-        private(set) readonly string $path,
+-        private(set) readonly string $content,
++        public readonly string $path,
++        public readonly string $content,
+@@ -17,2 +17,2 @@ public function __construct(
+-        private(set) readonly ?string $sourcePath = null,
+-        private(set) readonly ?int $sourceLine = null,
++        public readonly ?string $sourcePath = null,
++        public readonly ?int $sourceLine = null,

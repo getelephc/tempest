@@ -1,0 +1,9 @@
+diff --git a/packages/view/src/Elements/RawConditionalAttribute.php b/packages/view/src/Elements/RawConditionalAttribute.php
+index c31f43195522e848640799331296a3262d052215..195b5e8b96b10abc07dc28d66b8fbdb1bbbfe00e 100644
+--- a/packages/view/src/Elements/RawConditionalAttribute.php
++++ b/packages/view/src/Elements/RawConditionalAttribute.php
+@@ -10,2 +10,2 @@ public function __construct(
+-        private(set) string $name,
+-        private(set) string $value,
++        public string $name,
++        public string $value,

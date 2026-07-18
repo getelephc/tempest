@@ -1,0 +1,13 @@
+diff --git a/packages/idempotency/tests/IdempotentCommandMiddlewareTest.php b/packages/idempotency/tests/IdempotentCommandMiddlewareTest.php
+index 33850d36c8b9892d721986630dabf7d5c265702d..fd46c526908dd8a4086369c6476845de6a97957a 100644
+--- a/packages/idempotency/tests/IdempotentCommandMiddlewareTest.php
++++ b/packages/idempotency/tests/IdempotentCommandMiddlewareTest.php
+@@ -180 +180 @@ public function takes_over_a_pending_record_owned_by_a_dead_process(): void
+-            scope: 'command:' . $command::class,
++            scope: 'command:' . get_class($command),
+@@ -221 +221 @@ public function takes_over_a_pending_record_owned_by_another_host_when_the_heart
+-            scope: 'command:' . $command::class,
++            scope: 'command:' . get_class($command),
+@@ -262 +262 @@ public function does_not_take_over_a_pending_record_owned_by_another_host_when_t
+-            scope: 'command:' . $command::class,
++            scope: 'command:' . get_class($command),

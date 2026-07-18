@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use Tempest\Database\Config\SQLiteConfig;
 use Tempest\Database\Tables\PascalCaseStrategy;
-use Tempest\Support\NamespaceUtils\Psr4Namespace;
+use Tempest\Support\Namespace\Psr4Namespace;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 
 /**

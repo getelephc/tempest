@@ -1,0 +1,10 @@
+diff --git a/packages/container/tests/ContainerTest.php b/packages/container/tests/ContainerTest.php
+index 9a66cc8c225aa2cec79d893d5ee9e6f71a13575f..8eef54f99ad611627a7c658aad524414bd5bdf7a 100644
+--- a/packages/container/tests/ContainerTest.php
++++ b/packages/container/tests/ContainerTest.php
+@@ -397 +397 @@ public function test_call_function_with_parameters(): void
+-            method: fn (SingletonClass $class, string $prefix) => $prefix . $class::class,
++            method: fn (SingletonClass $class, string $prefix) => $prefix . get_class($class),
+@@ -436 +436 @@ public function test_invoke_closure_with_function(): void
+-        $result = Container\invoke(fn (SingletonClass $class) => $class::class);
++        $result = Container\invoke(fn (SingletonClass $class) => get_class($class));

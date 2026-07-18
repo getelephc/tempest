@@ -1,0 +1,11 @@
+diff --git a/packages/http/src/ServerSentMessage.php b/packages/http/src/ServerSentMessage.php
+index e55d94fc16ee4bc69ce3cbfd944cb14d4d77985f..ab0d3b9515e4c8739734d364139b0b7dd57a3a60 100644
+--- a/packages/http/src/ServerSentMessage.php
++++ b/packages/http/src/ServerSentMessage.php
+@@ -25,3 +25,3 @@ public function __construct(
+-        private(set) string $event = 'message',
+-        private(set) ?int $id = null,
+-        private(set) Duration|int|null $retryAfter = null,
++        public string $event = 'message',
++        public ?int $id = null,
++        public Duration|int|null $retryAfter = null,

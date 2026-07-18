@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Database/Commands/MakeModelCommandTest.php b/tests/Integration/Database/Commands/MakeModelCommandTest.php
+index 0f1d4b72b95eba9a9998da48a82906f119526bb0..c53db14c50f802b077e7c0f430c122d98dfc90b7 100644
+--- a/tests/Integration/Database/Commands/MakeModelCommandTest.php
++++ b/tests/Integration/Database/Commands/MakeModelCommandTest.php
+@@ -9 +9 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

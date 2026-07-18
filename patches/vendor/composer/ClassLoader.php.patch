@@ -1,4 +1,5 @@
 diff --git a/vendor/composer/ClassLoader.php b/vendor/composer/ClassLoader.php
+index 7824d8f7eafe8db890975f0fa2dfab31435900da..f4b99ac8e2f14def0e9b55bde4e708aa066aac32 100644
 --- a/vendor/composer/ClassLoader.php
 +++ b/vendor/composer/ClassLoader.php
 @@ -500 +500 @@ class ClassLoader

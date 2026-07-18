@@ -1,0 +1,16 @@
+diff --git a/packages/datetime/src/DateTimeConvenienceMethods.php b/packages/datetime/src/DateTimeConvenienceMethods.php
+index 3fc235ac6ab3e79871ee1554ff950cdf428f6de9..8dd8ed7eceda86b28e5a977936b6ffb633651eee 100644
+--- a/packages/datetime/src/DateTimeConvenienceMethods.php
++++ b/packages/datetime/src/DateTimeConvenienceMethods.php
+@@ -336 +336 @@ public function isLeapYear(): bool
+-        return namespace\is_leap_year($this->getYear());
++        return is_leap_year($this->getYear());
+@@ -934 +934 @@ public function format(FormatPattern|string|null $pattern = null, ?Timezone $tim
+-        return namespace\create_intl_date_formatter(
++        return create_intl_date_formatter(
+@@ -971 +971 @@ public function toRfc3339(?SecondsStyle $secondsStyle = null, bool $useZ = false
+-        return namespace\format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ, $this->getTimezone());
++        return format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ, $this->getTimezone());
+@@ -1009 +1009 @@ public function toString(
+-        return namespace\create_intl_date_formatter(
++        return create_intl_date_formatter(

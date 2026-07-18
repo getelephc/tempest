@@ -1,0 +1,14 @@
+diff --git a/packages/support/src/Math/constants.php b/packages/support/src/Math/constants.php
+index 3c6f7b4037d9fbee8b0006aad0d3e1d33cfe1d03..8efe229ff2eaf7dd951666aad7baebdb8915365b 100644
+--- a/packages/support/src/Math/constants.php
++++ b/packages/support/src/Math/constants.php
+@@ -7,3 +6,0 @@
+-use const INF;
+-use const NAN as PHP_NAN;
+-
+@@ -15 +12 @@
+-const INFINITY = INF;
++define('Tempest\\Support\\Math\\INFINITY', INF);
+@@ -22 +19 @@
+-const NAN = PHP_NAN;
++define('Tempest\\Support\\Math\\NAN', NAN);

@@ -1,0 +1,7 @@
+diff --git a/packages/console/src/Actions/ExecuteConsoleCommand.php b/packages/console/src/Actions/ExecuteConsoleCommand.php
+index 7a80dcb3bec9bf3ecf72a959922bfc13130f88b0..b58228ceacc13efea12db25e0d8f730a3922324c 100644
+--- a/packages/console/src/Actions/ExecuteConsoleCommand.php
++++ b/packages/console/src/Actions/ExecuteConsoleCommand.php
+@@ -73 +73 @@ private function getCallable(array $commandMiddleware): ConsoleMiddlewareCallabl
+-            ->clone()
++            ->copy()

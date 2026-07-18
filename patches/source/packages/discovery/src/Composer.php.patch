@@ -1,0 +1,7 @@
+diff --git a/packages/discovery/src/Composer.php b/packages/discovery/src/Composer.php
+index 8b7598ddba65e24abeaa454f07567167d3e5eb8c..852f8e4185dfffa0af05b8ba12d7618248b522cc 100644
+--- a/packages/discovery/src/Composer.php
++++ b/packages/discovery/src/Composer.php
+@@ -11 +11 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

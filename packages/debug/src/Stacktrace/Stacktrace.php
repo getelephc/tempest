@@ -30,12 +30,12 @@ final class Stacktrace
      * @param array<int,Frame> $frames
      */
     public function __construct(
-        public string $message,
-        public string $exceptionClass,
-        public array $frames,
-        public int $line,
-        public string $absoluteFile,
-        public string $relativeFile,
+        private(set) string $message,
+        private(set) string $exceptionClass,
+        private(set) array $frames,
+        private(set) int $line,
+        private(set) string $absoluteFile,
+        private(set) string $relativeFile,
     ) {}
 
     public static function fromThrowable(Throwable $throwable, int $contextLines = 5, ?string $rootPath = null): self
@@ -75,7 +75,7 @@ final class Stacktrace
 
         return new self(
             message: $throwable->getMessage(),
-            exceptionClass: get_class($throwable),
+            exceptionClass: $throwable::class,
             frames: $frames,
             line: $throwable->getLine(),
             absoluteFile: $exceptionFile,

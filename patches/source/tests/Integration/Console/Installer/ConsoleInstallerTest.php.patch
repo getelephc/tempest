@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Console/Installer/ConsoleInstallerTest.php b/tests/Integration/Console/Installer/ConsoleInstallerTest.php
+index 36ab895daaa1e8be081da9b882ae630bb2dc37af..8a754a636ac4e515921fcf1563e180d2aac7f484 100644
+--- a/tests/Integration/Console/Installer/ConsoleInstallerTest.php
++++ b/tests/Integration/Console/Installer/ConsoleInstallerTest.php
+@@ -7 +7 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

@@ -1,0 +1,7 @@
+diff --git a/packages/database/src/Connection/PDOConnection.php b/packages/database/src/Connection/PDOConnection.php
+index fed6d12d42ed61ddf1144a695521b795a33dab5b..7ecf9606a0ab29c59b0f4e07e4bb34aead206fda 100644
+--- a/packages/database/src/Connection/PDOConnection.php
++++ b/packages/database/src/Connection/PDOConnection.php
+@@ -18 +18 @@ public function __construct(
+-        private(set) readonly DatabaseConfig $config,
++        public readonly DatabaseConfig $config,

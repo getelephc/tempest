@@ -70,9 +70,9 @@ final readonly class ConfigShowCommand
             $config = require $configPath;
             $configPath = realpath($configPath);
 
-            if ($filter === null || str_contains($configPath, $filter) || str_contains(get_class($config), $filter)) {
+            if ($filter === null || str_contains($configPath, $filter) || str_contains($config::class, $filter)) {
                 $configs[$configPath] = $config;
-                $uniqueMap[get_class($config)] = $configPath;
+                $uniqueMap[$config::class] = $configPath;
             }
         }
 
@@ -165,7 +165,7 @@ final readonly class ConfigShowCommand
 
         if (is_object($value)) {
             $result = [
-                '@type' => get_class($value),
+                '@type' => $value::class,
             ];
 
             $reflector = new ClassReflector($value);

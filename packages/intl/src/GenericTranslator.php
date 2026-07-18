@@ -10,8 +10,8 @@ use Throwable;
 final readonly class GenericTranslator implements Translator
 {
     public function __construct(
-        public IntlConfig $config,
-        public Catalog $catalog,
+        private(set) IntlConfig $config,
+        private(set) Catalog $catalog,
         private MessageFormatter $formatter,
         private ?EventBus $eventBus = null,
     ) {}

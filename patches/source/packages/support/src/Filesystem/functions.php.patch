@@ -1,0 +1,205 @@
+diff --git a/packages/support/src/Filesystem/functions.php b/packages/support/src/Filesystem/functions.php
+index f69c05d41804e2edabaa49b626460bf533ddcac5..edb5bbf535c20daad27bb645e0fc36c79d18b691 100644
+--- a/packages/support/src/Filesystem/functions.php
++++ b/packages/support/src/Filesystem/functions.php
+@@ -53 +53 @@ function copy_file(string $source, string $destination, bool $overwrite = false)
+-    $destination_exists = namespace\is_file($destination);
++    $destination_exists = is_file($destination);
+@@ -59 +59 @@ function copy_file(string $source, string $destination, bool $overwrite = false)
+-    if (namespace\is_directory($source)) {
++    if (is_directory($source)) {
+@@ -63 +63 @@ function copy_file(string $source, string $destination, bool $overwrite = false)
+-    if (! namespace\is_file($source)) {
++    if (! is_file($source)) {
+@@ -67 +67 @@ function copy_file(string $source, string $destination, bool $overwrite = false)
+-    if (! namespace\is_readable($source)) {
++    if (! is_readable($source)) {
+@@ -71 +71 @@ function copy_file(string $source, string $destination, bool $overwrite = false)
+-    namespace\create_directory_for_file($destination);
++    create_directory_for_file($destination);
+@@ -87 +87 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
+-    if (! namespace\exists($source)) {
++    if (! exists($source)) {
+@@ -91 +91 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
+-    if (! namespace\is_directory($source)) {
++    if (! is_directory($source)) {
+@@ -95 +95 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
+-    if (! namespace\is_readable($source)) {
++    if (! is_readable($source)) {
+@@ -99 +99 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
+-    if (! $overwrite && namespace\is_directory($destination)) {
++    if (! $overwrite && is_directory($destination)) {
+@@ -103 +103 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
+-    namespace\create_directory($destination);
++    create_directory($destination);
+@@ -105,2 +105,2 @@ function copy_directory(string $source, string $destination, bool $overwrite = f
+-    foreach (namespace\list_directory($source) as $node) {
+-        namespace\copy(
++    foreach (list_directory($source) as $node) {
++        copy(
+@@ -119,2 +119,2 @@ function copy(string $source, string $destination, bool $overwrite = false): voi
+-    if (namespace\is_directory($source)) {
+-        namespace\copy_directory($source, $destination, $overwrite);
++    if (is_directory($source)) {
++        copy_directory($source, $destination, $overwrite);
+@@ -122 +122 @@ function copy(string $source, string $destination, bool $overwrite = false): voi
+-        namespace\copy_file($source, $destination, $overwrite);
++        copy_file($source, $destination, $overwrite);
+@@ -136 +136 @@ function write_json(string $filename, mixed $content, bool $pretty = true): void
+-    namespace\write_file($filename, $json);
++    write_file($filename, $json);
+@@ -144 +144 @@ function write_file(string $filename, mixed $content, int $flags = 0): void
+-    namespace\create_directory_for_file($filename);
++    create_directory_for_file($filename);
+@@ -162 +162 @@ function read_json(string $filename, bool $associative = true): array
+-    return Json\decode(namespace\read_file($filename), $associative);
++    return Json\decode(read_file($filename), $associative);
+@@ -170 +170 @@ function read_file(string $filename): string
+-    if (! namespace\exists($filename)) {
++    if (! exists($filename)) {
+@@ -174 +174 @@ function read_file(string $filename): string
+-    if (! namespace\is_readable($filename)) {
++    if (! is_readable($filename)) {
+@@ -196 +196 @@ function read_locked_file(string $filename, LockType $type = LockType::SHARED):
+-    if (! namespace\exists($filename)) {
++    if (! exists($filename)) {
+@@ -200 +200 @@ function read_locked_file(string $filename, LockType $type = LockType::SHARED):
+-    if (! namespace\is_readable($filename)) {
++    if (! is_readable($filename)) {
+@@ -244,2 +244,2 @@ function ensure_directory_exists(string $directory): void
+-    if (! namespace\exists($directory)) {
+-        namespace\create_directory($directory);
++    if (! exists($directory)) {
++        create_directory($directory);
+@@ -254 +254 @@ function create_directory(string $directory, int $permissions = 0o777): void
+-    if (namespace\is_directory($directory)) {
++    if (is_directory($directory)) {
+@@ -260 +260 @@ function create_directory(string $directory, int $permissions = 0o777): void
+-    if ($result === false && ! namespace\is_directory($directory)) { // @phpstan-ignore booleanNot.alwaysTrue
++    if ($result === false && ! is_directory($directory)) { // @phpstan-ignore booleanNot.alwaysTrue
+@@ -279,2 +279,2 @@ function create_temporary_directory(?string $prefix = null): string
+-    namespace\ensure_directory_exists($uniqueDirectory);
+-    namespace\ensure_directory_empty($uniqueDirectory);
++    ensure_directory_exists($uniqueDirectory);
++    ensure_directory_empty($uniqueDirectory);
+@@ -292,2 +292,2 @@ function create_directory_for_file(string $filename, int $permissions = 0o777):
+-    $directory = namespace\get_directory($filename);
+-    namespace\create_directory($directory, $permissions);
++    $directory = get_directory($filename);
++    create_directory($directory, $permissions);
+@@ -312 +312 @@ function create_file(string $filename, ?int $time = null, ?int $accessTime = nul
+-    namespace\create_directory_for_file($filename);
++    create_directory_for_file($filename);
+@@ -316 +316 @@ function create_file(string $filename, ?int $time = null, ?int $accessTime = nul
+-    if (false === $result && ! namespace\is_file($filename)) {
++    if (false === $result && ! is_file($filename)) {
+@@ -338 +338 @@ function delete(string $path, bool $recursive = true): void
+-    if (! namespace\exists($path)) {
++    if (! exists($path)) {
+@@ -342,4 +342,4 @@ function delete(string $path, bool $recursive = true): void
+-    if (namespace\is_file($path) || namespace\is_symbolic_link($path)) {
+-        namespace\delete_file($path);
+-    } elseif (namespace\is_directory($path)) {
+-        namespace\delete_directory($path, $recursive);
++    if (is_file($path) || is_symbolic_link($path)) {
++        delete_file($path);
++    } elseif (is_directory($path)) {
++        delete_directory($path, $recursive);
+@@ -354 +354 @@ function delete_file(string $file): void
+-    if (namespace\is_symbolic_link($file)) {
++    if (is_symbolic_link($file)) {
+@@ -357 +357 @@ function delete_file(string $file): void
+-        if ($result === false && namespace\is_symbolic_link($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
++        if ($result === false && is_symbolic_link($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
+@@ -368 +368 @@ function delete_file(string $file): void
+-    if (! namespace\exists($file)) {
++    if (! exists($file)) {
+@@ -372 +372 @@ function delete_file(string $file): void
+-    if (! namespace\is_file($file)) {
++    if (! is_file($file)) {
+@@ -378 +378 @@ function delete_file(string $file): void
+-    if ($result === false && namespace\is_file($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
++    if ($result === false && is_file($file)) { // @phpstan-ignore booleanAnd.rightAlwaysTrue
+@@ -392 +392 @@ function get_permissions(string $path): int
+-    if (! namespace\exists($path)) {
++    if (! exists($path)) {
+@@ -414 +414 @@ function ensure_directory_empty(string $directory): void
+-    if (namespace\exists($directory) && ! namespace\is_directory($directory)) {
++    if (exists($directory) && ! is_directory($directory)) {
+@@ -418,2 +418,2 @@ function ensure_directory_empty(string $directory): void
+-    if (! namespace\is_directory($directory)) {
+-        namespace\create_directory($directory);
++    if (! is_directory($directory)) {
++        create_directory($directory);
+@@ -424 +424 @@ function ensure_directory_empty(string $directory): void
+-        ? namespace\get_permissions($directory)
++        ? get_permissions($directory)
+@@ -427,2 +427,2 @@ function ensure_directory_empty(string $directory): void
+-    namespace\delete_directory($directory, recursive: true);
+-    namespace\create_directory($directory, $permissions);
++    delete_directory($directory, recursive: true);
++    create_directory($directory, $permissions);
+@@ -436 +436 @@ function delete_directory(string $directory, bool $recursive = true): void
+-    if ($recursive && ! namespace\is_symbolic_link($directory)) {
++    if ($recursive && ! is_symbolic_link($directory)) {
+@@ -439 +439 @@ function delete_directory(string $directory, bool $recursive = true): void
+-            predicate: static fn (string $node): bool => namespace\is_symbolic_link($node),
++            predicate: static fn (string $node): bool => is_symbolic_link($node),
+@@ -443 +443 @@ function delete_directory(string $directory, bool $recursive = true): void
+-            namespace\delete_file($symbolicLink);
++            delete_file($symbolicLink);
+@@ -447,2 +447,2 @@ function delete_directory(string $directory, bool $recursive = true): void
+-            if (! namespace\is_directory($node)) {
+-                namespace\delete_file($node);
++            if (! is_directory($node)) {
++                delete_file($node);
+@@ -450 +450 @@ function delete_directory(string $directory, bool $recursive = true): void
+-                namespace\delete_directory($node, recursive: true);
++                delete_directory($node, recursive: true);
+@@ -454 +454 @@ function delete_directory(string $directory, bool $recursive = true): void
+-        if (! namespace\exists($directory)) {
++        if (! exists($directory)) {
+@@ -458 +458 @@ function delete_directory(string $directory, bool $recursive = true): void
+-        if (! namespace\is_directory($directory)) {
++        if (! is_directory($directory)) {
+@@ -465 +465 @@ function delete_directory(string $directory, bool $recursive = true): void
+-    if (false === $result && namespace\is_directory($directory)) {
++    if (false === $result && is_directory($directory)) {
+@@ -483 +483 @@ function rename(string $source, string $name, bool $overwrite = false): void
+-    namespace\move(
++    move(
+@@ -485 +485 @@ function rename(string $source, string $name, bool $overwrite = false): void
+-        destination: namespace\get_directory($source) . '/' . $name,
++        destination: get_directory($source) . '/' . $name,
+@@ -495 +495 @@ function move(string $source, string $destination, bool $overwrite = false): voi
+-    if (! namespace\exists($source)) {
++    if (! exists($source)) {
+@@ -499 +499 @@ function move(string $source, string $destination, bool $overwrite = false): voi
+-    if (! namespace\is_readable($source)) {
++    if (! is_readable($source)) {
+@@ -503 +503 @@ function move(string $source, string $destination, bool $overwrite = false): voi
+-    if (namespace\exists($destination) && $overwrite === false) {
++    if (exists($destination) && $overwrite === false) {
+@@ -507,2 +507,2 @@ function move(string $source, string $destination, bool $overwrite = false): voi
+-    if (namespace\is_directory($destination)) {
+-        namespace\ensure_directory_empty($destination);
++    if (is_directory($destination)) {
++        ensure_directory_empty($destination);
+@@ -510 +510 @@ function move(string $source, string $destination, bool $overwrite = false): voi
+-        namespace\create_directory_for_file($destination);
++        create_directory_for_file($destination);
+@@ -581 +581 @@ function list_directory(string $directory): array
+-    if (! namespace\exists($directory)) {
++    if (! exists($directory)) {
+@@ -585 +585 @@ function list_directory(string $directory): array
+-    if (! namespace\is_directory($directory)) {
++    if (! is_directory($directory)) {
+@@ -589 +589 @@ function list_directory(string $directory): array
+-    if (! namespace\is_readable($directory)) {
++    if (! is_readable($directory)) {
+@@ -605 +605 @@ function read_symbolic_link(string $path): string
+-    if (! namespace\exists($path)) {
++    if (! exists($path)) {
+@@ -609 +609 @@ function read_symbolic_link(string $path): string
+-    if (! namespace\is_symbolic_link($path)) {
++    if (! is_symbolic_link($path)) {

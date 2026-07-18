@@ -25,7 +25,7 @@ final class TestingOAuthClient implements OAuthClient
 {
     private ?string $state = null;
 
-    public ?string $baseUrl = null;
+    private(set) ?string $baseUrl = null;
 
     public string $clientId {
         get => $this->clientId ?? $this->config->clientId;
@@ -58,8 +58,8 @@ final class TestingOAuthClient implements OAuthClient
     private array $users = [];
 
     public function __construct(
-        public OAuthUser $user,
-        public readonly OAuthConfig $config,
+        private(set) OAuthUser $user,
+        private(set) readonly OAuthConfig $config,
         private readonly Authenticator $authenticator,
         private readonly UriGenerator $uri,
     ) {}

@@ -1,0 +1,7 @@
+diff --git a/packages/console/src/Components/Renderers/SpinnerRenderer.php b/packages/console/src/Components/Renderers/SpinnerRenderer.php
+index 6e147ee42c6d830399ad98453d18e50face6232f..b68d1433085ead9719165b77633a2f2b4652b642 100644
+--- a/packages/console/src/Components/Renderers/SpinnerRenderer.php
++++ b/packages/console/src/Components/Renderers/SpinnerRenderer.php
+@@ -46 +46 @@ final class SpinnerRenderer
+-    private(set) int $speed = 80_000;
++    public int $speed = 80_000;

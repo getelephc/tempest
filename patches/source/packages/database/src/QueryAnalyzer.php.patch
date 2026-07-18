@@ -1,0 +1,7 @@
+diff --git a/packages/database/src/QueryAnalyzer.php b/packages/database/src/QueryAnalyzer.php
+index c8e5ba7b4eab492a085be0876d64490607054b99..3075ca59419add54b6ac079046bfcf8e924d8803 100644
+--- a/packages/database/src/QueryAnalyzer.php
++++ b/packages/database/src/QueryAnalyzer.php
+@@ -19 +19 @@ public function __construct(
+-        private(set) readonly QueryExecuted $query,
++        public readonly QueryExecuted $query,

@@ -147,7 +147,7 @@ final readonly class IdempotentCommandMiddleware implements CommandBusMiddleware
         $instance = new ClassReflector($command)->getAttribute(Idempotent::class);
 
         if ($instance === null) {
-            $instance = ($this->commandBusConfig->handlers[get_class($command)] ?? null)
+            $instance = ($this->commandBusConfig->handlers[$command::class] ?? null)
                 ?->handler
                 ->getAttribute(Idempotent::class);
         }
@@ -181,6 +181,6 @@ final readonly class IdempotentCommandMiddleware implements CommandBusMiddleware
 
     private function resolveScope(object $command): string
     {
-        return 'command:' . get_class($command);
+        return 'command:' . $command::class;
     }
 }

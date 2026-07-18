@@ -1,0 +1,18 @@
+diff --git a/src/Tempest/Framework/Testing/ModelFactory.php b/src/Tempest/Framework/Testing/ModelFactory.php
+index 3d7e87f55815cfaa7117c788f13ad4a3fe03315a..b10eb3a8745f5d25f876bc4b124045091e24e246 100644
+--- a/src/Tempest/Framework/Testing/ModelFactory.php
++++ b/src/Tempest/Framework/Testing/ModelFactory.php
+@@ -45,6 +45,7 @@ public function with(mixed ...$fields): self
+-        return clone($this, [
+-            'fields' => [
+-                ...$this->fields,
+-                ...$fields,
+-            ],
+-        ]);
++        $clone = clone $this;
++        $clone->fields = [
++            ...$this->fields,
++            ...$fields,
++        ];
++
++        return $clone;

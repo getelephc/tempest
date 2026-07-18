@@ -1,0 +1,21 @@
+diff --git a/packages/log/src/Config/SysLogConfig.php b/packages/log/src/Config/SysLogConfig.php
+index ebb98882e87e6c4e0126da620f2d53b61c995f77..ff9f0a391d1c6f09fbeee5634834d3cbb0cf1a62 100644
+--- a/packages/log/src/Config/SysLogConfig.php
++++ b/packages/log/src/Config/SysLogConfig.php
+@@ -39,8 +39,8 @@ public function __construct(
+-        private(set) string $identity,
+-        private(set) int $facility = LOG_USER,
+-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
+-        private(set) bool $bubble = true,
+-        private(set) int $flags = LOG_PID,
+-        private(set) array $channels = [],
+-        private(set) ?string $prefix = null,
+-        private(set) UnitEnum|string|null $tag = null,
++        public string $identity,
++        public int $facility = LOG_USER,
++        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
++        public bool $bubble = true,
++        public int $flags = LOG_PID,
++        public array $channels = [],
++        public ?string $prefix = null,
++        public UnitEnum|string|null $tag = null,

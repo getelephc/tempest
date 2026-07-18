@@ -1,0 +1,32 @@
+diff --git a/packages/support/src/Str/functions.php b/packages/support/src/Str/functions.php
+index 5a5a1188a4560d7469236a9d7e456629442082ff..e8961292daf41a47ce0cd2d9609265556b3c101f 100644
+--- a/packages/support/src/Str/functions.php
++++ b/packages/support/src/Str/functions.php
+@@ -75 +75 @@ function to_snake_case(Stringable|string $string, Stringable|string $delimiter =
+-    return namespace\deduplicate($string, $delimiter);
++    return deduplicate($string, $delimiter);
+@@ -89 +89 @@ function to_words(Stringable|string $string): array
+-    return array_values(array_filter(explode(' ', namespace\deduplicate($words))));
++    return array_values(array_filter(explode(' ', deduplicate($words))));
+@@ -502 +502 @@ function replace_every(Stringable|string $haystack, array $replacements): string
+-        $string = namespace\replace($string, $needle, (string) $replacement);
++        $string = replace($string, $needle, (string) $replacement);
+@@ -647 +647 @@ function slice(Stringable|string $string, int $start, ?int $length = null): stri
+-    $stringLength = namespace\length($string);
++    $stringLength = length($string);
+@@ -778 +778 @@ function pad_left(string $string, int $totalLength, string $padString = ' '): st
+-        $length = namespace\length($string);
++        $length = length($string);
+@@ -787,2 +787,2 @@ function pad_left(string $string, int $totalLength, string $padString = ' '): st
+-        if ($remaining <= namespace\length($padString)) {
+-            $padString = namespace\slice($padString, 0, $remaining);
++        if ($remaining <= length($padString)) {
++            $padString = slice($padString, 0, $remaining);
+@@ -821 +821 @@ function pad_right(string $string, int $totalLength, string $padString = ' '): s
+-        $length = namespace\length($string);
++        $length = length($string);
+@@ -830,2 +830,2 @@ function pad_right(string $string, int $totalLength, string $padString = ' '): s
+-        if ($remaining <= namespace\length($padString)) {
+-            $padString = namespace\slice($padString, 0, $remaining);
++        if ($remaining <= length($padString)) {
++            $padString = slice($padString, 0, $remaining);

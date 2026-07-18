@@ -12,7 +12,7 @@ use Tempest\Generation\TypeScript\TypeScriptGenerationConfig;
  */
 final class NamespacedTypeScriptGenerationConfig implements TypeScriptGenerationConfig
 {
-    public string $writer = NamespacedFileWriter::class;
+    private(set) string $writer = NamespacedFileWriter::class;
 
     /** @var array<class-string> */
     public array $sources = [];

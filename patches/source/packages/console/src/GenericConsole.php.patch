@@ -1,0 +1,7 @@
+diff --git a/packages/console/src/GenericConsole.php b/packages/console/src/GenericConsole.php
+index ff416ecc706c424cff8ed35d6095ae38b2f185a7..10b72cde75710f019f0d6bf2579af6282fa614df 100644
+--- a/packages/console/src/GenericConsole.php
++++ b/packages/console/src/GenericConsole.php
+@@ -41 +41 @@ final class GenericConsole implements Console
+-    private(set) bool $isForced = false;
++    public bool $isForced = false;

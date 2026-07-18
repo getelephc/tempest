@@ -142,7 +142,7 @@ enum Currency: string
     case TMT = 'TMT';
     case TND = 'TND';
     case TOP = 'TOP';
-    case TRY_CURRENCY = 'TRY';
+    case TRY = 'TRY';
     case TTD = 'TTD';
     case TWD = 'TWD';
     case TZS = 'TZS';

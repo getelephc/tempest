@@ -64,7 +64,7 @@ final class UserCacheInsightsProvider implements InsightsProvider
     private function getCacheName(Cache $cache): string
     {
         if (! $cache instanceof GenericCache) {
-            return get_class($cache);
+            return $cache::class;
         }
 
         if ($cache->tag instanceof UnitEnum) {

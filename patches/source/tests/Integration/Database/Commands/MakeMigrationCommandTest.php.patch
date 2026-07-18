@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Database/Commands/MakeMigrationCommandTest.php b/tests/Integration/Database/Commands/MakeMigrationCommandTest.php
+index 2b6ae5c785aa3b76ab51b0b8c861c0dbe9b18311..40ad09b2e358a22827f396dd62f128e26e2cb5e8 100644
+--- a/tests/Integration/Database/Commands/MakeMigrationCommandTest.php
++++ b/tests/Integration/Database/Commands/MakeMigrationCommandTest.php
+@@ -13 +13 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

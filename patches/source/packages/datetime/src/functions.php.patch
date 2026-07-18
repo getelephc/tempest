@@ -1,0 +1,13 @@
+diff --git a/packages/datetime/src/functions.php b/packages/datetime/src/functions.php
+index 206d68aad5dfcb8863a3a93c7cbcd863b5aa2be5..24aa05bc26b4f325d9b10d702df1000bb85a423f 100644
+--- a/packages/datetime/src/functions.php
++++ b/packages/datetime/src/functions.php
+@@ -67 +67 @@ function format_rfc3339(Timestamp $timestamp, ?SecondsStyle $secondsStyle = null
+-    $formatter = namespace\create_intl_date_formatter(
++    $formatter = create_intl_date_formatter(
+@@ -116 +116 @@ function create_intl_date_formatter(
+-        timezone: namespace\to_intl_timezone($timezone),
++        timezone: to_intl_timezone($timezone),
+@@ -195 +195 @@ function intl_parse(
+-    $formatter = namespace\create_intl_date_formatter($dateStyle, $timeStyle, $pattern, $timezone, $locale);
++    $formatter = create_intl_date_formatter($dateStyle, $timeStyle, $pattern, $timezone, $locale);

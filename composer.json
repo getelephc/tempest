@@ -250,6 +250,10 @@
         "packages/console/bin/tempest-complete"
     ],
     "config": {
+        "platform": {
+            "php": "8.5.0"
+        },
+        "platform-check": false,
         "allow-plugins": {
             "carthage-software/mago": true,
             "php-http/discovery": true

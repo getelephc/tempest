@@ -1,0 +1,7 @@
+diff --git a/packages/mapper/src/Serializers/ArrayOfObjectsSerializer.php b/packages/mapper/src/Serializers/ArrayOfObjectsSerializer.php
+index 1f5c249f1dcf53428361e07a9bf333cc1c84f1f1..d42a02acfbe6c0db5568af03600070a7c65b7aa2 100644
+--- a/packages/mapper/src/Serializers/ArrayOfObjectsSerializer.php
++++ b/packages/mapper/src/Serializers/ArrayOfObjectsSerializer.php
+@@ -38 +38 @@ public function serialize(mixed $input): array
+-            $values[$key] = map($object)->with(ObjectToArrayMapper::class)->do();
++            $values[$key] = map($object)->with(ObjectToArrayMapper::class)->execute();

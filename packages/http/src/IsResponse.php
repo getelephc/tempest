@@ -17,12 +17,12 @@ use function Tempest\Container\get;
 /** @phpstan-require-implements \Tempest\Http\Response */
 trait IsResponse
 {
-    public Status $status = Status::OK;
+    private(set) Status $status = Status::OK;
 
-    public View|string|array|Generator|JsonSerializable|null $body = null;
+    private(set) View|string|array|Generator|JsonSerializable|null $body = null;
 
     /** @var \Tempest\Http\Header[] */
-    public array $headers = [];
+    private(set) array $headers = [];
 
     public CookieManager $cookieManager {
         get => get(CookieManager::class);
@@ -32,7 +32,7 @@ trait IsResponse
         get => get(Session::class);
     }
 
-    public ?View $view = null;
+    private(set) ?View $view = null;
 
     public function getHeader(string $name): ?Header
     {

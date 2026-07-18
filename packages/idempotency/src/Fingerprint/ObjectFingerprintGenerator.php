@@ -21,7 +21,7 @@ final class ObjectFingerprintGenerator implements CommandFingerprintGenerator
     private function normalize(mixed $value, array &$seen): mixed
     {
         if ($value instanceof UnitEnum) {
-            return get_class($value) . '::' . $value->name;
+            return $value::class . '::' . $value->name;
         }
 
         if (is_array($value)) {
@@ -50,7 +50,7 @@ final class ObjectFingerprintGenerator implements CommandFingerprintGenerator
             }
 
             $seen[$objectId] = true;
-            $normalized = ['@class' => get_class($value)];
+            $normalized = ['@class' => $value::class];
 
             foreach ((array) $value as $property => $item) {
                 $normalized[$this->normalizePropertyName($property)] = $this->normalize($item, $seen);

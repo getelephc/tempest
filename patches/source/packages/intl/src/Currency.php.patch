@@ -1,0 +1,7 @@
+diff --git a/packages/intl/src/Currency.php b/packages/intl/src/Currency.php
+index 050b1e099e9a5cad809715832ee02c3eb8edbda8..1990c25150d9524a5ae661eb121e041ab5ad360c 100644
+--- a/packages/intl/src/Currency.php
++++ b/packages/intl/src/Currency.php
+@@ -145 +145 @@ enum Currency: string
+-    case TRY = 'TRY';
++    case TRY_CURRENCY = 'TRY';

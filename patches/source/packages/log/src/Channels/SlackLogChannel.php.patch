@@ -1,0 +1,16 @@
+diff --git a/packages/log/src/Channels/SlackLogChannel.php b/packages/log/src/Channels/SlackLogChannel.php
+index b572d703fc4c31b4c8408e0a8f1c5c3810d31fd1..fe13585d0953bb8791f4f94f19c14a2731b47e9e 100644
+--- a/packages/log/src/Channels/SlackLogChannel.php
++++ b/packages/log/src/Channels/SlackLogChannel.php
+@@ -25,4 +25,4 @@ public function __construct(
+-        private(set) string $webhookUrl,
+-        private(set) ?string $channelId = null,
+-        private(set) ?string $username = null,
+-        private(set) PresentationMode $mode = PresentationMode::INLINE,
++        public string $webhookUrl,
++        public ?string $channelId = null,
++        public ?string $username = null,
++        public PresentationMode $mode = PresentationMode::INLINE,
+@@ -30 +30 @@ public function __construct(
+-        private(set) bool $bubble = true,
++        public bool $bubble = true,

@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Discovery/Commands/MakeDiscoveryCommandTest.php b/tests/Integration/Discovery/Commands/MakeDiscoveryCommandTest.php
+index 225c365dedda06196f8a4414fcaeb42769d85581..b333c1fcb903c3b147230e026995d741995c8e31 100644
+--- a/tests/Integration/Discovery/Commands/MakeDiscoveryCommandTest.php
++++ b/tests/Integration/Discovery/Commands/MakeDiscoveryCommandTest.php
+@@ -9 +9 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

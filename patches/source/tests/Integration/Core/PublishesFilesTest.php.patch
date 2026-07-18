@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Core/PublishesFilesTest.php b/tests/Integration/Core/PublishesFilesTest.php
+index 1ee6b178ab2d280ddd3d8053f9051340bd547463..63fda801fdd836f1990aca500c45caf5a4adb819 100644
+--- a/tests/Integration/Core/PublishesFilesTest.php
++++ b/tests/Integration/Core/PublishesFilesTest.php
+@@ -10 +10 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

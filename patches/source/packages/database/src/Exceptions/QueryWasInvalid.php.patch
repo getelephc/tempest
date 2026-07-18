@@ -1,0 +1,9 @@
+diff --git a/packages/database/src/Exceptions/QueryWasInvalid.php b/packages/database/src/Exceptions/QueryWasInvalid.php
+index 3da5a17841437e7ac6ebeeb8a82d58073973ff36..28a8251981e90ced543241657a000b11d6d39f0f 100644
+--- a/packages/database/src/Exceptions/QueryWasInvalid.php
++++ b/packages/database/src/Exceptions/QueryWasInvalid.php
+@@ -15,2 +15,2 @@ public function __construct(
+-        private(set) Query $query,
+-        private(set) array $bindings,
++        public Query $query,
++        public array $bindings,

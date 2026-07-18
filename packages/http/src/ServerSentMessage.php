@@ -22,9 +22,9 @@ final class ServerSentMessage implements ServerSentEvent
      */
     public function __construct(
         JsonSerializable|Stringable|string|iterable $data,
-        public string $event = 'message',
-        public ?int $id = null,
-        public Duration|int|null $retryAfter = null,
+        private(set) string $event = 'message',
+        private(set) ?int $id = null,
+        private(set) Duration|int|null $retryAfter = null,
     ) {
         $this->data = Json\encode($data);
     }

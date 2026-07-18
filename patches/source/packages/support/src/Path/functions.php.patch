@@ -1,0 +1,27 @@
+diff --git a/packages/support/src/Path/functions.php b/packages/support/src/Path/functions.php
+index f1c5faeff53d9df8c9bd36f8f68bc8b6934d607b..e2e73a1026abe8399dd57cec92924d65feef16a5 100644
+--- a/packages/support/src/Path/functions.php
++++ b/packages/support/src/Path/functions.php
+@@ -18 +18 @@ function is_relative_path(Stringable|string|null ...$parts): bool
+-    return ! namespace\is_absolute_path(...$parts);
++    return ! is_absolute_path(...$parts);
+@@ -27 +27 @@ function to_relative_path(Stringable|string|null $from, Stringable|string ...$pa
+-    $path = namespace\normalize(...$parts);
++    $path = normalize(...$parts);
+@@ -56 +56 @@ function is_absolute_path(Stringable|string|null ...$parts): bool
+-    $path = namespace\normalize(...$parts);
++    $path = normalize(...$parts);
+@@ -74,2 +74,2 @@ function to_absolute_path(Stringable|string $cwd, Stringable|string|null ...$par
+-    $cwd = namespace\normalize($cwd);
+-    $path = namespace\normalize(...$parts);
++    $cwd = normalize($cwd);
++    $path = normalize(...$parts);
+@@ -77 +77 @@ function to_absolute_path(Stringable|string $cwd, Stringable|string|null ...$par
+-    if (starts_with($path, $cwd) && namespace\is_absolute_path($path)) {
++    if (starts_with($path, $cwd) && is_absolute_path($path)) {
+@@ -81 +81 @@ function to_absolute_path(Stringable|string $cwd, Stringable|string|null ...$par
+-    $segments = explode('/', namespace\normalize($cwd, $path));
++    $segments = explode('/', normalize($cwd, $path));
+@@ -102 +102 @@ function to_absolute_path(Stringable|string $cwd, Stringable|string|null ...$par
+-    $absolutePath = namespace\normalize(...$resolved);
++    $absolutePath = normalize(...$resolved);

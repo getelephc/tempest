@@ -29,7 +29,7 @@ final class Terminal
 
     private ?string $tty = null;
 
-    public bool $supportsTty = true {
+    private(set) bool $supportsTty = true {
         get {
             if (! $this->supportsTty) {
                 return false;

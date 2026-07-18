@@ -1,0 +1,7 @@
+diff --git a/packages/mapper/src/Exceptions/MapperWasMissing.php b/packages/mapper/src/Exceptions/MapperWasMissing.php
+index 77b36634977bcc738739d4790c7f53043ffda076..d3090fa9c42a5dd71a9b60191bef3f48af598bb5 100644
+--- a/packages/mapper/src/Exceptions/MapperWasMissing.php
++++ b/packages/mapper/src/Exceptions/MapperWasMissing.php
+@@ -13 +13 @@ public function __construct()
+-        parent::__construct('Cannot map using `do()` without calling `with()` first: `map()->with()->do()`');
++        parent::__construct('Cannot map using `execute()` without calling `with()` first: `map()->with()->execute()`');

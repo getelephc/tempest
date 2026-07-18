@@ -1,0 +1,7 @@
+diff --git a/packages/command-bus/src/GenericCommandBus.php b/packages/command-bus/src/GenericCommandBus.php
+index 5ae0e156cd1dc7fe63952c558509804223ca9553..466890f93df4b8f02976d2b044a4eed792b0ecb9 100644
+--- a/packages/command-bus/src/GenericCommandBus.php
++++ b/packages/command-bus/src/GenericCommandBus.php
+@@ -56 +56 @@ private function getCommandHandler(object $command): ?CommandHandler
+-        return $this->commandBusConfig->handlers[$command::class] ?? null;
++        return $this->commandBusConfig->handlers[get_class($command)] ?? null;

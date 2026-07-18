@@ -167,9 +167,9 @@ final class ArrayToObjectMapper implements Mapper
                 continue;
             }
 
-            if ($childProperty->getType()->equals(get_class($parent))) {
+            if ($childProperty->getType()->equals($parent::class)) {
                 $valueToSet = $parent;
-            } elseif ($childProperty->getIterableType()?->equals(get_class($parent))) {
+            } elseif ($childProperty->getIterableType()?->equals($parent::class)) {
                 $valueToSet = [$parent];
             } else {
                 continue;
@@ -207,7 +207,7 @@ final class ArrayToObjectMapper implements Mapper
             return $caster->cast($value);
         }
 
-        if (is_object($value) && $property->getType()->matches(get_class($value))) {
+        if (is_object($value) && $property->getType()->matches($value::class)) {
             return $value;
         }
 

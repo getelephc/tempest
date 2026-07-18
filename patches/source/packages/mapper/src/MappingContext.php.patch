@@ -1,0 +1,7 @@
+diff --git a/packages/mapper/src/MappingContext.php b/packages/mapper/src/MappingContext.php
+index b75ee40d9fbd797ea6d75f2a220f9a9416b55855..f7ce22f0875f38fb83482409c83851bf6a9a22c6 100644
+--- a/packages/mapper/src/MappingContext.php
++++ b/packages/mapper/src/MappingContext.php
+@@ -11 +11 @@ public function __construct(
+-        private(set) string $name,
++        public string $name,

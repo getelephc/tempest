@@ -1,0 +1,7 @@
+diff --git a/packages/http/src/Session/SessionCreated.php b/packages/http/src/Session/SessionCreated.php
+index 6ac675988eee2af75a4f34a044678b678e935514..e2ee029747765c50141cb0977f81855e60f74ecf 100644
+--- a/packages/http/src/Session/SessionCreated.php
++++ b/packages/http/src/Session/SessionCreated.php
+@@ -11 +11 @@ public function __construct(
+-        private(set) Session $session,
++        public Session $session,

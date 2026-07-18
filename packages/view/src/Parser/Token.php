@@ -9,22 +9,22 @@ use function Tempest\Support\str;
 final class Token
 {
     /** @var \Tempest\View\Parser\Token[] */
-    public array $children = [];
+    private(set) array $children = [];
 
-    public ?Token $parent = null;
+    private(set) ?Token $parent = null;
 
-    public ?Token $endingToken = null;
+    private(set) ?Token $endingToken = null;
 
-    public ?Token $closingToken = null;
+    private(set) ?Token $closingToken = null;
 
     /** @var \Tempest\View\Parser\Token[] */
-    public array $rawAttributes = [];
+    private(set) array $rawAttributes = [];
 
-    public array $phpAttributes = [];
+    private(set) array $phpAttributes = [];
 
-    public array $htmlAttributes = [];
+    private(set) array $htmlAttributes = [];
 
-    public ?string $tag = null;
+    private(set) ?string $tag = null;
 
     public function __construct(
         public readonly string $content,

@@ -16,7 +16,7 @@ final class Insight
     }
 
     public function __construct(
-        public readonly string $value,
+        private(set) readonly string $value,
         private readonly InsightType $type = InsightType::NORMAL,
     ) {}
 }

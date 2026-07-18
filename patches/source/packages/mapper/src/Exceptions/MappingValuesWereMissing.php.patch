@@ -1,0 +1,7 @@
+diff --git a/packages/mapper/src/Exceptions/MappingValuesWereMissing.php b/packages/mapper/src/Exceptions/MappingValuesWereMissing.php
+index d9bb0caaa05b372cd59df414ea113589338eee72..a2d9d54901460ad4e3dc227d530da973991d4fab 100644
+--- a/packages/mapper/src/Exceptions/MappingValuesWereMissing.php
++++ b/packages/mapper/src/Exceptions/MappingValuesWereMissing.php
+@@ -13 +13 @@ public function __construct(object|string $objectOrClass, array $missingValues)
+-        $className = is_string($objectOrClass) ? $objectOrClass : $objectOrClass::class;
++        $className = is_string($objectOrClass) ? $objectOrClass : get_class($objectOrClass);

@@ -1,0 +1,15 @@
+diff --git a/packages/cryptography/src/Encryption/EncryptedData.php b/packages/cryptography/src/Encryption/EncryptedData.php
+index e8dcd9d7812dec3a744996fcc6ed7fdc63342088..18e2f59d0d3c08edb616a0ece0556eaea84b5e44 100644
+--- a/packages/cryptography/src/Encryption/EncryptedData.php
++++ b/packages/cryptography/src/Encryption/EncryptedData.php
+@@ -13,5 +13,5 @@ public function __construct(
+-        private(set) string $payload,
+-        private(set) string $iv,
+-        private(set) string $tag,
+-        private(set) Signature $signature,
+-        private(set) EncryptionAlgorithm $algorithm,
++        public string $payload,
++        public string $iv,
++        public string $tag,
++        public Signature $signature,
++        public EncryptionAlgorithm $algorithm,

@@ -28,7 +28,7 @@ final readonly class Argument
                 ? sprintf('string<%s>', mb_strlen($value))
                 : sprintf('"%s"', $value),
             is_array($value) => sprintf('array<%s>', count($value)),
-            is_object($value) => sprintf('object<%s>', get_class($value)),
+            is_object($value) => sprintf('object<%s>', $value::class),
             is_resource($value) => 'resource',
             default => get_debug_type($value),
         };

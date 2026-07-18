@@ -4,8 +4,10 @@
 		"packages/*"
 	],
 	"scripts": {
+		"patch:elephc": "./scripts/apply-elephc-patches.sh",
 		"build:elephc": "./scripts/build-elephc.sh",
 		"test:elephc": "node scripts/test-elephc.mjs",
+		"test:clean-room": "./scripts/test-clean-room.sh",
 		"audit:patches": "node scripts/audit-patches.mjs",
 		"qa": "bun fmt && bun run test run && bun run build",
 		"fmt": "dprint fmt ./packages/vite-plugin-tempest/**/*.{ts,vue,json}",

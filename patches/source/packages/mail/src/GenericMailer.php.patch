@@ -1,0 +1,7 @@
+diff --git a/packages/mail/src/GenericMailer.php b/packages/mail/src/GenericMailer.php
+index 968e76b48d77045cc1b0ebf75c4d0a1c0afc6882..9ddbd7fc52a1c832cb8aedd1b478906fee60bbca 100644
+--- a/packages/mail/src/GenericMailer.php
++++ b/packages/mail/src/GenericMailer.php
+@@ -25 +25 @@ public function send(Email $email): void
+-            ->do();
++            ->execute();

@@ -1,0 +1,7 @@
+diff --git a/packages/auth/src/OAuth/GenericOAuthClient.php b/packages/auth/src/OAuth/GenericOAuthClient.php
+index 3660e9765be69f9c2752f77ebbb4dbef3dd6f45e..72882aeb1bba5d44d05e726b8bac76e87ce42d6a 100644
+--- a/packages/auth/src/OAuth/GenericOAuthClient.php
++++ b/packages/auth/src/OAuth/GenericOAuthClient.php
+@@ -29 +29 @@ public function __construct(
+-        private(set) readonly OAuthConfig $config,
++        public readonly OAuthConfig $config,

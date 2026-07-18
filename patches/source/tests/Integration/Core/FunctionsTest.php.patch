@@ -1,0 +1,9 @@
+diff --git a/tests/Integration/Core/FunctionsTest.php b/tests/Integration/Core/FunctionsTest.php
+index 132a98489baa2614d9d57d9b93e293592c63a351..d359b14bc6843d90f098aa00e1f3e958fa03d85f 100644
+--- a/tests/Integration/Core/FunctionsTest.php
++++ b/tests/Integration/Core/FunctionsTest.php
+@@ -10,2 +10,2 @@
+-use Tempest\Support\Namespace\PathCouldNotBeMappedToNamespace;
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\PathCouldNotBeMappedToNamespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

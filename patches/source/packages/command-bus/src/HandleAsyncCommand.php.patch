@@ -1,0 +1,10 @@
+diff --git a/packages/command-bus/src/HandleAsyncCommand.php b/packages/command-bus/src/HandleAsyncCommand.php
+index 88fadf9c959789d918e2e2ab19c10789008bf850..86eda96e26a9c088f6b38a1fec8d7032fed9b701 100644
+--- a/packages/command-bus/src/HandleAsyncCommand.php
++++ b/packages/command-bus/src/HandleAsyncCommand.php
+@@ -58 +58 @@ public function __invoke(?string $uuid = null): ExitCode
+-                $commandHandler = $this->commandBusConfig->handlers[$command::class] ?? null;
++                $commandHandler = $this->commandBusConfig->handlers[get_class($command)] ?? null;
+@@ -61 +61 @@ public function __invoke(?string $uuid = null): ExitCode
+-                    $commandClass = $command::class;
++                    $commandClass = get_class($command);

@@ -10,7 +10,7 @@ final class CommandHandlerWasNotFound extends Exception
 {
     public function __construct(object $command)
     {
-        $commandName = get_class($command);
+        $commandName = $command::class;
 
         parent::__construct("No handler found for [{$commandName}].");
     }

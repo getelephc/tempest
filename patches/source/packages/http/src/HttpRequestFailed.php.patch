@@ -1,0 +1,12 @@
+diff --git a/packages/http/src/HttpRequestFailed.php b/packages/http/src/HttpRequestFailed.php
+index b207921de77d02b643ad69ba44527f950a7e6cc9..bec1d1cb673d8bc3acdb384b86386aaa27e0e4cd 100644
+--- a/packages/http/src/HttpRequestFailed.php
++++ b/packages/http/src/HttpRequestFailed.php
+@@ -20 +20 @@ public function __construct(
+-        private(set) readonly Status $status,
++        public readonly Status $status,
+@@ -22,2 +22,2 @@ public function __construct(
+-        private(set) readonly ?Response $cause = null,
+-        private(set) readonly ?Request $request = null,
++        public readonly ?Response $cause = null,
++        public readonly ?Request $request = null,

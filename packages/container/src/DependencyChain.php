@@ -53,7 +53,7 @@ final class DependencyChain
         return $this->origin;
     }
 
-    public function copy(): self
+    public function clone(): self
     {
         return clone $this;
     }

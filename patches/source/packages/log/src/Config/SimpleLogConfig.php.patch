@@ -1,0 +1,19 @@
+diff --git a/packages/log/src/Config/SimpleLogConfig.php b/packages/log/src/Config/SimpleLogConfig.php
+index fc3b3953b1c0ced0c88ff3f25de1ca756d80c44c..364fd7109ffc2a35680c5a5afb333c096fda1573 100644
+--- a/packages/log/src/Config/SimpleLogConfig.php
++++ b/packages/log/src/Config/SimpleLogConfig.php
+@@ -37,7 +37,7 @@ public function __construct(
+-        private(set) string $path,
+-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
+-        private(set) array $channels = [],
+-        private(set) bool $useLocking = false,
+-        private(set) ?int $filePermission = null,
+-        private(set) ?string $prefix = null,
+-        private(set) UnitEnum|string|null $tag = null,
++        public string $path,
++        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
++        public array $channels = [],
++        public bool $useLocking = false,
++        public ?int $filePermission = null,
++        public ?string $prefix = null,
++        public UnitEnum|string|null $tag = null,

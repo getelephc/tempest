@@ -1,0 +1,7 @@
+diff --git a/packages/mapper/src/Exceptions/DataCouldNotBeMapped.php b/packages/mapper/src/Exceptions/DataCouldNotBeMapped.php
+index d36c6b281495084d63cec019cde8db0ed0a3ada9..1e3dec7f23515fa880278f064b062cbf5a65f99b 100644
+--- a/packages/mapper/src/Exceptions/DataCouldNotBeMapped.php
++++ b/packages/mapper/src/Exceptions/DataCouldNotBeMapped.php
+@@ -15 +15 @@ public function __construct(mixed $data, object|string $objectOrClass)
+-        $to = is_object($objectOrClass) ? $objectOrClass::class : $objectOrClass;
++        $to = is_object($objectOrClass) ? get_class($objectOrClass) : $objectOrClass;

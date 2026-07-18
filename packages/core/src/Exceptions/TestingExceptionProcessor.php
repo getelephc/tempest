@@ -9,10 +9,10 @@ final class TestingExceptionProcessor implements ExceptionProcessor
     /**
      * @var array<Throwable> List of processed exceptions.
      */
-    public array $processed = [];
+    private(set) array $processed = [];
 
     public function __construct(
-        public ExceptionProcessor $processor,
+        private(set) ExceptionProcessor $processor,
         public bool $enabled,
     ) {}
 

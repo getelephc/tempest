@@ -22,12 +22,12 @@ final readonly class SlackLogChannel implements LogChannel
      * @param bool $bubble Whether the messages that are handled can bubble up the stack or not.
      */
     public function __construct(
-        public string $webhookUrl,
-        public ?string $channelId = null,
-        public ?string $username = null,
-        public PresentationMode $mode = PresentationMode::INLINE,
+        private(set) string $webhookUrl,
+        private(set) ?string $channelId = null,
+        private(set) ?string $username = null,
+        private(set) PresentationMode $mode = PresentationMode::INLINE,
         private LogLevel $minimumLogLevel = LogLevel::DEBUG,
-        public bool $bubble = true,
+        private(set) bool $bubble = true,
     ) {}
 
     public function getHandlers(Level $level): array

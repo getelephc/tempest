@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Vite/DevelopmentTagsResolverTest.php b/tests/Integration/Vite/DevelopmentTagsResolverTest.php
+index 3e5b66c5d24415e14de3db65934aba13db0034ef..6c829ad6a8531c08569d664b022aa08679a4019a 100644
+--- a/tests/Integration/Vite/DevelopmentTagsResolverTest.php
++++ b/tests/Integration/Vite/DevelopmentTagsResolverTest.php
+@@ -8 +8 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

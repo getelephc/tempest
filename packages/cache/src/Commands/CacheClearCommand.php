@@ -77,7 +77,7 @@ if (class_exists(ConsoleCommand::class)) {
                 $cache->clear();
 
                 $this->console->keyValue(
-                    key: get_class($cache),
+                    key: $cache::class,
                     value: "<style='bold fg-green'>CLEARED</style>",
                 );
             }

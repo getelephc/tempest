@@ -6,7 +6,7 @@ namespace Tests\Tempest\Integration\Database\Commands;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use Tempest\Support\NamespaceUtils\Psr4Namespace;
+use Tempest\Support\Namespace\Psr4Namespace;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 
 /**

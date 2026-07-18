@@ -11,7 +11,7 @@ final class UnsupportedComponent extends ConsoleException
 {
     public function __construct(InteractiveConsoleComponent $component)
     {
-        $className = get_class($component);
+        $className = $component::class;
 
         parent::__construct("Could not start an interactive terminal to render {$className}, you need `stty` and `tput` installed.");
     }

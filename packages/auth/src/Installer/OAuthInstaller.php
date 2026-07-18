@@ -15,7 +15,7 @@ use function Tempest\root_path;
 use function Tempest\src_path;
 use function Tempest\Support\arr;
 use function Tempest\Support\Filesystem\read_file;
-use function Tempest\Support\NamespaceUtils\to_fqcn;
+use function Tempest\Support\Namespace\to_fqcn;
 use function Tempest\Support\str;
 
 final class OAuthInstaller
@@ -102,7 +102,7 @@ final class OAuthInstaller
             source: __DIR__ . '/oauth/OAuthControllerStub.php',
             destination: src_path("Authentication/OAuth/{$fileName}"),
             callback: function (string $source, string $destination) use ($provider) {
-                $providerFqcn = get_class($provider);
+                $providerFqcn = $provider::class;
                 $name = strtolower($provider->getName());
                 $userModelFqcn = to_fqcn(src_path('Authentication/User.php'), root: root_path());
 

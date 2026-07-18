@@ -20,11 +20,11 @@ final readonly class AppendLogChannel implements LogChannel
      * @param null|int $filePermission Optional file permissions (default (0644) are only for owner read/write).
      */
     public function __construct(
-        public string $path,
-        public bool $useLocking = false,
-        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
-        public bool $bubble = true,
-        public ?int $filePermission = null,
+        private(set) string $path,
+        private(set) bool $useLocking = false,
+        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
+        private(set) bool $bubble = true,
+        private(set) ?int $filePermission = null,
     ) {}
 
     public function getHandlers(Level $level): array

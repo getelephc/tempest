@@ -1,0 +1,7 @@
+diff --git a/packages/auth/src/AccessControl/PolicyBasedAccessControl.php b/packages/auth/src/AccessControl/PolicyBasedAccessControl.php
+index 88cb780da901acd50a109dd63b4e6d1cf81448dd..f7fe608b51d62ee106ac49f8d518cb3eb27e9c07 100644
+--- a/packages/auth/src/AccessControl/PolicyBasedAccessControl.php
++++ b/packages/auth/src/AccessControl/PolicyBasedAccessControl.php
+@@ -83 +83 @@ private function findPoliciesForResourceAction(object|string $resource, UnitEnum
+-            ? $resource::class
++            ? get_class($resource)

@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Http/SessionInstallerTest.php b/tests/Integration/Http/SessionInstallerTest.php
+index 7bd799a70a697fa377375d2c3b2e7334e8570a65..0ed57b62e8fc5bc073b10df3fbc1e3c4224a9414 100644
+--- a/tests/Integration/Http/SessionInstallerTest.php
++++ b/tests/Integration/Http/SessionInstallerTest.php
+@@ -11 +11 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

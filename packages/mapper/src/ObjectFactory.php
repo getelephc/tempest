@@ -112,8 +112,9 @@ final class ObjectFactory
      */
     public function in(Context|UnitEnum|string|null $context): self
     {
-        $clone = clone $this;
-        $clone->context = $context;
+        $clone = clone($this, [
+            'context' => $context,
+        ]);
 
         $clone->mappers = $clone->resolveMappers();
 
@@ -153,7 +154,7 @@ final class ObjectFactory
      *
      * map($data)
      *     ->with(fn (SomeMapper $mapper) => $mapper->map($data))
-     *     ->execute();
+     *     ->do();
      * ```
      *
      * @template MapperType of \Tempest\Mapper\Mapper
@@ -199,10 +200,10 @@ final class ObjectFactory
      * $result = map($data)
      *     ->with(ObjectToArrayMapper::class)
      *     ->with(ArrayToJsonMapper::class)
-     *     ->execute();
+     *     ->do();
      * ```
      */
-    public function execute(): mixed
+    public function do(): mixed
     {
         if ($this->with === []) {
             throw new MapperWasMissing();
@@ -233,7 +234,7 @@ final class ObjectFactory
     public function toArray(): array
     {
         if (is_object($this->from)) {
-            return $this->with(ObjectToArrayMapper::class)->execute();
+            return $this->with(ObjectToArrayMapper::class)->do();
         }
 
         if (is_array($this->from)) {
@@ -248,7 +249,7 @@ final class ObjectFactory
         }
 
         if (Json\is_valid($this->from)) {
-            return $this->with(JsonToArrayMapper::class)->execute();
+            return $this->with(JsonToArrayMapper::class)->do();
         }
 
         throw new DataCouldNotBeMapped($this->from, 'array');
@@ -266,11 +267,11 @@ final class ObjectFactory
     public function toJson(): string
     {
         if (is_object($this->from)) {
-            return $this->with(ObjectToJsonMapper::class)->execute();
+            return $this->with(ObjectToJsonMapper::class)->do();
         }
 
         if (is_array($this->from)) {
-            return $this->with(ArrayToJsonMapper::class)->execute();
+            return $this->with(ArrayToJsonMapper::class)->do();
         }
 
         throw new DataCouldNotBeMapped($this->from, 'json');

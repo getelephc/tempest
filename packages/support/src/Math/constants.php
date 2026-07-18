@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace Tempest\Support\Math;
 
+use const INF;
+use const NAN as PHP_NAN;
+
 /**
  * The value of `INFINITY` is `1 / 0` (positive infinity).
  *
  * @var int
  */
-define('Tempest\\Support\\Math\\INFINITY', INF);
+const INFINITY = INF;
 
 /**
  * The value of `NAN` is `0 / 0` (not a number).
  *
  * @var float
  */
-define('Tempest\\Support\\Math\\NAN', NAN);
+const NAN = PHP_NAN;
 
 /**
  * The base of the natural system of logarithms, or approximately 2.7182818284590452353602875.

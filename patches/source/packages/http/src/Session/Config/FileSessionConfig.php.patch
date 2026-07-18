@@ -1,0 +1,7 @@
+diff --git a/packages/http/src/Session/Config/FileSessionConfig.php b/packages/http/src/Session/Config/FileSessionConfig.php
+index bf0155e6961eae3aa4515f103ff42cd5f6fffd36..7bf23b48201e569eaa6580be51620a92d710b083 100644
+--- a/packages/http/src/Session/Config/FileSessionConfig.php
++++ b/packages/http/src/Session/Config/FileSessionConfig.php
+@@ -20 +20 @@ public function __construct(
+-        private(set) CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,
++        public CleanupStrategy $cleanupStrategy = CleanupStrategy::RANDOM_REQUESTS,

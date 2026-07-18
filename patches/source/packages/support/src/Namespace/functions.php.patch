@@ -1,0 +1,7 @@
+diff --git a/packages/support/src/Namespace/functions.php b/packages/support/src/Namespace/functions.php
+index e296c903edf245a1783c6775d22c768f16b818db..3862e510153ada188886e340de46f955a5ddf8b3 100644
+--- a/packages/support/src/Namespace/functions.php
++++ b/packages/support/src/Namespace/functions.php
+@@ -5 +5 @@
+-namespace Tempest\Support\Namespace;
++namespace Tempest\Support\NamespaceUtils;

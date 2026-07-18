@@ -1,0 +1,13 @@
+diff --git a/packages/support/src/Paginator/Paginator.php b/packages/support/src/Paginator/Paginator.php
+index df810a20e4b75905f1c9dd7c9e056b8f6918e4d5..be5c681c5ccbbee8b8d505b7c2700afbdf073e63 100644
+--- a/packages/support/src/Paginator/Paginator.php
++++ b/packages/support/src/Paginator/Paginator.php
+@@ -10,4 +10,4 @@ public function __construct(
+-        private(set) int $totalItems,
+-        private(set) int $itemsPerPage = 20,
+-        private(set) int $currentPage = 1,
+-        private(set) int $maxLinks = 10,
++        public int $totalItems,
++        public int $itemsPerPage = 20,
++        public int $currentPage = 1,
++        public int $maxLinks = 10,

@@ -10,11 +10,11 @@ use Tempest\Support\Json;
 final readonly class EncryptedData implements Stringable
 {
     public function __construct(
-        public string $payload,
-        public string $iv,
-        public string $tag,
-        public Signature $signature,
-        public EncryptionAlgorithm $algorithm,
+        private(set) string $payload,
+        private(set) string $iv,
+        private(set) string $tag,
+        private(set) Signature $signature,
+        private(set) EncryptionAlgorithm $algorithm,
     ) {}
 
     public function serialize(): string

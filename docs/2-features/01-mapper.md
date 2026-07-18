@@ -40,7 +40,7 @@ By default, Tempest determines which mapper to use based on the source and targe
 ```php
 $psrRequest = map($request)
     ->with(RequestToPsrRequestMapper::class)
-    ->execute();
+    ->do();
 ```
 
 Alternatively, provide closures to the `with()` method. These closures expect the mapper as their first parameter and the source data as the second. Using closures provides access to the `$from` parameter for more advanced mapping operations:
@@ -48,7 +48,7 @@ Alternatively, provide closures to the `with()` method. These closures expect th
 ```php
 $result = map($rawBooksAsJson)
     ->with(fn (ArrayToBooksMapper $mapper, array $books) => $mapper->map($books, Book::class))
-    ->execute();
+    ->do();
 ```
 
 Of course, `with()` can also be combined with `collection()` and `to()`.

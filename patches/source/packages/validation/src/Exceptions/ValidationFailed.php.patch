@@ -1,0 +1,16 @@
+diff --git a/packages/validation/src/Exceptions/ValidationFailed.php b/packages/validation/src/Exceptions/ValidationFailed.php
+index 33a8fe00375ebe9b0528914429f4ad998a7a9a70..43c7fd857c330851b090d4fa5bbd11c5ae1ae998 100644
+--- a/packages/validation/src/Exceptions/ValidationFailed.php
++++ b/packages/validation/src/Exceptions/ValidationFailed.php
+@@ -22,4 +22,4 @@ public function __construct(
+-        private(set) array $failingRules,
+-        private(set) object|string|null $subject = null,
+-        private(set) array $errorMessages = [],
+-        private(set) ?string $targetClass = null,
++        public array $failingRules,
++        public object|string|null $subject = null,
++        public array $errorMessages = [],
++        public ?string $targetClass = null,
+@@ -29 +29 @@ public function __construct(
+-            default => sprintf('Validation failed for %s.', is_object($subject) ? $subject::class : $subject),
++            default => sprintf('Validation failed for %s.', is_object($subject) ? get_class($subject) : $subject),

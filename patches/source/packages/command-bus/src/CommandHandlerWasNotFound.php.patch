@@ -1,0 +1,7 @@
+diff --git a/packages/command-bus/src/CommandHandlerWasNotFound.php b/packages/command-bus/src/CommandHandlerWasNotFound.php
+index d87bd196cc6634e9902e6e5ce6acdac1954af54b..51964a447b25835f0b82c34752df048925a33dfb 100644
+--- a/packages/command-bus/src/CommandHandlerWasNotFound.php
++++ b/packages/command-bus/src/CommandHandlerWasNotFound.php
+@@ -13 +13 @@ public function __construct(object $command)
+-        $commandName = $command::class;
++        $commandName = get_class($command);

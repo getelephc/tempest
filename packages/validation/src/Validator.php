@@ -57,7 +57,7 @@ final readonly class Validator
         }
 
         if ($failingRules !== []) {
-            throw $this->createValidationFailureException($failingRules, $object, get_class($object));
+            throw $this->createValidationFailureException($failingRules, $object, $object::class);
         }
     }
 
@@ -262,7 +262,7 @@ final readonly class Validator
             $rule = $rule->rule;
         }
 
-        return str(get_class($rule))
+        return str($rule::class)
             ->classBasename()
             ->snake()
             ->replaceEvery([ // those are snake case issues that we manually fix for consistency

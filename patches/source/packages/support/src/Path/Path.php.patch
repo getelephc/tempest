@@ -1,0 +1,10 @@
+diff --git a/packages/support/src/Path/Path.php b/packages/support/src/Path/Path.php
+index c24967c114d361335dc1ea66394f690b02eb65f3..184d36c91380fc121a5ab0e30a972fbbdc74a59a 100644
+--- a/packages/support/src/Path/Path.php
++++ b/packages/support/src/Path/Path.php
+@@ -22 +22 @@ public function __construct(Stringable|string ...$paths)
+-        $this->value = namespace\normalize(...$paths);
++        $this->value = normalize(...$paths);
+@@ -87 +87 @@ public function glob(string $pattern): ImmutableArray
+-        $paths = glob(namespace\normalize($this->value, $pattern));
++        $paths = glob(normalize($this->value, $pattern));

@@ -7,7 +7,7 @@ namespace Tests\Tempest\Integration\Auth\Installer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Tempest\Auth\OAuth\SupportedOAuthProvider;
-use Tempest\Support\NamespaceUtils\Psr4Namespace;
+use Tempest\Support\Namespace\Psr4Namespace;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 
 final class OAuthInstallerTest extends FrameworkIntegrationTestCase

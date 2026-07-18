@@ -1,0 +1,9 @@
+diff --git a/packages/http/src/Session/Config/RedisSessionConfig.php b/packages/http/src/Session/Config/RedisSessionConfig.php
+index 4d34156fb09303151e4959a170d1b6d86cc29039..94d6ff762f4f10766d78466deaddb39b19897273 100644
+--- a/packages/http/src/Session/Config/RedisSessionConfig.php
++++ b/packages/http/src/Session/Config/RedisSessionConfig.php
+@@ -20,2 +20,2 @@ public function __construct(
+-        private(set) Duration $expiration,
+-        private(set) CleanupStrategy $cleanupStrategy = CleanupStrategy::DISABLED,
++        public Duration $expiration,
++        public CleanupStrategy $cleanupStrategy = CleanupStrategy::DISABLED,

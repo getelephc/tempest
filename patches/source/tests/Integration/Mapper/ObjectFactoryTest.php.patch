@@ -1,0 +1,10 @@
+diff --git a/tests/Integration/Mapper/ObjectFactoryTest.php b/tests/Integration/Mapper/ObjectFactoryTest.php
+index 05d8ef9954db7396af0680892c3a6715150ebfc8..d21f829edf1f9d58d1c2c45896f82744c85a1a85 100644
+--- a/tests/Integration/Mapper/ObjectFactoryTest.php
++++ b/tests/Integration/Mapper/ObjectFactoryTest.php
+@@ -84 +84 @@ public function test_map_with(): void
+-        )->do();
++        )->execute();
+@@ -93 +93 @@ public function test_map_do_without_with_throws(): void
+-        map([])->do();
++        map([])->execute();

@@ -17,8 +17,8 @@ final class RedisSessionConfig implements SessionConfig
      * @param CleanupStrategy $cleanupStrategy Strategy for cleaning up expired sessions. Defaults to `DISABLED`, because sessions expire automatically in Redis.
      */
     public function __construct(
-        public Duration $expiration,
-        public CleanupStrategy $cleanupStrategy = CleanupStrategy::DISABLED,
+        private(set) Duration $expiration,
+        private(set) CleanupStrategy $cleanupStrategy = CleanupStrategy::DISABLED,
         readonly string $prefix = 'session:',
     ) {}
 

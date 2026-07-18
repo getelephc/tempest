@@ -32,7 +32,7 @@ final class MutableArray implements ArrayInterface
      */
     public function pull(string|int $key, mixed $default = null): mixed
     {
-        return pull($this->value, $key, $default);
+        return namespace\pull($this->value, $key, $default);
     }
 
     /**

@@ -1,0 +1,7 @@
+diff --git a/packages/event-bus/src/EventBusConfig.php b/packages/event-bus/src/EventBusConfig.php
+index 57810dd09b66f83e5531a6d77d527904a062e622..fa708f5633b4bc8782f7bde20d99c6455646cf65 100644
+--- a/packages/event-bus/src/EventBusConfig.php
++++ b/packages/event-bus/src/EventBusConfig.php
+@@ -30 +30 @@ public function addClosureHandler(Closure $handler, string|UnitEnum|null $event
+-            $event = $event::class . '::' . $event->name;
++            $event = get_class($event) . '::' . $event->name;

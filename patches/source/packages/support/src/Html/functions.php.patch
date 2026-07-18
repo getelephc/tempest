@@ -1,0 +1,7 @@
+diff --git a/packages/support/src/Html/functions.php b/packages/support/src/Html/functions.php
+index 1dde0cb19fdbe4db48678053a76a7f3c459a5b22..eb1a8a7c81c18c14c5dc8517ff676fa37d0513b1 100644
+--- a/packages/support/src/Html/functions.php
++++ b/packages/support/src/Html/functions.php
+@@ -200 +200 @@ function create_tag(string $tag, array $attributes = [], ?string $content = null
+-    $attributes = namespace\format_attributes($attributes);
++    $attributes = format_attributes($attributes);

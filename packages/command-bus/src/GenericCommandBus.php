@@ -53,7 +53,7 @@ final class GenericCommandBus implements CommandBus
 
     private function getCommandHandler(object $command): ?CommandHandler
     {
-        return $this->commandBusConfig->handlers[get_class($command)] ?? null;
+        return $this->commandBusConfig->handlers[$command::class] ?? null;
     }
 
     public function getHistory(): array

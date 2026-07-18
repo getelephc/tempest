@@ -1,21 +1,28 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readdir, readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
+import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const patchRoot = path.join(root, 'patches', 'vendor');
+const requireApplied = process.argv.includes('--require-applied');
+const requireCleanSource = process.argv.includes('--require-clean-source');
 
-async function list(directory) {
+function compareStrings(left, right) {
+    return left < right ? -1 : left > right ? 1 : 0;
+}
+
+async function listPatches(directory) {
     const entries = await readdir(directory, { withFileTypes: true });
     const files = [];
 
-    for (const entry of entries) {
+    for (const entry of entries.sort((left, right) => compareStrings(left.name, right.name))) {
         const absolute = path.join(directory, entry.name);
+
         if (entry.isDirectory()) {
-            files.push(...await list(absolute));
-        } else {
+            files.push(...await listPatches(absolute));
+        } else if (entry.name.endsWith('.patch')) {
             files.push(absolute);
         }
     }
@@ -23,31 +30,117 @@ async function list(directory) {
     return files;
 }
 
-const patches = (await list(patchRoot)).sort();
-assert.ok(patches.length > 0, 'The vendor patch corpus is empty.');
+function gitBlobHash(contents) {
+    const header = Buffer.from(`blob ${contents.length}\0`);
+    return createHash('sha1').update(header).update(contents).digest('hex');
+}
 
-const digest = createHash('sha256');
+async function targetState(record) {
+    try {
+        const contents = await readFile(path.join(root, record.target));
+        const hash = gitBlobHash(contents);
 
-for (const patch of patches) {
-    assert.equal(path.extname(patch), '.patch', `Unexpected corpus file: ${patch}`);
+        if (hash === record.originalHash) {
+            return 'clean';
+        }
+        if (hash === record.patchedHash) {
+            return 'applied';
+        }
 
-    const content = await readFile(patch, 'utf8');
-    const targets = [...content.matchAll(/^\+\+\+ b\/(.+)$/gm)].map((match) => match[1]);
-
-    assert.ok(targets.length > 0, `Patch has no target: ${patch}`);
-    for (const target of targets) {
-        assert.match(target, /^vendor\/.+\.php$/, `Non-PHP vendor target: ${target}`);
+        return 'divergent';
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            return 'missing';
+        }
+        throw error;
     }
+}
 
-    digest.update(path.relative(root, patch));
-    digest.update('\0');
-    digest.update(content);
+const series = [
+    { kind: 'source', root: path.join(root, 'patches', 'source') },
+    { kind: 'vendor', root: path.join(root, 'patches', 'vendor') },
+];
+const records = [];
+const digest = createHash('sha256');
+const targets = new Set();
+
+for (const currentSeries of series) {
+    const patches = await listPatches(currentSeries.root);
+    assert.ok(patches.length > 0, `${currentSeries.kind} patch corpus is empty.`);
+
+    for (const absolute of patches) {
+        const relative = path.relative(root, absolute);
+        const contents = await readFile(absolute);
+        const text = contents.toString('utf8');
+        const patchTargets = [...text.matchAll(/^\+\+\+ b\/(.+)$/gm)].map((match) => match[1]);
+        const indexLines = [...text.matchAll(/^index ([0-9a-f]{40})\.\.([0-9a-f]{40}) \d+$/gm)];
+
+        assert.equal(patchTargets.length, 1, `Patch must have exactly one target: ${relative}`);
+        assert.equal(indexLines.length, 1, `Patch must have exactly one full index line: ${relative}`);
+
+        const target = patchTargets[0];
+        const expectedPath = currentSeries.kind === 'vendor'
+            ? path.join('patches', 'vendor', `${target.replace(/^vendor\//, '')}.patch`)
+            : path.join('patches', 'source', `${target}.patch`);
+
+        assert.equal(relative, expectedPath, `Patch path does not mirror its target: ${relative}`);
+        assert.ok(!targets.has(target), `Duplicate patch target: ${target}`);
+        targets.add(target);
+
+        if (currentSeries.kind === 'vendor') {
+            assert.match(target, /^vendor\/.+\.php$/, `Unsupported vendor target: ${target}`);
+        } else {
+            const isPhpSource = /^(src|packages|tests)\/.+\.php$/.test(target);
+            const isMapperDocumentation = target === 'docs/2-features/01-mapper.md';
+            assert.ok(isPhpSource || isMapperDocumentation, `Unsupported source target: ${target}`);
+        }
+
+        const record = {
+            kind: currentSeries.kind,
+            relative,
+            target,
+            originalHash: indexLines[0][1],
+            patchedHash: indexLines[0][2],
+        };
+        record.state = await targetState(record);
+        records.push(record);
+
+        digest.update(relative);
+        digest.update('\0');
+        digest.update(contents);
+        digest.update('\0');
+    }
 }
 
 const expectedLockHash = (await readFile(path.join(root, 'patches', 'vendor.composer-lock.sha256'), 'utf8')).trim();
 const lockHash = createHash('sha256').update(await readFile(path.join(root, 'composer.lock'))).digest('hex');
 assert.equal(lockHash, expectedLockHash, 'composer.lock does not match the vendor patch baseline.');
 
-console.log(`Vendor PHP patches: ${patches.length}`);
-console.log(`Corpus SHA-256: ${digest.digest('hex')}`);
+const sourceBaseline = (await readFile(path.join(root, 'patches', 'source.baseline'), 'utf8')).trim();
+assert.match(sourceBaseline, /^[0-9a-f]{40}$/, 'Source baseline must be a full Git commit SHA.');
+
+for (const record of records) {
+    assert.notEqual(record.state, 'divergent', `Divergent patch target: ${record.target}`);
+
+    if (record.kind === 'source') {
+        assert.notEqual(record.state, 'missing', `Missing source patch target: ${record.target}`);
+    }
+    if (requireApplied) {
+        assert.equal(record.state, 'applied', `Patch is not applied: ${record.target}`);
+    }
+    if (requireCleanSource && record.kind === 'source') {
+        assert.equal(record.state, 'clean', `Source patch is already applied: ${record.target}`);
+    }
+}
+
+function count(kind, state) {
+    return records.filter((record) => record.kind === kind && record.state === state).length;
+}
+
+console.log(`Source compatibility patches: ${records.filter(({ kind }) => kind === 'source').length}`);
+console.log(`Vendor compatibility patches: ${records.filter(({ kind }) => kind === 'vendor').length}`);
+console.log(`Source state: ${count('source', 'clean')} clean, ${count('source', 'applied')} applied`);
+console.log(`Vendor state: ${count('vendor', 'clean')} clean, ${count('vendor', 'applied')} applied, ${count('vendor', 'missing')} missing`);
+console.log(`Source baseline: ${sourceBaseline}`);
 console.log(`Composer lock SHA-256: ${lockHash}`);
+console.log(`Corpus SHA-256: ${digest.digest('hex')}`);

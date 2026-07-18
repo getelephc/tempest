@@ -1,0 +1,21 @@
+diff --git a/packages/log/src/Config/SlackLogConfig.php b/packages/log/src/Config/SlackLogConfig.php
+index 77585baae723c58650cb8cd2f0fd69546cf8ea13..e65f36f96db2b09ef77cc7655a9031346ff09bdf 100644
+--- a/packages/log/src/Config/SlackLogConfig.php
++++ b/packages/log/src/Config/SlackLogConfig.php
+@@ -40,8 +40,8 @@ public function __construct(
+-        private(set) string $webhookUrl,
+-        private(set) ?string $channelId = null,
+-        private(set) ?string $username = null,
+-        private(set) PresentationMode $mode = PresentationMode::INLINE,
+-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
+-        private(set) array $channels = [],
+-        private(set) ?string $prefix = null,
+-        private(set) UnitEnum|string|null $tag = null,
++        public string $webhookUrl,
++        public ?string $channelId = null,
++        public ?string $username = null,
++        public PresentationMode $mode = PresentationMode::INLINE,
++        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
++        public array $channels = [],
++        public ?string $prefix = null,
++        public UnitEnum|string|null $tag = null,

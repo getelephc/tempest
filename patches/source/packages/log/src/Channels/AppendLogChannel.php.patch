@@ -1,0 +1,15 @@
+diff --git a/packages/log/src/Channels/AppendLogChannel.php b/packages/log/src/Channels/AppendLogChannel.php
+index 35de7b4e37897967932f65aad864d3793003ce5a..a35ce6aa39fedb6860284f125f1fa010cff014ef 100644
+--- a/packages/log/src/Channels/AppendLogChannel.php
++++ b/packages/log/src/Channels/AppendLogChannel.php
+@@ -23,5 +23,5 @@ public function __construct(
+-        private(set) string $path,
+-        private(set) bool $useLocking = false,
+-        private(set) LogLevel $minimumLogLevel = LogLevel::DEBUG,
+-        private(set) bool $bubble = true,
+-        private(set) ?int $filePermission = null,
++        public string $path,
++        public bool $useLocking = false,
++        public LogLevel $minimumLogLevel = LogLevel::DEBUG,
++        public bool $bubble = true,
++        public ?int $filePermission = null,

@@ -11,9 +11,9 @@ use Rector\ValueObject\Configuration;
 
 final class RectorTester
 {
-    public string $fixturePath;
+    private(set) string $fixturePath;
 
-    public string $actual;
+    private(set) string $actual;
 
     public function __construct(
         private readonly string $configPath,

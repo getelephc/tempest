@@ -55,10 +55,10 @@ if (class_exists(ConsoleCommand::class)) {
                     value: "<style='fg-gray'>{$time->format('Y-m-d H:i:s')}</style>",
                 );
 
-                $commandHandler = $this->commandBusConfig->handlers[get_class($command)] ?? null;
+                $commandHandler = $this->commandBusConfig->handlers[$command::class] ?? null;
 
                 if (! $commandHandler) {
-                    $commandClass = get_class($command);
+                    $commandClass = $command::class;
                     $this->error("No handler found for command {$commandClass}.");
 
                     return ExitCode::ERROR;

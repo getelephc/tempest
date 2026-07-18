@@ -110,7 +110,7 @@ function reduce(iterable $array, callable $callback, mixed $initial = null): mix
 function pull(array &$array, string|int $key, mixed $default = null): mixed
 {
     $value = get_by_key($array, $key, $default);
-    $array = forget_keys($array, $key);
+    $array = namespace\forget_keys($array, $key);
 
     return $value;
 }
@@ -143,7 +143,7 @@ function remove_keys(iterable $array, string|int|iterable $keys): array
 {
     $array = to_array($array);
 
-    return forget_keys($array, $keys);
+    return namespace\forget_keys($array, $keys);
 }
 
 /**
@@ -161,7 +161,7 @@ function remove_keys_except(iterable $array, string|int|iterable $keys): array
     $array = to_array($array);
     $keys = to_array($keys);
 
-    return forget_keys($array, array_diff(array_keys($array), $keys));
+    return namespace\forget_keys($array, array_diff(array_keys($array), $keys));
 }
 
 /**
@@ -178,7 +178,7 @@ function remove_values(array $array, mixed $values): array
 {
     $array = to_array($array);
 
-    return forget_values($array, $values);
+    return namespace\forget_values($array, $values);
 }
 
 /**
@@ -279,11 +279,9 @@ function random(iterable $array, int $number = 1, bool $preserveKey = false): mi
 
     $randomValues = [];
     foreach ($keys as $key) {
-        if ($preserveKey) {
-            $randomValues[$key] = $array[$key];
-        } else {
-            $randomValues[] = $array[$key];
-        }
+        $preserveKey
+            ? ($randomValues[$key] = $array[$key])
+            : ($randomValues[] = $array[$key]);
     }
 
     if ($preserveKey === false) {
@@ -657,10 +655,10 @@ function at(iterable $array, int $index, mixed $default = null): mixed
 
     if ($index < 0) {
         $index = abs($index) - 1;
-        $array = reverse($array);
+        $array = namespace\reverse($array);
     }
 
-    return get_by_key(array_values($array), key: $index, default: $default);
+    return namespace\get_by_key(array_values($array), key: $index, default: $default);
 }
 
 /**
@@ -689,7 +687,7 @@ function last(iterable $array, ?Closure $filter = null, mixed $default = null): 
         return array_last($array) ?? $default;
     }
 
-    return array_find(reverse($array), static fn ($value, $key) => $filter($value, $key)) ?? $default;
+    return array_find(namespace\reverse($array), static fn ($value, $key) => $filter($value, $key)) ?? $default;
 }
 
 /**
@@ -707,7 +705,7 @@ function last(iterable $array, ?Closure $filter = null, mixed $default = null): 
 function pop(iterable $array, mixed &$value = null): array
 {
     $array = to_array($array);
-    $value = last($array);
+    $value = namespace\last($array);
 
     return array_slice($array, 0, -1);
 }
@@ -727,7 +725,7 @@ function pop(iterable $array, mixed &$value = null): array
 function unshift(iterable $array, mixed &$value = null): array
 {
     $array = to_array($array);
-    $value = first($array);
+    $value = namespace\first($array);
 
     return array_slice($array, 1);
 }
@@ -1122,17 +1120,17 @@ function join(iterable $array, string $glue = ', ', ?string $finalGlue = ' and '
     $array = to_array($array);
 
     if ($finalGlue === '' || is_null($finalGlue)) {
-        return implode($array, $glue);
+        return namespace\implode($array, $glue);
     }
 
-    if (is_empty($array)) {
+    if (namespace\is_empty($array)) {
         return new ImmutableString('');
     }
 
-    $parts = pop($array, $last);
+    $parts = namespace\pop($array, $last);
 
-    if (! is_empty($parts)) {
-        return implode($parts, $glue)->append($finalGlue, $last);
+    if (! namespace\is_empty($parts)) {
+        return namespace\implode($parts, $glue)->append($finalGlue, $last);
     }
 
     return new ImmutableString($last);
@@ -1165,8 +1163,8 @@ function flatten(iterable $array, int|float $depth = INF): array
         }
 
         $values = $depth === 1
-            ? values($item)
-            : flatten($item, $depth - 1);
+            ? namespace\values($item)
+            : namespace\flatten($item, $depth - 1);
 
         foreach ($values as $value) {
             $result[] = $value;
@@ -1239,7 +1237,7 @@ function group_by(iterable $array, Closure $keyExtracor): array
  */
 function flat_map(iterable $array, Closure $map, int|float $depth = 1): array
 {
-    return flatten(map(to_array($array), $map), $depth);
+    return namespace\flatten(map(to_array($array), $map), $depth);
 }
 
 /**
@@ -1283,17 +1281,9 @@ function sort(iterable $array, bool $desc = false, ?bool $preserveKeys = null, i
     }
 
     if ($preserveKeys) {
-        if ($desc) {
-            arsort($array, $flags);
-        } else {
-            asort($array, $flags);
-        }
+        $desc ? arsort($array, $flags) : asort($array, $flags);
     } else {
-        if ($desc) {
-            rsort($array, $flags);
-        } else {
-            php_sort($array, $flags);
-        }
+        $desc ? rsort($array, $flags) : php_sort($array, $flags);
     }
 
     return $array;
@@ -1318,11 +1308,7 @@ function sort_by_callback(iterable $array, callable $callback, ?bool $preserveKe
         $preserveKeys = is_associative($array);
     }
 
-    if ($preserveKeys) {
-        uasort($array, $callback);
-    } else {
-        usort($array, $callback);
-    }
+    $preserveKeys ? uasort($array, $callback) : usort($array, $callback);
 
     return $array;
 }
@@ -1342,11 +1328,7 @@ function sort_keys(iterable $array, bool $desc = false, int $flags = SORT_REGULA
 {
     $array = to_array($array);
 
-    if ($desc) {
-        krsort($array, $flags);
-    } else {
-        ksort($array, $flags);
-    }
+    $desc ? krsort($array, $flags) : ksort($array, $flags);
 
     return $array;
 }

@@ -15,7 +15,7 @@ use function Tempest\Support\Str\starts_with;
  */
 function is_relative_path(Stringable|string|null ...$parts): bool
 {
-    return ! is_absolute_path(...$parts);
+    return ! namespace\is_absolute_path(...$parts);
 }
 
 /**
@@ -24,7 +24,7 @@ function is_relative_path(Stringable|string|null ...$parts): bool
  */
 function to_relative_path(Stringable|string|null $from, Stringable|string ...$parts): string
 {
-    $path = normalize(...$parts);
+    $path = namespace\normalize(...$parts);
     $from = $from === null ? '' : (string) $from;
 
     if (is_relative_path($path)) {
@@ -53,7 +53,7 @@ function to_relative_path(Stringable|string|null $from, Stringable|string ...$pa
  */
 function is_absolute_path(Stringable|string|null ...$parts): bool
 {
-    $path = normalize(...$parts);
+    $path = namespace\normalize(...$parts);
 
     if ($path === '' || '.' === $path[0]) {
         return false;
@@ -71,14 +71,14 @@ function is_absolute_path(Stringable|string|null ...$parts): bool
  */
 function to_absolute_path(Stringable|string $cwd, Stringable|string|null ...$parts): string
 {
-    $cwd = normalize($cwd);
-    $path = normalize(...$parts);
+    $cwd = namespace\normalize($cwd);
+    $path = namespace\normalize(...$parts);
 
-    if (starts_with($path, $cwd) && is_absolute_path($path)) {
+    if (starts_with($path, $cwd) && namespace\is_absolute_path($path)) {
         return $path;
     }
 
-    $segments = explode('/', normalize($cwd, $path));
+    $segments = explode('/', namespace\normalize($cwd, $path));
     $resolved = [];
 
     foreach ($segments as $part) {
@@ -99,7 +99,7 @@ function to_absolute_path(Stringable|string $cwd, Stringable|string|null ...$par
         }
     }
 
-    $absolutePath = normalize(...$resolved);
+    $absolutePath = namespace\normalize(...$resolved);
 
     if (matches($cwd, '#^[a-zA-Z]:/#')) {
         return $absolutePath;

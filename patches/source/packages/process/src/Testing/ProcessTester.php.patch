@@ -1,0 +1,7 @@
+diff --git a/packages/process/src/Testing/ProcessTester.php b/packages/process/src/Testing/ProcessTester.php
+index f000ef21d9c1f280f5d576facd332c56df13bd14..cfae8c01c051220627474482dc6a78d97fb23ba1 100644
+--- a/packages/process/src/Testing/ProcessTester.php
++++ b/packages/process/src/Testing/ProcessTester.php
+@@ -20 +20 @@ final class ProcessTester
+-    private(set) ?TestingProcessExecutor $executor = null;
++    public ?TestingProcessExecutor $executor = null;

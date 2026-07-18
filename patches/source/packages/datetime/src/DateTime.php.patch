@@ -1,0 +1,10 @@
+diff --git a/packages/datetime/src/DateTime.php b/packages/datetime/src/DateTime.php
+index bea06dfd003b575a0ca6f81ae6930e7989dacbfb..bd0d301e5bfa344f210547e7f79cdefe48c0b760 100644
+--- a/packages/datetime/src/DateTime.php
++++ b/packages/datetime/src/DateTime.php
+@@ -169 +169 @@ public static function fromParts(Timezone $timezone, int $year, Month|int $month
+-        $calendar = namespace\create_intl_calendar_from_date_time(
++        $calendar = create_intl_calendar_from_date_time(
+@@ -241 +241 @@ public static function fromTimestamp(int|Timestamp $timestamp, ?Timezone $timezo
+-        $calendar = IntlCalendar::createInstance(namespace\to_intl_timezone($timezone));
++        $calendar = IntlCalendar::createInstance(to_intl_timezone($timezone));

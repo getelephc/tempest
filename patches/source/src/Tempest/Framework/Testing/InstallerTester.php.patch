@@ -1,0 +1,7 @@
+diff --git a/src/Tempest/Framework/Testing/InstallerTester.php b/src/Tempest/Framework/Testing/InstallerTester.php
+index 1032853ab673d442e01db5f8e590b086ba20c9f8..337feed0db31a21a2307f4f811d1051d3832e327 100644
+--- a/src/Tempest/Framework/Testing/InstallerTester.php
++++ b/src/Tempest/Framework/Testing/InstallerTester.php
+@@ -14 +14 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

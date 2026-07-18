@@ -1,0 +1,7 @@
+diff --git a/packages/mapper/src/Casters/ArrayToObjectCollectionCaster.php b/packages/mapper/src/Casters/ArrayToObjectCollectionCaster.php
+index 263658bebb1ee41a794fa7913c66d8668715e910..7401e6e30f10bbda81022f0df07803b37ce3bb2e 100644
+--- a/packages/mapper/src/Casters/ArrayToObjectCollectionCaster.php
++++ b/packages/mapper/src/Casters/ArrayToObjectCollectionCaster.php
+@@ -56 +56 @@ public function cast(mixed $input): mixed
+-            $values[$key] = is_object($item) && $iterableType->matches($item::class) ? $item : $caster->cast($item);
++            $values[$key] = is_object($item) && $iterableType->matches(get_class($item)) ? $item : $caster->cast($item);

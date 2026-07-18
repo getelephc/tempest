@@ -1,0 +1,10 @@
+diff --git a/packages/auth/src/Authentication/DatabaseAuthenticatableResolver.php b/packages/auth/src/Authentication/DatabaseAuthenticatableResolver.php
+index 43cdd356c3291b12a412be2be679b80f51d9a55e..1d5b42d4377a35cb1fdd6833d8b94f3bbbc58fc4 100644
+--- a/packages/auth/src/Authentication/DatabaseAuthenticatableResolver.php
++++ b/packages/auth/src/Authentication/DatabaseAuthenticatableResolver.php
+@@ -25 +25 @@ public function resolveId(Authenticatable $authenticatable): int|string
+-            throw AuthenticatableModelWasInvalid::didNotHavePrimaryKey($authenticatable::class);
++            throw AuthenticatableModelWasInvalid::didNotHavePrimaryKey(get_class($authenticatable));
+@@ -31 +31 @@ public function resolveId(Authenticatable $authenticatable): int|string
+-            throw AuthenticatableModelWasInvalid::primaryKeyWasNotInitialized($authenticatable::class);
++            throw AuthenticatableModelWasInvalid::primaryKeyWasNotInitialized(get_class($authenticatable));

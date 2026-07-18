@@ -1,0 +1,9 @@
+diff --git a/packages/cryptography/src/Encryption/EncryptionKey.php b/packages/cryptography/src/Encryption/EncryptionKey.php
+index e6a88e7247635cfaf8172611e157ebe10e3e86b6..83bdd75356a2335ba057ccaa364171addb20d0cd 100644
+--- a/packages/cryptography/src/Encryption/EncryptionKey.php
++++ b/packages/cryptography/src/Encryption/EncryptionKey.php
+@@ -11,2 +11,2 @@ public function __construct(
+-        private(set) string $value,
+-        private(set) EncryptionAlgorithm $algorithm,
++        public string $value,
++        public EncryptionAlgorithm $algorithm,

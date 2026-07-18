@@ -1,0 +1,11 @@
+diff --git a/packages/database/src/RawSql.php b/packages/database/src/RawSql.php
+index 59d553e98dd6dd7b13880881bd0ff4f19bce711e..f6ffacf586aa32f647f9597a51b70ed746e3dfa1 100644
+--- a/packages/database/src/RawSql.php
++++ b/packages/database/src/RawSql.php
+@@ -19,3 +19,3 @@ public function __construct(
+-        private(set) DatabaseDialect $dialect,
+-        private(set) string $sql,
+-        private(set) array $bindings,
++        public DatabaseDialect $dialect,
++        public string $sql,
++        public array $bindings,

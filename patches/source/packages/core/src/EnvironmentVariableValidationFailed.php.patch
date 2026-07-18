@@ -1,0 +1,13 @@
+diff --git a/packages/core/src/EnvironmentVariableValidationFailed.php b/packages/core/src/EnvironmentVariableValidationFailed.php
+index 696278f1b104458eadbce3ecfafad672b7c62466..d228a590a0f9fff98de3c8aabc7ed0987e2ece32 100644
+--- a/packages/core/src/EnvironmentVariableValidationFailed.php
++++ b/packages/core/src/EnvironmentVariableValidationFailed.php
+@@ -17,4 +17,4 @@ public function __construct(
+-        private(set) string $name,
+-        private(set) mixed $value,
+-        private(set) array $failingRules,
+-        private(set) Validator $validator,
++        public string $name,
++        public mixed $value,
++        public array $failingRules,
++        public Validator $validator,

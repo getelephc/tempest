@@ -38,7 +38,7 @@ final readonly class ConsoleExceptionHandler implements ExceptionHandler
 
             $this->console
                 ->writeln()
-                ->error(get_class($throwable))
+                ->error($throwable::class)
                 ->when(
                     condition: $throwable->getMessage(),
                     callback: fn (Console $console) => $console->error($throwable->getMessage()),

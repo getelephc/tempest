@@ -11,10 +11,10 @@ use Tempest\DateTime\Duration;
 final class GenericLock implements Lock
 {
     public function __construct(
-        public string $key,
-        public string $owner,
+        private(set) string $key,
+        private(set) string $owner,
         private readonly Cache $cache,
-        public ?Duration $duration = null,
+        private(set) ?Duration $duration = null,
     ) {}
 
     public function locked(Stringable|string|null $by = null): bool

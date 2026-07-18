@@ -1,0 +1,7 @@
+diff --git a/packages/core/src/Insight.php b/packages/core/src/Insight.php
+index c5d22bf9736bb67952ddb7df8baeac8cb56fc6b1..2eff15b8ed85a67d2dbc53e833621a580c8dca4d 100644
+--- a/packages/core/src/Insight.php
++++ b/packages/core/src/Insight.php
+@@ -19 +19 @@ public function __construct(
+-        private(set) readonly string $value,
++        public readonly string $value,

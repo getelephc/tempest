@@ -2,7 +2,7 @@
 
 namespace Tests\Tempest\Integration\Core;
 
-use Tempest\Support\NamespaceUtils\Psr4Namespace;
+use Tempest\Support\Namespace\Psr4Namespace;
 use Tempest\View\ViewComponent;
 use Tempest\View\ViewConfig;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;

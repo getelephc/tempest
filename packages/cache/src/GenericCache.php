@@ -17,7 +17,7 @@ use UnitEnum;
 final class GenericCache implements Cache
 {
     public function __construct(
-        public CacheItemPoolInterface $adapter,
+        private(set) CacheItemPoolInterface $adapter,
         public bool $enabled = true,
         private ?DeferredTasks $deferredTasks = null,
         public UnitEnum|string|null $tag = null,

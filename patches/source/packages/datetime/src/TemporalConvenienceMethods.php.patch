@@ -1,0 +1,13 @@
+diff --git a/packages/datetime/src/TemporalConvenienceMethods.php b/packages/datetime/src/TemporalConvenienceMethods.php
+index 45ddccc093fe3bd357fed67bc1428ed3d636cd2a..d0a6e27f65aa7886ca74b35dd64e8f608d4d1b6a 100644
+--- a/packages/datetime/src/TemporalConvenienceMethods.php
++++ b/packages/datetime/src/TemporalConvenienceMethods.php
+@@ -468 +468 @@ public function format(FormatPattern|string|null $pattern = null, ?Timezone $tim
+-        return namespace\create_intl_date_formatter(null, null, $pattern, $timezone, $locale)->format(
++        return create_intl_date_formatter(null, null, $pattern, $timezone, $locale)->format(
+@@ -500 +500 @@ public function toRfc3339(?SecondsStyle $secondsStyle = null, bool $useZ = false
+-        return namespace\format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ);
++        return format_rfc3339($this->getTimestamp(), $secondsStyle, $useZ);
+@@ -532 +532 @@ public function toString(?DateStyle $dateStyle = null, ?TimeStyle $timeStyle = n
+-        return namespace\create_intl_date_formatter($dateStyle, $timeStyle, null, $timezone, $locale)->format(
++        return create_intl_date_formatter($dateStyle, $timeStyle, null, $timezone, $locale)->format(

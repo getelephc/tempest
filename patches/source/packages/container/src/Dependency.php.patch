@@ -1,0 +1,13 @@
+diff --git a/packages/container/src/Dependency.php b/packages/container/src/Dependency.php
+index 149d60f3d047bc9a6d725c733368745487737b16..22add60d9efcf10d69105d83bad475586c761143 100644
+--- a/packages/container/src/Dependency.php
++++ b/packages/container/src/Dependency.php
+@@ -46 +46 @@ public function getTypeName(): string
+-        return match ($dependency::class) {
++        return match (get_class($dependency)) {
+@@ -61 +61 @@ private function resolveName(Reflector|Closure|string $dependency): string
+-        return match ($dependency::class) {
++        return match (get_class($dependency)) {
+@@ -77 +77 @@ private function resolveShortName(Reflector|Closure|string $dependency): string
+-        return match ($dependency::class) {
++        return match (get_class($dependency)) {

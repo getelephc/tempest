@@ -7,7 +7,7 @@ namespace Tests\Tempest\Integration\Core;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Tempest\Discovery\Composer;
-use Tempest\Support\NamespaceUtils\Psr4Namespace;
+use Tempest\Support\Namespace\Psr4Namespace;
 use Tests\Tempest\Fixtures\Core\PublishesFilesConcreteClass;
 use Tests\Tempest\Integration\FrameworkIntegrationTestCase;
 

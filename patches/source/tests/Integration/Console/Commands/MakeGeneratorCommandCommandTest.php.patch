@@ -1,0 +1,7 @@
+diff --git a/tests/Integration/Console/Commands/MakeGeneratorCommandCommandTest.php b/tests/Integration/Console/Commands/MakeGeneratorCommandCommandTest.php
+index 427d83dfc71bb46dd7d29e486eb5d3e93122193d..09ee65e1a6fef386990989d613baa22491b13002 100644
+--- a/tests/Integration/Console/Commands/MakeGeneratorCommandCommandTest.php
++++ b/tests/Integration/Console/Commands/MakeGeneratorCommandCommandTest.php
+@@ -9 +9 @@
+-use Tempest\Support\Namespace\Psr4Namespace;
++use Tempest\Support\NamespaceUtils\Psr4Namespace;

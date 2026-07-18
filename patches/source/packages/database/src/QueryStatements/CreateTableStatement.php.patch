@@ -1,0 +1,7 @@
+diff --git a/packages/database/src/QueryStatements/CreateTableStatement.php b/packages/database/src/QueryStatements/CreateTableStatement.php
+index 8e57ccf7a95ab0e1af35f379762d4667581de1a9..eabcb608092f048f560f3f5a55f2c74883889bfd 100644
+--- a/packages/database/src/QueryStatements/CreateTableStatement.php
++++ b/packages/database/src/QueryStatements/CreateTableStatement.php
+@@ -22 +22 @@ final class CreateTableStatement implements QueryStatement, HasTrailingStatement
+-    private(set) array $trailingStatements = [];
++    public array $trailingStatements = [];

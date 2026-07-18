@@ -116,7 +116,7 @@ final class BootDiscovery
 
         foreach ($discoveries as $discovery) {
             $discovery->setItems(
-                $discovery->getItems()->addForLocation($location, $cachedForLocation[get_class($discovery)]),
+                $discovery->getItems()->addForLocation($location, $cachedForLocation[$discovery::class]),
             );
         }
 
@@ -129,7 +129,7 @@ final class BootDiscovery
             is_array($cachedForLocation)
             && array_all(
                 array: $discoveries,
-                callback: static fn (Discovery $discovery): bool => array_key_exists(get_class($discovery), $cachedForLocation) && is_iterable($cachedForLocation[get_class($discovery)]),
+                callback: static fn (Discovery $discovery): bool => array_key_exists($discovery::class, $cachedForLocation) && is_iterable($cachedForLocation[$discovery::class]),
             )
         );
     }
@@ -247,7 +247,7 @@ final class BootDiscovery
             }
 
             foreach ($discoveries as $discovery) {
-                if (is_array($skipForClass) && ! isset($skipForClass[get_class($discovery)])) {
+                if (is_array($skipForClass) && ! isset($skipForClass[$discovery::class])) {
                     continue;
                 }
 
@@ -303,13 +303,13 @@ final class BootDiscovery
      */
     private function applyDiscovery(Discovery $discovery): void
     {
-        if ($this->appliedDiscovery[get_class($discovery)] ?? null) {
+        if ($this->appliedDiscovery[$discovery::class] ?? null) {
             return;
         }
 
         $discovery->apply();
 
-        $this->appliedDiscovery[get_class($discovery)] = true;
+        $this->appliedDiscovery[$discovery::class] = true;
     }
 
     /**

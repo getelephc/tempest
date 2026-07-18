@@ -10,7 +10,7 @@ final class RelationWasMissing extends Exception
 {
     public function __construct(object $model, string $relation)
     {
-        $modelClass = get_class($model);
+        $modelClass = $model::class;
 
         parent::__construct("Could not access {$modelClass}::{$relation}, did you forget to load it?");
     }

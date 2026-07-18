@@ -1,0 +1,7 @@
+diff --git a/packages/cryptography/src/Signing/SigningKey.php b/packages/cryptography/src/Signing/SigningKey.php
+index 675a889c1b35c2ca52eee3a13e8e13176886957c..95e82d2b524c7e5c8276044b20ccc1da3355342b 100644
+--- a/packages/cryptography/src/Signing/SigningKey.php
++++ b/packages/cryptography/src/Signing/SigningKey.php
+@@ -11 +11 @@ public function __construct(
+-        private(set) string $value,
++        public string $value,

@@ -28,7 +28,7 @@ use Throwable;
 use function strlen;
 use function Tempest\root_path;
 use function Tempest\src_path;
-use function Tempest\Support\NamespaceUtils\to_base_class_name;
+use function Tempest\Support\Namespace\to_base_class_name;
 use function Tempest\Support\path;
 use function Tempest\Support\Path\to_absolute_path;
 use function Tempest\Support\Path\to_relative_path;

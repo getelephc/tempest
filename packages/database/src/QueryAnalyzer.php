@@ -16,7 +16,7 @@ final class QueryAnalyzer
     private bool $explainComputed = false;
 
     public function __construct(
-        public readonly QueryExecuted $query,
+        private(set) readonly QueryExecuted $query,
         private readonly Database $database,
     ) {}
 

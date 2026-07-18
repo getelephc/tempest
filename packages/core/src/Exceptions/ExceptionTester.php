@@ -8,7 +8,7 @@ use Tempest\Container\Container;
 
 final class ExceptionTester
 {
-    public ?TestingExceptionProcessor $processor = null;
+    private(set) ?TestingExceptionProcessor $processor = null;
 
     public function __construct(
         private readonly Container $container,

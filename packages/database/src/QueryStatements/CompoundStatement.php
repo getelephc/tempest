@@ -12,7 +12,7 @@ use function Tempest\Support\arr;
 final readonly class CompoundStatement implements QueryStatement
 {
     /** @var array|\Tempest\Database\QueryStatement[] */
-    public array $statements;
+    private(set) array $statements;
 
     public function __construct(QueryStatement ...$statements)
     {

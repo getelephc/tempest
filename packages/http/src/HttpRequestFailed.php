@@ -17,10 +17,10 @@ final class HttpRequestFailed extends Exception implements ProvidesContext
      * @param Request|null $request The request that failed, for debug purposes.
      */
     public function __construct(
-        public readonly Status $status,
+        private(set) readonly Status $status,
         ?string $message = null,
-        public readonly ?Response $cause = null,
-        public readonly ?Request $request = null,
+        private(set) readonly ?Response $cause = null,
+        private(set) readonly ?Request $request = null,
     ) {
         parent::__construct(
             message: $message ?: '',

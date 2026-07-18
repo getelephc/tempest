@@ -1,0 +1,7 @@
+diff --git a/packages/container/src/Commands/ContainerShowCommand.php b/packages/container/src/Commands/ContainerShowCommand.php
+index 4e94eb207112453b53c6f5c1d533d508fb54d540..5c69ca71b3d01360a94101e1a998364274eac8c8 100644
+--- a/packages/container/src/Commands/ContainerShowCommand.php
++++ b/packages/container/src/Commands/ContainerShowCommand.php
+@@ -110 +110 @@ private function formatClassValue(string|object $class, mixed $key = null): stri
+-                $class = $class::class;
++                $class = get_class($class);

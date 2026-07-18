@@ -1,0 +1,10 @@
+diff --git a/packages/database/src/Builder/QueryBuilders/SelectQueryBuilder.php b/packages/database/src/Builder/QueryBuilders/SelectQueryBuilder.php
+index bdab365a8cd7b3b2e1666ec6ac7b1d6fb368bc5d..f2561b9a69fd05079ca5a3f39c9ca83a114810f4 100644
+--- a/packages/database/src/Builder/QueryBuilders/SelectQueryBuilder.php
++++ b/packages/database/src/Builder/QueryBuilders/SelectQueryBuilder.php
+@@ -210 +210 @@ public function chunk(Closure $closure, int $amountPerChunk = 200): void
+-                ->clone()
++                ->copy()
+@@ -464 +464 @@ private function aggregate(AggregateFunction $function, string $column): mixed
+-    private function clone(): self
++    private function copy(): self
