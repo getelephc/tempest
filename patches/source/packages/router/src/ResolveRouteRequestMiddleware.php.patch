@@ -1,7 +1,0 @@
-diff --git a/packages/router/src/ResolveRouteRequestMiddleware.php b/packages/router/src/ResolveRouteRequestMiddleware.php
-index ef66a647cd0fd1e583ce45a69315a00a89ccdce5..ac7a539dae22c5d62a438792d369f10165047d48 100644
---- a/packages/router/src/ResolveRouteRequestMiddleware.php
-+++ b/packages/router/src/ResolveRouteRequestMiddleware.php
-@@ -31 +31 @@ public function __invoke(Request $request, HttpMiddlewareCallable $next): Respon
--        $this->container->singleton($request::class, fn () => $request);
-+        $this->container->singleton(get_class($request), fn () => $request);

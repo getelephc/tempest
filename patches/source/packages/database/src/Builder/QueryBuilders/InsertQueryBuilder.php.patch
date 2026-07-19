@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/Builder/QueryBuilders/InsertQueryBuilder.php b/packages/database/src/Builder/QueryBuilders/InsertQueryBuilder.php
-index 1313de3cd0c9fa746d27338e5e9ddaca565c3284..d10c8bbeb92936885cc4520af067c092c3a57d92 100644
---- a/packages/database/src/Builder/QueryBuilders/InsertQueryBuilder.php
-+++ b/packages/database/src/Builder/QueryBuilders/InsertQueryBuilder.php
-@@ -565 +565 @@ private function resolveRelationProperty(ModelInspector $definition, PropertyRef
--            default => new InsertQueryBuilder($value::class, [$value], $this->serializerFactory)->build(),
-+            default => new InsertQueryBuilder(get_class($value), [$value], $this->serializerFactory)->build(),

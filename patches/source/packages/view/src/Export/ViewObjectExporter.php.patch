@@ -1,7 +1,0 @@
-diff --git a/packages/view/src/Export/ViewObjectExporter.php b/packages/view/src/Export/ViewObjectExporter.php
-index 9d736e3f7b9cbbe62ee395e73532b7caafb7d7ac..ded92bf57220d85d4143bf9280616704961a21ad 100644
---- a/packages/view/src/Export/ViewObjectExporter.php
-+++ b/packages/view/src/Export/ViewObjectExporter.php
-@@ -17 +17 @@ public static function export(ExportableViewObject|ImmutableArray $object): stri
--            $object::class,
-+            get_class($object),

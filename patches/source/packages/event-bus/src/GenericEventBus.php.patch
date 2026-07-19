@@ -1,13 +1,7 @@
 diff --git a/packages/event-bus/src/GenericEventBus.php b/packages/event-bus/src/GenericEventBus.php
-index 14372e851da33d8235f95d8f9e8e599b35b4a832..40003b99a80d6c1159e4aec64b1c200b1353f6a4 100644
+index 14372e851da33d8235f95d8f9e8e599b35b4a832..6e6d0e7948be1aea7ee128ec380c4ea4911f8e38 100644
 --- a/packages/event-bus/src/GenericEventBus.php
 +++ b/packages/event-bus/src/GenericEventBus.php
 @@ -18 +18 @@ public function __construct(
 -        private(set) EventBusConfig $eventBusConfig,
 +        public EventBusConfig $eventBusConfig,
-@@ -38 +38 @@ private function resolveHandlers(string|object $event): array
--        $eventName = Str\parse($event) ?: $event::class;
-+        $eventName = Str\parse($event) ?: get_class($event);
-@@ -41 +41 @@ private function resolveHandlers(string|object $event): array
--            $eventName = $event::class . '::' . $eventName;
-+            $eventName = get_class($event) . '::' . $eventName;

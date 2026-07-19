@@ -1,7 +1,0 @@
-diff --git a/packages/http/src/Mappers/RequestToObjectMapper.php b/packages/http/src/Mappers/RequestToObjectMapper.php
-index e79e482bbc7e069c7377e05b07704aa8eb63fcf1..d78e0b799f35bc1669109d0ab0bbe0d13600286c 100644
---- a/packages/http/src/Mappers/RequestToObjectMapper.php
-+++ b/packages/http/src/Mappers/RequestToObjectMapper.php
-@@ -61 +61 @@ public function map(mixed $from, mixed $to): array|object
--            $targetClass = is_string($to) ? $to : $to::class;
-+            $targetClass = is_string($to) ? $to : get_class($to);

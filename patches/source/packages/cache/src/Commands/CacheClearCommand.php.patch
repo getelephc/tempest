@@ -1,7 +1,0 @@
-diff --git a/packages/cache/src/Commands/CacheClearCommand.php b/packages/cache/src/Commands/CacheClearCommand.php
-index 4d0e4343b33f626bd28eecd187ff07ca610817d5..2a53f694ce2af2d4e5eaec8386a80856f6c42074 100644
---- a/packages/cache/src/Commands/CacheClearCommand.php
-+++ b/packages/cache/src/Commands/CacheClearCommand.php
-@@ -80 +80 @@ private function clearInternalCaches(bool $all = false): void
--                    key: $cache::class,
-+                    key: get_class($cache),

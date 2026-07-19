@@ -17,6 +17,7 @@ else
     exit 1
 fi
 
+"$compiler" --php-version 8.5 --check "$ROOT/elephc/probes/object-class.php"
 "$compiler" --php-version 8.5 --check "$ROOT/elephc/server.php"
 "$compiler" --php-version 8.5 --web "$ROOT/elephc/server.php"
 

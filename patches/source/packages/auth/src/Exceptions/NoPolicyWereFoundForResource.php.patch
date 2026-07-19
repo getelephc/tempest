@@ -1,7 +1,0 @@
-diff --git a/packages/auth/src/Exceptions/NoPolicyWereFoundForResource.php b/packages/auth/src/Exceptions/NoPolicyWereFoundForResource.php
-index 7519211b974f253d4ada930741f6148b93ffc5b5..97bef581ecd34ed322bcbc005587e60482db5c3b 100644
---- a/packages/auth/src/Exceptions/NoPolicyWereFoundForResource.php
-+++ b/packages/auth/src/Exceptions/NoPolicyWereFoundForResource.php
-@@ -12 +12 @@ public function __construct(
--        parent::__construct(sprintf('No policies were found for resource `%s`.', is_object($resource) ? $resource::class : $resource));
-+        parent::__construct(sprintf('No policies were found for resource `%s`.', is_object($resource) ? get_class($resource) : $resource));

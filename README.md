@@ -23,7 +23,7 @@ composer install
 ./elephc/server --listen 127.0.0.1:8080 --workers 1
 ```
 
-The patch command is idempotent and applies 189 Tempest source patches plus 2 Composer dependency patches. The build refuses to run unless the complete series is present. Run `npm run test:elephc` for the HTTP checks or `npm run test:clean-room` to repeat the complete install-patch-build-test workflow in a temporary source-only export.
+The patch command is idempotent and applies 149 Tempest source patches plus 2 Composer dependency patches. The build refuses to run unless the complete series is present. Run `npm run test:elephc` for the HTTP checks or `npm run test:clean-room` to repeat the complete install-patch-build-test workflow in a temporary source-only export.
 
 The verified profile serves `/`, `/health`, `/hello/:name`, and `/elephc`, with a real `404` fallback. It keeps Tempest-style controllers, `#[Get]` attributes, request/response objects, and routing; runtime discovery and container reflection are replaced by a static manifest. See [the porting log](docs/elephc/porting-log.md) for the exact boundary, patch policy, and full-framework probe.
 

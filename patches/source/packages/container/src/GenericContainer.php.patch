@@ -1,5 +1,5 @@
 diff --git a/packages/container/src/GenericContainer.php b/packages/container/src/GenericContainer.php
-index 8ee0c5acbf9dacd23698ccd37d634b1e232cbec3..f0587f427c5f16c69675c1f1337c1d1aa91cd070 100644
+index 8ee0c5acbf9dacd23698ccd37d634b1e232cbec3..dc7ee4fda55d347a5916a4931d8e4f1f7c2e4ed3 100644
 --- a/packages/container/src/GenericContainer.php
 +++ b/packages/container/src/GenericContainer.php
 @@ -36 +36 @@ public function __construct(
@@ -26,9 +26,6 @@ index 8ee0c5acbf9dacd23698ccd37d634b1e232cbec3..f0587f427c5f16c69675c1f1337c1d1a
 @@ -56 +56 @@ public function __construct(
 -        private(set) ?DependencyChain $chain = null,
 +        public ?DependencyChain $chain = null,
-@@ -192 +192 @@ public function config(object $config): self
--        $this->singleton($config::class, $config);
-+        $this->singleton(get_class($config), $config);
 @@ -238 +238 @@ public function invoke(ClassReflector|MethodReflector|FunctionReflector|callable
 -            return $this->invokeClosure($method(...), ...$params);
 +            return $this->invokeClosure(Closure::fromCallable($method), ...$params);

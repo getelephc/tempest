@@ -4,7 +4,7 @@ The committed Tempest source tree stays identical to upstream commit
 `a14f676369bb00c935b9603fe58ccc4c85e78820`. All compiler-facing rewrites are
 stored as one patch per target:
 
-- `patches/source/` contains 189 Tempest source, test, and API-documentation patches;
+- `patches/source/` contains 149 Tempest source, test, and API-documentation patches;
 - `patches/vendor/` contains 2 PHP dependency patches;
 - `source.baseline` pins the upstream source commit;
 - `vendor.composer-lock.sha256` pins the exact Composer dependency graph.

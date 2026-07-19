@@ -1,7 +1,0 @@
-diff --git a/packages/command-bus/src/AsyncCommandMiddleware.php b/packages/command-bus/src/AsyncCommandMiddleware.php
-index aa2c152281fb24254e608a4a1574f251e64314c5..39b96db8e8e1529b2a77ae6962a5aeef224c6d5a 100644
---- a/packages/command-bus/src/AsyncCommandMiddleware.php
-+++ b/packages/command-bus/src/AsyncCommandMiddleware.php
-@@ -23 +23 @@ public function __invoke(object $command, CommandBusMiddlewareCallable $next): v
--        if ($reflector->hasAttribute(Async::class) || ($this->commandBusConfig->handlers[$command::class] ?? null)?->handler->hasAttribute(Async::class)) {
-+        if ($reflector->hasAttribute(Async::class) || ($this->commandBusConfig->handlers[get_class($command)] ?? null)?->handler->hasAttribute(Async::class)) {

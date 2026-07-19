@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/Exceptions/ValueWasMissing.php b/packages/database/src/Exceptions/ValueWasMissing.php
-index b05640aa4b386b895e1e617689c9346529190898..075555394a65bc978a879c93fc0d55732843a47e 100644
---- a/packages/database/src/Exceptions/ValueWasMissing.php
-+++ b/packages/database/src/Exceptions/ValueWasMissing.php
-@@ -13 +13 @@ public function __construct(object $model, string $field)
--        $modelClass = $model::class;
-+        $modelClass = get_class($model);

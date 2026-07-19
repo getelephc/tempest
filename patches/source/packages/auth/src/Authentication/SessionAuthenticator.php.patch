@@ -1,7 +1,0 @@
-diff --git a/packages/auth/src/Authentication/SessionAuthenticator.php b/packages/auth/src/Authentication/SessionAuthenticator.php
-index 572b4fcfefd52d075d53a982f206f2df4cea8df5..ea1c40cfccac7259dc7ca652f0ec39a3d1e5aaa2 100644
---- a/packages/auth/src/Authentication/SessionAuthenticator.php
-+++ b/packages/auth/src/Authentication/SessionAuthenticator.php
-@@ -31 +31 @@ public function authenticate(Authenticatable $authenticatable): void
--        $class = $authenticatable::class;
-+        $class = get_class($authenticatable);

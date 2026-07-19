@@ -1,7 +1,0 @@
-diff --git a/packages/console/src/Exceptions/ConsoleExceptionHandler.php b/packages/console/src/Exceptions/ConsoleExceptionHandler.php
-index 3c9d20f9fea316bfce6f4de4a20f78d652944672..8f0364ebecdc84b7083e62190d0725af74f47e8c 100644
---- a/packages/console/src/Exceptions/ConsoleExceptionHandler.php
-+++ b/packages/console/src/Exceptions/ConsoleExceptionHandler.php
-@@ -41 +41 @@ public function handle(Throwable $throwable): void
--                ->error($throwable::class)
-+                ->error(get_class($throwable))

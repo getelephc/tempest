@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/Serializers/DataTransferObjectSerializer.php b/packages/database/src/Serializers/DataTransferObjectSerializer.php
-index d03cb10ff9576a905c225340e720cc30fc37eb57..96915b98ef42a6b2428241839dac5c8a9c7e8281 100644
---- a/packages/database/src/Serializers/DataTransferObjectSerializer.php
-+++ b/packages/database/src/Serializers/DataTransferObjectSerializer.php
-@@ -73 +73 @@ private function serializeWithType(mixed $input): mixed
--            $type = $this->mapperConfig->serializationMap[$input::class] ?? $input::class;
-+            $type = $this->mapperConfig->serializationMap[get_class($input)] ?? get_class($input);

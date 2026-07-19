@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/Exceptions/RelationWasMissing.php b/packages/database/src/Exceptions/RelationWasMissing.php
-index 8e43742cef986dba0132039dd7f20141402175a7..80ac8a3f167cd83c794e8d9a1a2b431c435c5979 100644
---- a/packages/database/src/Exceptions/RelationWasMissing.php
-+++ b/packages/database/src/Exceptions/RelationWasMissing.php
-@@ -13 +13 @@ public function __construct(object $model, string $relation)
--        $modelClass = $model::class;
-+        $modelClass = get_class($model);

@@ -1,7 +1,0 @@
-diff --git a/packages/router/src/Exceptions/JsonExceptionRenderer.php b/packages/router/src/Exceptions/JsonExceptionRenderer.php
-index 3afe725da959e90141b7e47567049baf9a4389f2..8ea9a8b50e9ccc4c0b16608b3929c54cd3cbca4d 100644
---- a/packages/router/src/Exceptions/JsonExceptionRenderer.php
-+++ b/packages/router/src/Exceptions/JsonExceptionRenderer.php
-@@ -94 +94 @@ private function renderErrorResponse(Status $status, ?string $message = null, ?T
--                'exception' => $throwable::class,
-+                'exception' => get_class($throwable),

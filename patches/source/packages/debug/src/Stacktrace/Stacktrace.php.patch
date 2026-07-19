@@ -1,5 +1,5 @@
 diff --git a/packages/debug/src/Stacktrace/Stacktrace.php b/packages/debug/src/Stacktrace/Stacktrace.php
-index 16ad4cd0024ab4e80085e112745b6b29c9cdb432..aa82e04cefb27412f93386c3a623e82aba6efad7 100644
+index 16ad4cd0024ab4e80085e112745b6b29c9cdb432..22ca20b1957183542939850623fa71fe1f4f201f 100644
 --- a/packages/debug/src/Stacktrace/Stacktrace.php
 +++ b/packages/debug/src/Stacktrace/Stacktrace.php
 @@ -33,6 +33,6 @@ public function __construct(
@@ -15,6 +15,3 @@ index 16ad4cd0024ab4e80085e112745b6b29c9cdb432..aa82e04cefb27412f93386c3a623e82a
 +        public int $line,
 +        public string $absoluteFile,
 +        public string $relativeFile,
-@@ -78 +78 @@ function: $firstTraceFrame['function'] ?? null,
--            exceptionClass: $throwable::class,
-+            exceptionClass: get_class($throwable),

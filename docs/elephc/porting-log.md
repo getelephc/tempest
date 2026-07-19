@@ -27,15 +27,31 @@ composer install
 npm run test:elephc
 ```
 
-The applicable corpus contains 189 source patches and 2 vendor patches. Every
+The applicable corpus contains 149 source patches and 2 vendor patches. Every
 patch has one target, full original and patched Git blob hashes, and a path
 mirroring that target. The application order is bytewise stable. Re-running
 the script is a no-op, while a divergent file stops the process.
 
-`scripts/build-elephc.sh` begins with an applied-state check, so compilation
-cannot silently succeed from an unpatched checkout. `npm run test:clean-room`
-exports only committed files to a temporary directory and repeats Composer
-installation, first application, idempotence, compilation, and HTTP tests.
+`scripts/build-elephc.sh` begins with an applied-state check and verifies the
+object-expression `::class` regression probe, so compilation cannot silently
+succeed from an unpatched checkout or a compiler that has lost that support.
+`npm run test:clean-room` exports only committed files to a temporary directory
+and repeats Composer installation, first application, idempotence, compilation,
+and HTTP tests.
+
+## Elephc main compatibility refresh
+
+Elephc main commit `9abe136ea` supports `::class` on object expressions. The
+change is covered by compiler tests, although it is not yet listed under the
+Elephc changelog's `Unreleased` section. The native support removed 70
+`get_class()` rewrite lines across 47 Tempest targets: 40 single-purpose patch
+files were removed, while 7 mixed patches were regenerated with their unrelated
+compatibility rewrites intact.
+
+The current `Unreleased` section additionally lists static local declarations
+without an initializer and the implicit `null` default for untyped properties.
+Neither feature had a corresponding workaround in this corpus, so no patch was
+removed for those changes.
 
 ## Verified AOT boundary
 
@@ -81,11 +97,11 @@ That path is open-ended for AOT for two independent reasons:
    and falls back to `new $discoveryClass()`. Those choices cannot be enumerated
    by Elephc from the request entry point.
 
-The full-framework probe progressed through the Tempest source series and the
-Composer/Symfony UUID patches, then stopped while parsing
-`vendor/symfony/uid/Ulid.php`. Patching that file would not remove the discovery
-boundary, so the verified profile uses the static manifest instead of claiming
-full dynamic compatibility.
+The full-framework probe progresses through the Tempest source series and the
+Composer/Symfony UUID patches, then stops on unsupported `require` syntax in
+`vendor/phpstan/phpstan/bootstrap.php`. Patching that tooling bootstrap would
+not remove the discovery boundary, so the verified profile uses the static
+manifest instead of claiming full dynamic compatibility.
 
 ## Compatibility categories represented
 
@@ -93,7 +109,6 @@ full dynamic compatibility.
 - Reserved `Namespace` identifiers and `namespace\function()` relative calls.
 - Standalone ternary expressions rewritten as `if`/`else`.
 - Asymmetric `private(set)` visibility normalized to public properties.
-- Dynamic object `::class` normalized to `get_class()`.
 - Keyword method and enum-case names renamed without changing represented values.
 - PHP 8.5 clone-with expressions lowered to clone-and-assign or construction.
 - Composer production metadata pruned of Rector to keep tooling out of the

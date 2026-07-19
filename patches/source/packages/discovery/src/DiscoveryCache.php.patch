@@ -1,5 +1,5 @@
 diff --git a/packages/discovery/src/DiscoveryCache.php b/packages/discovery/src/DiscoveryCache.php
-index 9f7873bd7fe0adc8ad00d3f70ff0e78206cbc299..56a4bd9fbec3a2ebab8f8dac6b87498156a39ff8 100644
+index 9f7873bd7fe0adc8ad00d3f70ff0e78206cbc299..514f294cb0ddd44661f9d10107054e5844c9ca07 100644
 --- a/packages/discovery/src/DiscoveryCache.php
 +++ b/packages/discovery/src/DiscoveryCache.php
 @@ -26 +26 @@ public function __construct(
@@ -10,6 +10,3 @@ index 9f7873bd7fe0adc8ad00d3f70ff0e78206cbc299..56a4bd9fbec3a2ebab8f8dac6b874981
 -            'strategy' => $strategy,
 -        ]);
 +        return new self($strategy, $this->pool);
-@@ -69 +67 @@ public function store(DiscoveryLocation $location, array $discoveries): void
--            $cachedForLocation[$discovery::class] = $items->getForLocation($location);
-+            $cachedForLocation[get_class($discovery)] = $items->getForLocation($location);

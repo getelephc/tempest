@@ -1,7 +1,0 @@
-diff --git a/packages/cache/src/Commands/CacheStatusCommand.php b/packages/cache/src/Commands/CacheStatusCommand.php
-index 7c2c70e189d6d80a5add9d08b67f09b21846aa86..b478f70e9ff44cb4abf5ebb3782355c8fe26939b 100644
---- a/packages/cache/src/Commands/CacheStatusCommand.php
-+++ b/packages/cache/src/Commands/CacheStatusCommand.php
-@@ -98 +98 @@ private function getCacheName(Cache $cache): string
--                return $cache::class;
-+                return get_class($cache);

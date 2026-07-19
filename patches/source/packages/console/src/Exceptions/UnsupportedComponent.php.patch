@@ -1,7 +1,0 @@
-diff --git a/packages/console/src/Exceptions/UnsupportedComponent.php b/packages/console/src/Exceptions/UnsupportedComponent.php
-index e77f502d0279e15e52c13e11bcd80cfe72c7a533..1d87b180f5cb92df4d612302239fadc77e6df2ad 100644
---- a/packages/console/src/Exceptions/UnsupportedComponent.php
-+++ b/packages/console/src/Exceptions/UnsupportedComponent.php
-@@ -14 +14 @@ public function __construct(InteractiveConsoleComponent $component)
--        $className = $component::class;
-+        $className = get_class($component);

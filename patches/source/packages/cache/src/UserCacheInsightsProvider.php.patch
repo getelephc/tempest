@@ -1,7 +1,0 @@
-diff --git a/packages/cache/src/UserCacheInsightsProvider.php b/packages/cache/src/UserCacheInsightsProvider.php
-index 6fb6cbc88c198ce038ab2514d5229ae68dd1698d..82e783e72e1d95628f0e645226c92d8a6b59ccf0 100644
---- a/packages/cache/src/UserCacheInsightsProvider.php
-+++ b/packages/cache/src/UserCacheInsightsProvider.php
-@@ -67 +67 @@ private function getCacheName(Cache $cache): string
--            return $cache::class;
-+            return get_class($cache);

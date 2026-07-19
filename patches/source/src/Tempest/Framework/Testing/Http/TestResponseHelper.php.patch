@@ -1,5 +1,5 @@
 diff --git a/src/Tempest/Framework/Testing/Http/TestResponseHelper.php b/src/Tempest/Framework/Testing/Http/TestResponseHelper.php
-index b3e244d53bd3e484a3086f203cc661904fd2502c..459ee3c8c5db723e82253b2abf7463c61f98419d 100644
+index b3e244d53bd3e484a3086f203cc661904fd2502c..6c75fb56b3d2e985cef48f94250f999e5ea547ce 100644
 --- a/src/Tempest/Framework/Testing/Http/TestResponseHelper.php
 +++ b/src/Tempest/Framework/Testing/Http/TestResponseHelper.php
 @@ -37,2 +37,2 @@ public function __construct(
@@ -10,6 +10,3 @@ index b3e244d53bd3e484a3086f203cc661904fd2502c..459ee3c8c5db723e82253b2abf7463c6
 @@ -40 +40 @@ public function __construct(
 -        private(set) ?Throwable $throwable = null,
 +        public ?Throwable $throwable = null,
-@@ -370 +370 @@ public function assertHasNoValidationsErrors(): self
--                ->map(fn (array $failingRules, string $key) => $key . ': ' . arr($failingRules)->map(fn (Rule $rule) => $rule::class)->implode(', '))
-+                ->map(fn (array $failingRules, string $key) => $key . ': ' . arr($failingRules)->map(fn (Rule $rule) => get_class($rule))->implode(', '))
