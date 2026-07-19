@@ -30,20 +30,22 @@ npm run test:elephc
 
 `ELEPHC_REPO` is mandatory for scripts that invoke the compiler. It may point
 to an Elephc checkout anywhere on disk and is resolved to an absolute path
-before the clean-room export changes directory. The build runs Cargo with the
-checkout's manifest and target directory, so no repository-relative fallback,
-global Elephc executable, or machine-specific path is involved.
+before the clean-room export changes directory. The build exports its committed
+`HEAD` to a temporary directory, applies the compiler patch there, and uses the
+checkout's `target/` only as a Cargo cache. No repository-relative fallback,
+global executable, machine-specific path, or Elephc source mutation is involved.
 
-The applicable corpus contains 149 source patches and 2 vendor patches. Every
-patch has one target, full original and patched Git blob hashes, and a path
-mirroring that target. The application order is bytewise stable. Re-running
-the script is a no-op, while a divergent file stops the process.
+The applicable corpus contains 183 source patches, 2 root vendor patches, and
+1 runtime manifest patch. Every patch has one target, full original and patched
+Git blob hashes, and a path mirroring that target. Both Composer lock files are
+checksummed. The application order is bytewise stable; re-running the script is
+a no-op, while a divergent file stops the process.
 
-`scripts/build-elephc.sh` resolves the required checkout, begins with an
-applied-state check, builds Elephc with Cargo, and verifies the object-expression
-`::class` regression probe. Compilation therefore cannot silently succeed from
-an unpatched checkout, a stale compiler, or a compiler that has lost that
-support.
+`scripts/build-elephc.sh` begins with an applied-state check, installs the
+isolated runtime Composer graph, applies its manifest patch, builds the
+temporary Elephc source, and verifies the object-expression `::class` regression
+probe. Compilation therefore cannot silently succeed from an unpatched
+checkout, a stale compiler, or a compiler that has lost that support.
 `npm run test:clean-room` exports only committed files to a temporary directory
 and repeats Composer installation, first application, idempotence, compilation,
 and HTTP tests.
@@ -64,22 +66,32 @@ removed for those changes.
 
 ## Verified AOT boundary
 
-The working entry point is `elephc/server.php`. It deliberately lives below
-the repository root so Elephc does not eagerly import the monorepo's complete
-Composer `autoload.files` graph.
+The working entry point is `elephc/runtime/server.php`. The runtime has a pinned
+production Composer graph and mirrors the patched Tempest package. A one-file
+runtime patch renames the package's eager `autoload.files` key so unrelated
+framework helpers are not imported into the finite request graph.
 
 The profile keeps these Tempest concepts as PHP classes:
 
 - `Tempest\Router\HttpApplication`
-- `Tempest\Router\Router` and finite routes
+- `Tempest\Router\GenericRouter` and `RouteConfig`
+- `Tempest\Router\MatchRouteMiddleware`
+- `Tempest\Router\Routing\Matching\GenericRouteMatcher`
 - `Tempest\Router\Get` method attributes
 - `Tempest\Http\Request` and `Tempest\Http\Response`
-- controller classes implementing a common handler contract
+- Tempest response classes and application controller classes
 
 Runtime discovery and reflective dependency injection are replaced by the
-static registration block in `HttpApplication::boot()`. This is the narrow
-synthetic boundary. Request parsing, route matching, controller dispatch,
-status codes, headers, bodies, and redirects all run in the compiled binary.
+manifest in `Elephc\TempestRuntime\Bootstrap`. `AotRequest`, `StaticContainer`,
+`AotRouteHandler`, `AotResponseSender`, and `AotKernel` are the narrow synthetic
+boundary. A request still crosses Tempest's application, router, route
+middleware, matcher, matched-route value, controller, and response objects.
+
+The route attributes are not reflected at runtime: their URIs and controller
+classes are repeated in the finite manifest. Dynamic callable invocation is
+also replaced by an explicit controller dispatcher because it corrupts typed
+arguments in the current compiler. The supported dynamic route has one required
+string parameter; this is not a general parameter-binding implementation.
 
 Verified routes:
 
@@ -89,7 +101,8 @@ Verified routes:
 | `/health` | `200` JSON |
 | `/hello/tempest` | `200` text |
 | `/elephc` | `302` to `https://elephc.dev` |
-| `/missing` | `404` text |
+| `/missing` | empty `404` response |
+| `POST /health` | `404` (method rejected) |
 
 ## Why the complete boot is not the profile boundary
 
@@ -106,11 +119,11 @@ That path is open-ended for AOT for two independent reasons:
    and falls back to `new $discoveryClass()`. Those choices cannot be enumerated
    by Elephc from the request entry point.
 
-The full-framework probe progresses through the Tempest source series and the
-Composer/Symfony UUID patches, then stops on unsupported `require` syntax in
-`vendor/phpstan/phpstan/bootstrap.php`. Patching that tooling bootstrap would
-not remove the discovery boundary, so the verified profile uses the static
-manifest instead of claiming full dynamic compatibility.
+The full-framework probe is intentionally outside the reproducible build. Its
+next compiler error may move as Elephc main evolves, but resolving individual
+syntax errors would not remove the open-ended discovery boundary. The verified
+profile therefore uses the static manifest instead of claiming full dynamic
+compatibility.
 
 ## Compatibility categories represented
 

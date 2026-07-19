@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <strong>Tempest 3.16.2 &middot; 149 source + 2 vendor patches &middot; static discovery manifest &middot; finite web AOT profile</strong>
+  <strong>Tempest 3.16.2 &middot; 183 source + 2 vendor + 1 runtime patches &middot; real Tempest HTTP pipeline &middot; finite web AOT profile</strong>
 </p>
 
 <p align="center">
@@ -41,15 +41,17 @@
   (commit `a14f676369`) is the pinned baseline. Tempest sources stay
   byte-identical to that import in a fresh checkout.
 - Compiler compatibility rewrites live in an explicit, file-level patch corpus:
-  149 Tempest source patches plus 2 Composer dependency patches. Every patch
+  183 Tempest source patches, 2 Composer dependency patches, and 1 isolated
+  runtime Composer patch. Every patch
   has one target, original and patched blob hashes, and a path mirroring its
   target. Application is idempotent; a divergent file stops the process.
 - The profile targets PHP 8.5 and is compiled with
   `--php-version 8.5 --web`. The build refuses to run unless the complete
   patch series is applied.
-- The web binary keeps Tempest-style controllers, `#[Get]` attributes,
-  request/response objects, and routing. Runtime discovery and container
-  reflection are replaced by a static manifest in `HttpApplication::boot()`.
+- A real request runs through Tempest's `HttpApplication`, `GenericRouter`,
+  `MatchRouteMiddleware`, `GenericRouteMatcher`, route model, controllers, and
+  response classes. Runtime discovery, reflective dependency injection, and
+  dynamic callable dispatch are replaced by finite AOT adapters.
 - Verified routes: `/` (`200` HTML), `/health` (`200` JSON), `/hello/:name`
   (`200` text), `/elephc` (`302` to the Elephc website), and a real `404`
   fallback for unknown paths.
@@ -64,7 +66,7 @@ export ELEPHC_REPO=/path/to/elephc
 composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/build-elephc.sh
-./elephc/server --listen 127.0.0.1:8080 --workers 1
+./elephc/runtime/server --listen 127.0.0.1:8080 --workers 1
 ```
 
 Verify the supported behavior:
@@ -75,21 +77,45 @@ npm run audit:patches    # patch corpus integrity
 npm run test:clean-room  # full install-patch-build-test cycle in a source-only export
 ```
 
-`./scripts/apply-elephc-patches.sh --check` reports the applied state without
-modifying files. `scripts/build-elephc.sh` starts from an applied-state check
-and verifies the object-expression `::class` regression probe, so compilation
-cannot silently succeed from an unpatched checkout or a stale compiler.
+`./scripts/apply-elephc-patches.sh --check` reports the applied root source and
+vendor state without modifying files. `scripts/build-elephc.sh` then installs
+the isolated runtime Composer graph, applies its one manifest patch, builds a
+patched compiler from a temporary archive of `ELEPHC_REPO`, verifies the
+object-expression `::class` regression probe, and compiles the web binary. The
+Elephc checkout itself remains unchanged.
 
 ## Current boundaries
 
-The entry point is `elephc/server.php`, deliberately below the repository root
-so elephc does not eagerly import the monorepo's complete Composer
-`autoload.files` graph. Request parsing, route matching, controller dispatch,
-status codes, headers, bodies, and redirects all run in the compiled binary;
-route and dependency registration is the static manifest, not runtime
-discovery.
+The entry point is `elephc/runtime/server.php`. Its isolated Composer project
+mirrors the patched Tempest package instead of symlinking it and disables the
+framework's eager `autoload.files` list with a committed runtime patch.
 
-`full-framework.php` is the diagnostic probe for the real
+The verified request path is:
+
+```text
+elephc worker
+  -> Tempest\Router\HttpApplication
+  -> Tempest\Router\GenericRouter
+  -> Tempest\Router\MatchRouteMiddleware
+  -> Tempest\Router\Routing\Matching\GenericRouteMatcher
+  -> AOT controller dispatcher
+  -> controller with #[Get]
+  -> Tempest\Http\Response
+  -> AOT response sender
+```
+
+`Bootstrap` contains the finite route manifest. The `#[Get]` attributes remain
+on the controller methods, but Elephc does not discover them with runtime
+reflection. `AotRequest`, `StaticContainer`, `AotRouteHandler`,
+`AotResponseSender`, and `AotKernel` are the explicit synthetic boundary.
+
+The supported profile currently has GET routes, one required string parameter,
+status/header/body/JSON/redirect responses, HEAD body suppression, and a 404
+fallback. Runtime discovery, general reflective DI, arbitrary middleware
+stacks, views, sessions, cookies, uploaded files, and parsed request input are
+not claimed as supported.
+
+`full-framework.php` remains a diagnostic probe for the reflective
 `FrameworkKernel::boot()` path. That path stays open-ended for AOT because
 `BootDiscovery` scans runtime filesystem paths and instantiates classes
 reflectively, which elephc cannot enumerate from the request entry point. The
