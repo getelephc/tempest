@@ -24,11 +24,16 @@ patches/vendor/symfony/uid/Uuid.php.patch
 Starting from a fresh checkout:
 
 ```bash
+export ELEPHC_REPO=/path/to/elephc
 composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/apply-elephc-patches.sh --check
 ./scripts/build-elephc.sh
 ```
+
+`ELEPHC_REPO` must point to an Elephc repository checkout. The build script
+compiles the compiler from that checkout and never assumes a local directory
+layout or a globally installed Elephc binary.
 
 The first run applies every clean target. A second run is safe and recognizes
 all patches as already present. The script stops if a target is neither the

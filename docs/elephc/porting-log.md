@@ -20,6 +20,7 @@ runtime.
 From a source-only checkout:
 
 ```bash
+export ELEPHC_REPO=/path/to/elephc
 composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/apply-elephc-patches.sh --check
@@ -27,14 +28,22 @@ composer install
 npm run test:elephc
 ```
 
+`ELEPHC_REPO` is mandatory for scripts that invoke the compiler. It may point
+to an Elephc checkout anywhere on disk and is resolved to an absolute path
+before the clean-room export changes directory. The build runs Cargo with the
+checkout's manifest and target directory, so no repository-relative fallback,
+global Elephc executable, or machine-specific path is involved.
+
 The applicable corpus contains 149 source patches and 2 vendor patches. Every
 patch has one target, full original and patched Git blob hashes, and a path
 mirroring that target. The application order is bytewise stable. Re-running
 the script is a no-op, while a divergent file stops the process.
 
-`scripts/build-elephc.sh` begins with an applied-state check and verifies the
-object-expression `::class` regression probe, so compilation cannot silently
-succeed from an unpatched checkout or a compiler that has lost that support.
+`scripts/build-elephc.sh` resolves the required checkout, begins with an
+applied-state check, builds Elephc with Cargo, and verifies the object-expression
+`::class` regression probe. Compilation therefore cannot silently succeed from
+an unpatched checkout, a stale compiler, or a compiler that has lost that
+support.
 `npm run test:clean-room` exports only committed files to a temporary directory
 and repeats Composer installation, first application, idempotence, compilation,
 and HTTP tests.

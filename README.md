@@ -17,13 +17,16 @@
 This repository tracks the Tempest 3.x framework plus a finite native web profile for [Elephc](https://elephc.dev). Tempest sources stay byte-identical to the pinned upstream baseline in a fresh checkout; compiler compatibility rewrites live in an explicit, file-level patch corpus.
 
 ```bash
+export ELEPHC_REPO=/path/to/elephc
 composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/build-elephc.sh
 ./elephc/server --listen 127.0.0.1:8080 --workers 1
 ```
 
-The patch command is idempotent and applies 149 Tempest source patches plus 2 Composer dependency patches. The build refuses to run unless the complete series is present. Run `npm run test:elephc` for the HTTP checks or `npm run test:clean-room` to repeat the complete install-patch-build-test workflow in a temporary source-only export.
+`ELEPHC_REPO` is required by every script that invokes the compiler and may point to an Elephc checkout anywhere on disk. The build compiles that checkout with Cargo before compiling the profile; it does not rely on a neighboring checkout or a globally installed binary.
+
+The patch command is idempotent and applies 149 Tempest source patches plus 2 Composer dependency patches. The build refuses to run unless the complete series is present. Run `npm run test:elephc` for the HTTP checks or `ELEPHC_REPO=/path/to/elephc npm run test:clean-room` to repeat the complete install-patch-build-test workflow in a temporary source-only export.
 
 The verified profile serves `/`, `/health`, `/hello/:name`, and `/elephc`, with a real `404` fallback. It keeps Tempest-style controllers, `#[Get]` attributes, request/response objects, and routing; runtime discovery and container reflection are replaced by a static manifest. See [the porting log](docs/elephc/porting-log.md) for the exact boundary, patch policy, and full-framework probe.
 
