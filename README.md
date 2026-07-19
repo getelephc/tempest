@@ -1,20 +1,63 @@
 <p align="center">
-  <a href="https://tempestphp.com">
-    <img src="https://github.com/tempestphp/.github/raw/refs/heads/main/logo_current/tempest-logo.png" width="100" />
-  </a>
+  <a href="https://github.com/illegalstudio/elephc"><img src="assets/elephc-logo-mark.png" width="130" alt="elephc logo"></a>
 </p>
 
-<h1 align="center">Tempest</h1>
-<div align="center">
-  Tempest is a community-driven, modern PHP framework that gets out of your way and dares to think outside the box. Read the <a href="https://tempestphp.com">documentation</a> to get started.
-</div>
+<p align="center">
+  <a href="https://tempestphp.com"><img src="https://github.com/tempestphp/.github/raw/refs/heads/main/logo_current/tempest-logo.png" width="100" alt="Tempest logo"></a>
+</p>
 
-<br />
-<br />
+<h1 align="center">Tempest 3 on elephc</h1>
 
-## Elephc AOT profile
+<p align="center">
+  <em>Tempest, compiled ahead of time.</em>
+</p>
 
-This repository tracks the Tempest 3.x framework plus a finite native web profile for [Elephc](https://elephc.dev). Tempest sources stay byte-identical to the pinned upstream baseline in a fresh checkout; compiler compatibility rewrites live in an explicit, file-level patch corpus.
+<p align="center">
+  <a href="https://opensource.org/license/mit"><img src="https://img.shields.io/badge/License-MIT-FF7A1A?style=flat-square" alt="License: MIT"></a>
+  <a href="https://x.com/nahime0"><img src="https://img.shields.io/badge/Follow-%40nahime0-FF7A1A?style=flat-square&logo=x&logoColor=white" alt="Follow @nahime0 on X"></a>
+</p>
+
+<p align="center">
+  <strong>Tempest 3.16.2 &middot; 149 source + 2 vendor patches &middot; static discovery manifest &middot; finite web AOT profile</strong>
+</p>
+
+<p align="center">
+  An experimental port that compiles a pinned Tempest 3.x checkout into a finite native <a href="https://github.com/illegalstudio/elephc">elephc</a> web binary while retaining every compiler compatibility rewrite as a reviewable patch corpus.
+</p>
+
+<p align="center">
+  <a href="https://elephc.dev"><strong>Official Website</strong></a>
+</p>
+
+---
+
+> [!IMPORTANT]
+> This is a narrow AOT web profile, not complete Tempest compatibility and not
+> a production-ready application.
+
+## Current status
+
+- Upstream `tempestphp/tempest-framework`, branch `3.x`, release `v3.16.2`
+  (commit `a14f676369`) is the pinned baseline. Tempest sources stay
+  byte-identical to that import in a fresh checkout.
+- Compiler compatibility rewrites live in an explicit, file-level patch corpus:
+  149 Tempest source patches plus 2 Composer dependency patches. Every patch
+  has one target, original and patched blob hashes, and a path mirroring its
+  target. Application is idempotent; a divergent file stops the process.
+- The profile targets PHP 8.5 and is compiled with
+  `--php-version 8.5 --web`. The build refuses to run unless the complete
+  patch series is applied.
+- The web binary keeps Tempest-style controllers, `#[Get]` attributes,
+  request/response objects, and routing. Runtime discovery and container
+  reflection are replaced by a static manifest in `HttpApplication::boot()`.
+- Verified routes: `/` (`200` HTML), `/health` (`200` JSON), `/hello/:name`
+  (`200` text), `/elephc` (`302` to the Elephc website), and a real `404`
+  fallback for unknown paths.
+
+## Reproduce the build
+
+`ELEPHC_REPO` must point to an elephc checkout; the build runs Cargo from that
+checkout, so no global elephc executable is involved.
 
 ```bash
 export ELEPHC_REPO=/path/to/elephc
@@ -24,105 +67,38 @@ composer install
 ./elephc/server --listen 127.0.0.1:8080 --workers 1
 ```
 
-`ELEPHC_REPO` is required by every script that invokes the compiler and may point to an Elephc checkout anywhere on disk. The build compiles that checkout with Cargo before compiling the profile; it does not rely on a neighboring checkout or a globally installed binary.
+Verify the supported behavior:
 
-The patch command is idempotent and applies 149 Tempest source patches plus 2 Composer dependency patches. The build refuses to run unless the complete series is present. Run `npm run test:elephc` for the HTTP checks or `ELEPHC_REPO=/path/to/elephc npm run test:clean-room` to repeat the complete install-patch-build-test workflow in a temporary source-only export.
-
-The verified profile serves `/`, `/health`, `/hello/:name`, and `/elephc`, with a real `404` fallback. It keeps Tempest-style controllers, `#[Get]` attributes, request/response objects, and routing; runtime discovery and container reflection are replaced by a static manifest. See [the porting log](docs/elephc/porting-log.md) for the exact boundary, patch policy, and full-framework probe.
-
-## Introduction
-
-Tempest is a PHP framework that _gets out of your way_.
-
-Its design philosophy is that developers should write as little framework-related code as possible, so that they can focus on application code instead.
-
-Zero config, zero overhead. This is Tempest:
-
-```php
-final class BookController
-{
-    #[Get('/books/{book}')]
-    public function show(Book $book): Response
-    {
-        return new Ok($book);
-    }
-
-    #[Post('/books')]
-    public function store(CreateBookRequest $request): Response
-    {
-        $book = map($request)->to(Book::class)->save();
-
-        return new Redirect([self::class, 'show'], book: $book->id);
-    }
-
-    // …
-}
+```bash
+npm run test:elephc      # HTTP checks against the compiled binary
+npm run audit:patches    # patch corpus integrity
+npm run test:clean-room  # full install-patch-build-test cycle in a source-only export
 ```
 
-```php
-final class MigrateUpCommand
-{
-    public function __construct(
-        private Console $console,
-        private MigrationManager $migrationManager,
-    ) {}
+`./scripts/apply-elephc-patches.sh --check` reports the applied state without
+modifying files. `scripts/build-elephc.sh` starts from an applied-state check
+and verifies the object-expression `::class` regression probe, so compilation
+cannot silently succeed from an unpatched checkout or a stale compiler.
 
-    #[ConsoleCommand(
-        name: 'migrate:up',
-        description: 'Run all new migrations',
-        middleware: [ForceMiddleware::class, CautionMiddleware::class],
-    )]
-    public function __invoke(): void
-    {
-        $this->migrationManager->up();
+## Current boundaries
 
-        $this->console->success("Everything migrated");
-    }
+The entry point is `elephc/server.php`, deliberately below the repository root
+so elephc does not eagerly import the monorepo's complete Composer
+`autoload.files` graph. Request parsing, route matching, controller dispatch,
+status codes, headers, bodies, and redirects all run in the compiled binary;
+route and dependency registration is the static manifest, not runtime
+discovery.
 
-    #[EventHandler]
-    public function onMigrationMigrated(MigrationMigrated $migrationMigrated): void
-    {
-        $this->console->writeln("- {$migrationMigrated->name}");
-    }
-}
-```
+`full-framework.php` is the diagnostic probe for the real
+`FrameworkKernel::boot()` path. That path stays open-ended for AOT because
+`BootDiscovery` scans runtime filesystem paths and instantiates classes
+reflectively, which elephc cannot enumerate from the request entry point. The
+verified profile therefore uses the static manifest instead of claiming full
+dynamic compatibility.
 
-Read how to get started with Tempest [here](https://tempestphp.com).
+After patching, the working tree is an AOT build tree and should not be
+treated as a normal upstream Tempest checkout.
 
-&nbsp;
+## Documentation
 
-## Installation
-
-Create a Tempest project from scratch:
-
-```
-composer create-project tempest/app <name>
-```
-
-Or install Tempest in any existing project:
-
-```
-composer require tempest/framework
-```
-
-Continue to read how Tempest works in [the docs](https://tempestphp.com).
-
-&nbsp;
-
-## Contributing
-
-We welcome contributing to Tempest! We only ask that you take a quick look at our [guidelines](https://tempestphp.com/main/extra-topics/contributing).
-
-An easy way to get started is to head on over to the issues page to see some ways you might help out.
-
-<p align="center">
-	<br />
-	<br />
-	<sub>
-		Check out the <a href="https://tempestphp.com">documentation</a>
-		&nbsp;
-		·
-		&nbsp;
-		Join the <a href="https://tempestphp.com/discord">Discord</a> server
-  </sub>
-</p>
+- [Porting log: baseline, patch policy, and full-framework probe](docs/elephc/porting-log.md)
