@@ -1,0 +1,9 @@
+diff --git a/packages/reflection/src/TypeReflector.php b/packages/reflection/src/TypeReflector.php
+index a9b5bd2f149f9a82949cb0d6a525d52139a7edc7..65338bfb0b5d44aa1c5575f6172c63f511146c01 100644
+--- a/packages/reflection/src/TypeReflector.php
++++ b/packages/reflection/src/TypeReflector.php
+@@ -114 +114,3 @@ public function accepts(mixed $input): bool
+-            return $input instanceof $this->definition;
++            $definition = $this->definition;
++
++            return $input instanceof $definition;

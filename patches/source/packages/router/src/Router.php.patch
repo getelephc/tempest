@@ -1,0 +1,11 @@
+diff --git a/packages/router/src/Router.php b/packages/router/src/Router.php
+index 6f28e55e2852b0f2c09da630eca3546f8e791520..bf0af161ba5d1f8680f741d8ec3fc56b054dc762 100644
+--- a/packages/router/src/Router.php
++++ b/packages/router/src/Router.php
+@@ -7,2 +7 @@
+-use Psr\Http\Message\ServerRequestInterface as PsrRequest;
+-use Tempest\Http\Request;
++use Elephc\TempestRuntime\AotRequest;
+@@ -13 +12 @@ interface Router
+-    public function dispatch(Request|PsrRequest $request): Response;
++    public function dispatch(AotRequest $request): Response;

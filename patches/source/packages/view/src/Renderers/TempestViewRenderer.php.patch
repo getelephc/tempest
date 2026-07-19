@@ -1,0 +1,15 @@
+diff --git a/packages/view/src/Renderers/TempestViewRenderer.php b/packages/view/src/Renderers/TempestViewRenderer.php
+index a228f9336d62ee76b4bbba4b7e075eff23382a31..e81515d7d4eb2039c71e6898300a7ab90a86d38d 100644
+--- a/packages/view/src/Renderers/TempestViewRenderer.php
++++ b/packages/view/src/Renderers/TempestViewRenderer.php
+@@ -108,2 +108,5 @@ public function includeViewComponent(string $path): Closure
+-        /** @var Closure */
+-        return $this->includedViewComponents[$path] ??= include $path;
++        if (isset($this->includedViewComponents[$path])) {
++            return $this->includedViewComponents[$path];
++        }
++
++        throw new \RuntimeException('Dynamic view component includes are not available in the Elephc AOT profile.');
+@@ -149 +152 @@ private function renderCompiled(View $_view, string $_path): string
+-            include $_path;
++            throw new \RuntimeException('Dynamic compiled view includes are not available in the Elephc AOT profile.');

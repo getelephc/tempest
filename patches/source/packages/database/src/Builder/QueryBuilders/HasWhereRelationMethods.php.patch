@@ -1,0 +1,16 @@
+diff --git a/packages/database/src/Builder/QueryBuilders/HasWhereRelationMethods.php b/packages/database/src/Builder/QueryBuilders/HasWhereRelationMethods.php
+index 83ed7acc4f4bafd27c9c69b767aca39a29754eff..01d0702f2575a36884ce68c93e0af491f4a58f71 100644
+--- a/packages/database/src/Builder/QueryBuilders/HasWhereRelationMethods.php
++++ b/packages/database/src/Builder/QueryBuilders/HasWhereRelationMethods.php
+@@ -38 +38 @@ public function whereHas(
+-            connector: WhereConnector::AND,
++            connector: WhereConnector::CONJUNCTION,
+@@ -59 +59 @@ public function whereDoesntHave(
+-            connector: WhereConnector::AND,
++            connector: WhereConnector::CONJUNCTION,
+@@ -82 +82 @@ public function orWhereHas(
+-            connector: WhereConnector::OR,
++            connector: WhereConnector::DISJUNCTION,
+@@ -103 +103 @@ public function orWhereDoesntHave(
+-            connector: WhereConnector::OR,
++            connector: WhereConnector::DISJUNCTION,

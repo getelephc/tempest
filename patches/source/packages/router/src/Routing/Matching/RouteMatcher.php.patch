@@ -1,0 +1,10 @@
+diff --git a/packages/router/src/Routing/Matching/RouteMatcher.php b/packages/router/src/Routing/Matching/RouteMatcher.php
+index ddaf8354876843c65e74e8527dda9234d98ec99b..3fc84ede562e2ea1817b07fc9d427144290993eb 100644
+--- a/packages/router/src/Routing/Matching/RouteMatcher.php
++++ b/packages/router/src/Routing/Matching/RouteMatcher.php
+@@ -7 +7 @@
+-use Tempest\Http\Request;
++use Elephc\TempestRuntime\AotRequest;
+@@ -12 +12 @@ interface RouteMatcher
+-    public function match(Request $request): ?MatchedRoute;
++    public function match(AotRequest $request): ?MatchedRoute;

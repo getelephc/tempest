@@ -1,0 +1,13 @@
+diff --git a/elephc/runtime/vendor/tempest/framework/composer.json b/elephc/runtime/vendor/tempest/framework/composer.json
+index 319b382ab2f47b0e2df7eec27dd600f8fb2d1ace..6e7f367c4c1a2e834dbe9776d996ea6e88d1fe65 100644
+--- a/elephc/runtime/vendor/tempest/framework/composer.json
++++ b/elephc/runtime/vendor/tempest/framework/composer.json
+@@ -170,7 +170,7 @@
+             "Tempest\\View\\": "packages/view/src",
+             "Tempest\\Vite\\": "packages/vite/src"
+         },
+-        "files": [
++        "elephc-disabled-files": [
+             "packages/clock/src/functions.php",
+             "packages/command-bus/src/functions.php",
+             "packages/container/src/functions.php",

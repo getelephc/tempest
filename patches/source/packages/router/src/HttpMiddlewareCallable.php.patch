@@ -1,0 +1,23 @@
+diff --git a/packages/router/src/HttpMiddlewareCallable.php b/packages/router/src/HttpMiddlewareCallable.php
+index df2fec43bd371e8cff7911dbed684dbad70c80f8..3c4af92988bdf81043ce9e46e2df0946cfaa16a0 100644
+--- a/packages/router/src/HttpMiddlewareCallable.php
++++ b/packages/router/src/HttpMiddlewareCallable.php
+@@ -7,2 +7,2 @@
+-use Closure;
+-use Tempest\Http\Request;
++use Elephc\TempestRuntime\AotRequest;
++use Elephc\TempestRuntime\AotRouteHandler;
+@@ -14 +14 @@ public function __construct(
+-        private Closure $closure,
++        private AotRouteHandler $handler,
+@@ -17 +17 @@ public function __construct(
+-    public function __invoke(Request $request): Response
++    public function __invoke(AotRequest $request): Response
+@@ -19 +19,6 @@ public function __invoke(Request $request): Response
+-        return ($this->closure)($request);
++        return $this->call($request, null);
++    }
++
++    public function call(AotRequest $request, ?MatchedRoute $matchedRoute): Response
++    {
++        return $this->handler->handle($request, $matchedRoute);

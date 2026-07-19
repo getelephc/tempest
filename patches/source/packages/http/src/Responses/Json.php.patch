@@ -1,0 +1,12 @@
+diff --git a/packages/http/src/Responses/Json.php b/packages/http/src/Responses/Json.php
+index 86f04e7b847351ee767489c769860c6dc0bdfc47..d3aad5d6083e2979d06f1cc8483be4696bda7d53 100644
+--- a/packages/http/src/Responses/Json.php
++++ b/packages/http/src/Responses/Json.php
+@@ -10 +9,0 @@
+-use Tempest\Http\Status;
+@@ -16 +15 @@ final class Json implements Response
+-    public function __construct(JsonSerializable|array|null $body = null, ?Status $status = null, array $headers = [])
++    public function __construct(JsonSerializable|array|null $body = null, ?int $status = null, array $headers = [])
+@@ -18 +17 @@ public function __construct(JsonSerializable|array|null $body = null, ?Status $s
+-        $this->status = $status ?? Status::OK;
++        $this->status = $status ?? 200;

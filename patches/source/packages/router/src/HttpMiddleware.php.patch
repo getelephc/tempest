@@ -1,0 +1,10 @@
+diff --git a/packages/router/src/HttpMiddleware.php b/packages/router/src/HttpMiddleware.php
+index 3f35a73040581af028266f4785d4146d2a493bf5..35528f92ccb15d90002e53201930e5bf7a5283a5 100644
+--- a/packages/router/src/HttpMiddleware.php
++++ b/packages/router/src/HttpMiddleware.php
+@@ -7 +7 @@
+-use Tempest\Http\Request;
++use Elephc\TempestRuntime\AotRequest;
+@@ -12 +12 @@ interface HttpMiddleware
+-    public function __invoke(Request $request, HttpMiddlewareCallable $next): Response;
++    public function __invoke(AotRequest $request, HttpMiddlewareCallable $next): Response;

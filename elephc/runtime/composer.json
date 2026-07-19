@@ -1,0 +1,66 @@
+{
+    "name": "getelephc/tempest-runtime",
+    "description": "Production-only Composer graph for the Tempest Elephc AOT profile.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.5",
+        "tempest/framework": "3.x-dev"
+    },
+    "replace": {
+        "filp/whoops": "2.18.4",
+        "guzzlehttp/guzzle": "7.15.1",
+        "laminas/laminas-diactoros": "3.8.0",
+        "symfony/cache": "7.4.14",
+        "symfony/deprecation-contracts": "3.7.1",
+        "symfony/polyfill-ctype": "1.37.0",
+        "symfony/polyfill-intl-idn": "1.38.1",
+        "symfony/polyfill-intl-normalizer": "1.38.0",
+        "symfony/polyfill-mbstring": "1.38.2",
+        "symfony/polyfill-php80": "1.37.0",
+        "symfony/polyfill-uuid": "1.37.0",
+        "symfony/process": "7.4.13",
+        "symfony/var-dumper": "7.4.14"
+    },
+    "autoload": {
+        "classmap": [
+            "src/Synthetic/BackedEnum.php",
+            "src/Synthetic/Closure.php",
+            "src/Synthetic/Reflector.php",
+            "src/Synthetic/ReflectionType.php",
+            "src/Synthetic/UnitEnum.php"
+        ],
+        "psr-4": {
+            "App\\": "src/App/",
+            "Elephc\\TempestRuntime\\": "src/Runtime/",
+            "Symfony\\Component\\Cache\\": "src/Synthetic/Symfony/Component/Cache/",
+            "Symfony\\Component\\Process\\": "src/Synthetic/Symfony/Component/Process/",
+            "Symfony\\Component\\VarDumper\\": "src/Synthetic/Symfony/Component/VarDumper/",
+            "Whoops\\": "src/Synthetic/Whoops/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../..",
+            "options": {
+                "symlink": false,
+                "reference": "none",
+                "versions": {
+                    "tempest/framework": "3.x-dev"
+                }
+            }
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "platform": {
+            "php": "8.5.0"
+        },
+        "platform-check": false,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}

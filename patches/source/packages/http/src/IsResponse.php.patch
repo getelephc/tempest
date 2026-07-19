@@ -1,16 +1,126 @@
 diff --git a/packages/http/src/IsResponse.php b/packages/http/src/IsResponse.php
-index 0eda90fb79732b8a26859d7fc60be54576835ca6..a3571cad07d1807f9b026c599e5029c50c03573f 100644
+index 0eda90fb79732b8a26859d7fc60be54576835ca6..cc8dff5b34dff9a30d728ddfc30d10fcf5a63867 100644
 --- a/packages/http/src/IsResponse.php
 +++ b/packages/http/src/IsResponse.php
-@@ -20 +20 @@ trait IsResponse
+@@ -7,9 +7 @@
+-use Generator;
+-use JsonSerializable;
+-use Tempest\Http\Cookie\Cookie;
+-use Tempest\Http\Cookie\CookieManager;
+-use Tempest\Http\Session\Session;
+-use Tempest\View\View;
+-use UnitEnum;
+-
+-use function Tempest\Container\get;
++use RuntimeException;
+@@ -20 +12 @@ trait IsResponse
 -    private(set) Status $status = Status::OK;
-+    public Status $status = Status::OK;
-@@ -22 +22 @@ trait IsResponse
++    public int $status;
+@@ -22 +14 @@ trait IsResponse
 -    private(set) View|string|array|Generator|JsonSerializable|null $body = null;
-+    public View|string|array|Generator|JsonSerializable|null $body = null;
-@@ -25 +25 @@ trait IsResponse
++    public mixed $body = null;
+@@ -25 +17 @@ trait IsResponse
 -    private(set) array $headers = [];
 +    public array $headers = [];
-@@ -35 +35 @@ trait IsResponse
+@@ -27,2 +19,3 @@ trait IsResponse
+-    public CookieManager $cookieManager {
+-        get => get(CookieManager::class);
++    public function getStatusCode(): int
++    {
++        return $this->status;
+@@ -31,2 +24,3 @@ trait IsResponse
+-    public Session $session {
+-        get => get(Session::class);
++    public function getHeaders(): array
++    {
++        return $this->headers;
+@@ -35 +29,4 @@ trait IsResponse
 -    private(set) ?View $view = null;
-+    public ?View $view = null;
++    public function getBody(): mixed
++    {
++        return $this->body;
++    }
+@@ -37 +34 @@ trait IsResponse
+-    public function getHeader(string $name): ?Header
++    public function getHeader(string $name): mixed
+@@ -39,4 +36,7 @@ public function getHeader(string $name): ?Header
+-        return array_find(
+-            array: $this->headers,
+-            callback: fn (Header $header) => strcasecmp($header->name, $name) === 0,
+-        );
++        foreach ($this->headers as $header) {
++            if ($header instanceof Header && strcasecmp($header->name, $name) === 0) {
++                return $header;
++            }
++        }
++
++        return null;
+@@ -45 +45 @@ public function getHeader(string $name): ?Header
+-    public function addHeaders(array $headers): self
++    public function addHeaders(array $headers): Response
+@@ -53 +53 @@ public function addHeaders(array $headers): self
+-                $this->addHeader($key, $value);
++                $this->addHeader((string) $key, (string) $value);
+@@ -60 +60 @@ public function addHeaders(array $headers): self
+-    public function addHeader(string $key, string $value): self
++    public function addHeader(string $key, string $value): Response
+@@ -69 +69 @@ public function addHeader(string $key, string $value): self
+-    public function removeHeader(string $key): self
++    public function removeHeader(string $key): Response
+@@ -71 +71 @@ public function removeHeader(string $key): self
+-        unset($this->headers[$key]);
++        $this->headers = array_diff_key($this->headers, [$key => true]);
+@@ -76 +76 @@ public function removeHeader(string $key): self
+-    public function addCookie(Cookie $cookie): self
++    public function addCookie(mixed $cookie): Response
+@@ -78,3 +78 @@ public function addCookie(Cookie $cookie): self
+-        $this->cookieManager->add($cookie);
+-
+-        return $this;
++        throw new RuntimeException('Cookies are unavailable in the finite Elephc profile.');
+@@ -83 +81 @@ public function addCookie(Cookie $cookie): self
+-    public function removeCookie(string $key): self
++    public function removeCookie(string $key): Response
+@@ -85,3 +83 @@ public function removeCookie(string $key): self
+-        $this->cookieManager->remove($key);
+-
+-        return $this;
++        throw new RuntimeException('Cookies are unavailable in the finite Elephc profile.');
+@@ -90 +86 @@ public function removeCookie(string $key): self
+-    public function addSession(string $name, mixed $value): self
++    public function addSession(string $name, mixed $value): Response
+@@ -92,3 +88 @@ public function addSession(string $name, mixed $value): self
+-        $this->session->set($name, $value);
+-
+-        return $this;
++        throw new RuntimeException('Sessions are unavailable in the finite Elephc profile.');
+@@ -97 +91 @@ public function addSession(string $name, mixed $value): self
+-    public function removeSession(string $name): self
++    public function removeSession(string $name): Response
+@@ -99,3 +93 @@ public function removeSession(string $name): self
+-        $this->session->remove($name);
+-
+-        return $this;
++        throw new RuntimeException('Sessions are unavailable in the finite Elephc profile.');
+@@ -104 +96 @@ public function removeSession(string $name): self
+-    public function flash(string|UnitEnum $key, mixed $value): self
++    public function flash(string $key, mixed $value): Response
+@@ -106,3 +98 @@ public function flash(string|UnitEnum $key, mixed $value): self
+-        $this->session->flash($key, $value);
+-
+-        return $this;
++        throw new RuntimeException('Sessions are unavailable in the finite Elephc profile.');
+@@ -111 +101 @@ public function flash(string|UnitEnum $key, mixed $value): self
+-    public function setContentType(ContentType $contentType): self
++    public function setContentType(string $contentType): Response
+@@ -113,2 +103,2 @@ public function setContentType(ContentType $contentType): self
+-        $this->removeHeader(ContentType::HEADER)
+-            ->addHeader(ContentType::HEADER, $contentType->value);
++        $this->removeHeader('Content-Type')
++            ->addHeader('Content-Type', $contentType);
+@@ -119 +109 @@ public function setContentType(ContentType $contentType): self
+-    public function setStatus(Status $status): self
++    public function setStatus(int $status): Response
+@@ -126 +116 @@ public function setStatus(Status $status): self
+-    public function setBody(View|string|array|Generator|null $body): self
++    public function setBody(mixed $body): Response

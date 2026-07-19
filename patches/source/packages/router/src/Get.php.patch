@@ -1,0 +1,12 @@
+diff --git a/packages/router/src/Get.php b/packages/router/src/Get.php
+index 6d5f23bc36357367c2f1eed71e95ca1cb95ff0d5..e73c048136edb75eb021e80213fd201772033787 100644
+--- a/packages/router/src/Get.php
++++ b/packages/router/src/Get.php
+@@ -13 +13 @@ final class Get implements Route
+-    public Method $method = Method::GET;
++    public Method $method;
+@@ -23 +23,3 @@ public function __construct(
+-    ) {}
++    ) {
++        $this->method = Method::GET;
++    }

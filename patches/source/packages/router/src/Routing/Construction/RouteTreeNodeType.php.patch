@@ -1,0 +1,7 @@
+diff --git a/packages/router/src/Routing/Construction/RouteTreeNodeType.php b/packages/router/src/Routing/Construction/RouteTreeNodeType.php
+index 96600545f713ace4d877926bd62ff82503930638..6815d00d5140ef38e84971110fbc8b385d3680f3 100644
+--- a/packages/router/src/Routing/Construction/RouteTreeNodeType.php
++++ b/packages/router/src/Routing/Construction/RouteTreeNodeType.php
+@@ -10 +10 @@ enum RouteTreeNodeType
+-    case Static;
++    case Literal;

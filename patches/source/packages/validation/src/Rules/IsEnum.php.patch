@@ -1,0 +1,12 @@
+diff --git a/packages/validation/src/Rules/IsEnum.php b/packages/validation/src/Rules/IsEnum.php
+index cf318c92705b27b9a0636f66df836ec45eb8c7dd..590031298aca1f5d60f22014e9e94c38a07e9c18 100644
+--- a/packages/validation/src/Rules/IsEnum.php
++++ b/packages/validation/src/Rules/IsEnum.php
+@@ -45 +45,3 @@ public function isValid(mixed $value): bool
+-        if ($value instanceof $this->enum) {
++        $enum = $this->enum;
++
++        if ($value instanceof $enum) {
+@@ -120 +122 @@ private function retrieveEnumValue(mixed $value): mixed
+-        return defined("{$this->enum}::{$value}") ? $this->enum::{$value} : null;
++        return defined("{$this->enum}::{$value}") ? constant("{$this->enum}::{$value}") : null;

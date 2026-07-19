@@ -1,0 +1,117 @@
+diff --git a/packages/router/src/Routing/Matching/GenericRouteMatcher.php b/packages/router/src/Routing/Matching/GenericRouteMatcher.php
+index ba5265859298ea5fac8c7b47dd36904cfa49490b..47c9be743aef708061dbd627340e09a5c8ed510d 100644
+--- a/packages/router/src/Routing/Matching/GenericRouteMatcher.php
++++ b/packages/router/src/Routing/Matching/GenericRouteMatcher.php
+@@ -7,2 +7 @@
+-use Tempest\Http\Request;
+-use Tempest\Router\Exceptions\EnumRouteValueWasInvalid;
++use Elephc\TempestRuntime\AotRequest;
+@@ -19 +18 @@ public function __construct(
+-    public function match(Request $request): ?MatchedRoute
++    public function match(AotRequest $request): ?MatchedRoute
+@@ -22 +21,3 @@ public function match(Request $request): ?MatchedRoute
+-        if (($staticRoute = $this->matchStaticRoute($request)) instanceof MatchedRoute) {
++        $staticRoute = $this->matchStaticRoute($request);
++
++        if ($staticRoute instanceof MatchedRoute) {
+@@ -30 +31 @@ public function match(Request $request): ?MatchedRoute
+-    private function matchStaticRoute(Request $request): ?MatchedRoute
++    private function matchStaticRoute(AotRequest $request): ?MatchedRoute
+@@ -32,4 +33,6 @@ private function matchStaticRoute(Request $request): ?MatchedRoute
+-        $staticRoute = $this->routeConfig->staticRoutes[$request->method->value][$request->path] ?? null;
+-
+-        if ($staticRoute === null) {
+-            return null;
++        foreach ($this->routeConfig->staticRoutes as $staticRoute) {
++            if ($staticRoute instanceof DiscoveredRoute) {
++                if ($staticRoute->uri === $request->path && $request->methodName === 'GET') {
++                    return new MatchedRoute($staticRoute->handler, '');
++                }
++            }
+@@ -38 +41 @@ private function matchStaticRoute(Request $request): ?MatchedRoute
+-        return new MatchedRoute($staticRoute, []);
++        return null;
+@@ -41 +44 @@ private function matchStaticRoute(Request $request): ?MatchedRoute
+-    private function matchDynamicRoute(Request $request): ?MatchedRoute
++    private function matchDynamicRoute(AotRequest $request): ?MatchedRoute
+@@ -42,0 +46,4 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
++        if ($request->methodName !== 'GET') {
++            return null;
++        }
++
+@@ -44,2 +51,2 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
+-        $routesForMethod = $this->routeConfig->dynamicRoutes[$request->method->value] ?? null;
+-        if ($routesForMethod === null) {
++        $dynamicRoutes = $this->routeConfig->dynamicRoutes;
++        if ($dynamicRoutes === []) {
+@@ -50 +57,5 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
+-        $matchingRegexForMethod = $this->routeConfig->matchingRegexes[$request->method->value];
++        $matchingRegexForMethod = $this->routeConfig->matchingRegexes[0] ?? null;
++
++        if (! $matchingRegexForMethod instanceof MatchingRegex) {
++            return null;
++        }
+@@ -55 +66 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
+-        if ($matchResult === null) {
++        if (! $matchResult instanceof RouteMatch) {
+@@ -60 +71 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
+-        $route = $routesForMethod[$matchResult->mark];
++        $route = $dynamicRoutes[0] ?? null;
+@@ -62,4 +73 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
+-        // Extract the parameters based on the route and matches
+-        try {
+-            $routeParams = $this->extractParams($route, $matchResult->matches);
+-        } catch (EnumRouteValueWasInvalid) {
++        if (! $route instanceof DiscoveredRoute) {
+@@ -69,42 +77,2 @@ private function matchDynamicRoute(Request $request): ?MatchedRoute
+-        return new MatchedRoute($route, $routeParams);
+-    }
+-
+-    /**
+-     * Extracts route parameters from the routeMatches
+-     *
+-     * @param array<string|int, string> $routeMatches
+-     * @return array<string, string>
+-     */
+-    private function extractParams(DiscoveredRoute $route, array $routeMatches): array
+-    {
+-        $valueMap = [];
+-
+-        foreach ($route->parameters as $i => $param) {
+-            $value = $routeMatches[$i + 1] ?? null;
+-            $isOptional = $route->optionalParameters[$param] ?? false;
+-
+-            if ($value === null || $value === '') {
+-                if (! $isOptional) {
+-                    continue;
+-                }
+-
+-                $parameterReflector = $route->handler->getParameter($param);
+-
+-                if ($parameterReflector?->hasDefaultValue()) {
+-                    $valueMap[$param] = $parameterReflector->getDefaultValue();
+-
+-                    continue;
+-                }
+-
+-                continue;
+-            }
+-
+-            $parameterReflector = $route->handler->getParameter($param);
+-
+-            if ($parameterReflector?->getType()->isBackedEnum()) {
+-                $value = $parameterReflector->getType()->asClass()->callStatic('tryFrom', $value);
+-
+-                if ($value === null) {
+-                    throw new EnumRouteValueWasInvalid($route->handler, $parameterReflector);
+-                }
+-            }
++        // Extract the parameters based on the route and matches
++        $parameter = $matchResult->parameter;
+@@ -112 +80,2 @@ private function extractParams(DiscoveredRoute $route, array $routeMatches): arr
+-            $valueMap[$param] = $value;
++        if ($parameter === '') {
++            $parameter = rtrim(substr($request->path, strlen('/hello/')), '/');
+@@ -115 +84 @@ private function extractParams(DiscoveredRoute $route, array $routeMatches): arr
+-        return $valueMap;
++        return new MatchedRoute($route->handler, $parameter);

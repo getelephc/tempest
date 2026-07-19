@@ -1,0 +1,25 @@
+diff --git a/packages/router/src/Routing/Matching/RouteMatch.php b/packages/router/src/Routing/Matching/RouteMatch.php
+index 4166b8a0f885c7d1e1ed76035a7d5bac5f0035ac..48cc6fb9a45d06ab203470117d86605722b3461b 100644
+--- a/packages/router/src/Routing/Matching/RouteMatch.php
++++ b/packages/router/src/Routing/Matching/RouteMatch.php
+@@ -7,2 +6,0 @@
+-use Tempest\Router\Routing\Construction\MarkedRoute;
+-
+@@ -13 +11 @@ private function __construct(
+-        public array $matches,
++        public string $parameter,
+@@ -18 +16,13 @@ public static function match(array $params): self
+-        return new self($params[MarkedRoute::REGEX_MARK_TOKEN], $params);
++        return self::fromMatches($params);
++    }
++
++    public static function fromMatches(array $params): self
++    {
++        $parameter = $params[1] ?? '';
++
++        return self::fromParameter(is_string($parameter) ? $parameter : '');
++    }
++
++    public static function fromParameter(string $parameter): self
++    {
++        return new self('', $parameter);

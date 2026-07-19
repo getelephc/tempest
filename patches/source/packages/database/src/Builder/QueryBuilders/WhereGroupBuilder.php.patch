@@ -1,0 +1,16 @@
+diff --git a/packages/database/src/Builder/QueryBuilders/WhereGroupBuilder.php b/packages/database/src/Builder/QueryBuilders/WhereGroupBuilder.php
+index 466352a0df8fe86577ae031f1def0afcc01e8e87..b691dfa6349a9bc00cce9079282c8fdf69830fbf 100644
+--- a/packages/database/src/Builder/QueryBuilders/WhereGroupBuilder.php
++++ b/packages/database/src/Builder/QueryBuilders/WhereGroupBuilder.php
+@@ -177 +177 @@ public function whereHas(
+-            connector: WhereConnector::AND,
++            connector: WhereConnector::CONJUNCTION,
+@@ -198 +198 @@ public function whereDoesntHave(
+-            connector: WhereConnector::AND,
++            connector: WhereConnector::CONJUNCTION,
+@@ -221 +221 @@ public function orWhereHas(
+-            connector: WhereConnector::OR,
++            connector: WhereConnector::DISJUNCTION,
+@@ -242 +242 @@ public function orWhereDoesntHave(
+-            connector: WhereConnector::OR,
++            connector: WhereConnector::DISJUNCTION,

@@ -1,0 +1,12 @@
+diff --git a/packages/router/src/MatchedRoute.php b/packages/router/src/MatchedRoute.php
+index 08a82dc32683393475456150d283d33a2449ef79..3873c738a20e6b283608c6a47208f77caf20cab9 100644
+--- a/packages/router/src/MatchedRoute.php
++++ b/packages/router/src/MatchedRoute.php
+@@ -7,2 +6,0 @@
+-use Tempest\Router\Routing\Construction\DiscoveredRoute;
+-
+@@ -12,2 +10,2 @@ public function __construct(
+-        public DiscoveredRoute $route,
+-        public array $params,
++        public string $handler,
++        public string $parameter,

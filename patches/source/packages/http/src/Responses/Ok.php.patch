@@ -1,0 +1,16 @@
+diff --git a/packages/http/src/Responses/Ok.php b/packages/http/src/Responses/Ok.php
+index e565ce6b781402e286dbfa36e1f35104a3440430..0443e4f1ed909b078ff6b3965b68087f5d649562 100644
+--- a/packages/http/src/Responses/Ok.php
++++ b/packages/http/src/Responses/Ok.php
+@@ -7,2 +6,0 @@
+-use Generator;
+-use JsonSerializable;
+@@ -11,2 +8,0 @@
+-use Tempest\Http\Status;
+-use Tempest\View\View;
+@@ -18 +14 @@ final class Ok implements Response
+-    public function __construct(View|JsonSerializable|Generator|string|array|null $body = null)
++    public function __construct(mixed $body = null)
+@@ -20 +16 @@ public function __construct(View|JsonSerializable|Generator|string|array|null $b
+-        $this->status = Status::OK;
++        $this->status = 200;

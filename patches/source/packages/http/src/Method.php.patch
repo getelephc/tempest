@@ -1,0 +1,12 @@
+diff --git a/packages/http/src/Method.php b/packages/http/src/Method.php
+index 566338185058fa8f7d6297153c2893fbac978e06..e47d8a71c626cfe152b613373e130a2704e79772 100644
+--- a/packages/http/src/Method.php
++++ b/packages/http/src/Method.php
+@@ -22 +22 @@ public static function trySpoofingFrom(string $method): ?Method
+-        $method = Method::tryFrom(strtoupper($method));
++        $spoofedMethod = Method::tryFrom(strtoupper($method));
+@@ -24,2 +24,2 @@ public static function trySpoofingFrom(string $method): ?Method
+-        return match ($method) {
+-            self::DELETE, self::PATCH, self::PUT => $method,
++        return match ($spoofedMethod) {
++            self::DELETE, self::PATCH, self::PUT => $spoofedMethod,

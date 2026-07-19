@@ -1,0 +1,14 @@
+diff --git a/packages/router/src/RouteConfig.php b/packages/router/src/RouteConfig.php
+index 8a42c4fad465b91e861f5668d266bda913e42a50..b225d9a1a2301f28359c7c8bfe3e752b4e330538 100644
+--- a/packages/router/src/RouteConfig.php
++++ b/packages/router/src/RouteConfig.php
+@@ -31,8 +31 @@ public function __construct(
+-        public Middleware $middleware = new Middleware(
+-            HandleRouteExceptionMiddleware::class,
+-            MatchRouteMiddleware::class,
+-            ValidateQueryRequestMiddleware::class,
+-            ResolveRouteRequestMiddleware::class,
+-            SetCookieHeadersMiddleware::class,
+-            HandleRouteSpecificMiddleware::class,
+-        ),
++        public Middleware $middleware = new Middleware(),

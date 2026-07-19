@@ -1,0 +1,17 @@
+diff --git a/packages/view/src/Parser/TempestViewLexer.php b/packages/view/src/Parser/TempestViewLexer.php
+index 238cfe0b808f944cd77361d6ca9fc51bed05c36f..1939d91a82b195930988a81d663159a97f53ff30 100644
+--- a/packages/view/src/Parser/TempestViewLexer.php
++++ b/packages/view/src/Parser/TempestViewLexer.php
+@@ -90 +90,3 @@ private function consume(int $length = 1): string
+-            $char = $this->html[$this->position++] ?? null;
++            $position = $this->position;
++            $this->position = $this->position + 1;
++            $char = $this->html[$position] ?? null;
+@@ -93 +95 @@ private function consume(int $length = 1): string
+-                $this->line++;
++                $this->line = $this->line + 1;
+@@ -101,2 +103,2 @@ private function consume(int $length = 1): string
+-        $this->position += $length;
+-        $this->line += substr_count($buffer, "\n");
++        $this->position = $this->position + $length;
++        $this->line = $this->line + substr_count($buffer, "\n");

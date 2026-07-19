@@ -1,0 +1,10 @@
+diff --git a/packages/view/src/ViewCache.php b/packages/view/src/ViewCache.php
+index 83199b864bc9341ddb7c5542535864b5908143c3..d9e4097b7c4d10f04dedf44b75b9c040d8b5efb9 100644
+--- a/packages/view/src/ViewCache.php
++++ b/packages/view/src/ViewCache.php
+@@ -67 +67 @@ public function saveSourceMap(string $compiledViewPath, ?string $sourcePath, arr
+-            sprintf("<?php\n\nreturn %s;\n", var_export($sourceMap, true)),
++            json_encode($sourceMap, JSON_THROW_ON_ERROR),
+@@ -82 +82 @@ public function getSourceMap(string $compiledViewPath): ?array
+-        $sourceMap = include $sourceMapPath;
++        $sourceMap = json_decode(Filesystem\read_file($sourceMapPath), associative: true);

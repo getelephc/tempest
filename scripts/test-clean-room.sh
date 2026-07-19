@@ -29,8 +29,8 @@ GIT_INDEX_FILE="$temporary_index" git -C "$ROOT" checkout-index --all --prefix="
     ./scripts/apply-elephc-patches.sh
     ./scripts/apply-elephc-patches.sh
     ./scripts/apply-elephc-patches.sh --check
-    node scripts/audit-patches.mjs --require-applied
     ELEPHC_REPO="$elephc_repo" ./scripts/build-elephc.sh
+    node scripts/audit-patches.mjs --require-applied
     node scripts/test-elephc.mjs
 )
 

@@ -5,11 +5,13 @@ set -euo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 SOURCE_PATCH_ROOT="$ROOT/patches/source"
 VENDOR_PATCH_ROOT="$ROOT/patches/vendor"
+RUNTIME_PATCH_ROOT="$ROOT/patches/runtime"
 LOCK_SHA256_FILE="$ROOT/patches/vendor.composer-lock.sha256"
 
 mode=apply
 include_source=true
 include_vendor=true
+include_runtime=false
 
 for argument in "$@"; do
     case "$argument" in
@@ -25,9 +27,14 @@ for argument in "$@"; do
         --vendor-only)
             include_source=false
             ;;
+        --runtime-only)
+            include_source=false
+            include_vendor=false
+            include_runtime=true
+            ;;
         *)
             echo "Unknown argument: $argument" >&2
-            echo "Usage: $0 [--check|--reverse] [--source-only|--vendor-only]" >&2
+            echo "Usage: $0 [--check|--reverse] [--source-only|--vendor-only|--runtime-only]" >&2
             exit 2
             ;;
     esac
@@ -154,6 +161,9 @@ if [[ "$include_vendor" == true ]]; then
 fi
 
 if [[ "$mode" == reverse ]]; then
+    if [[ "$include_runtime" == true ]]; then
+        process_series runtime "$RUNTIME_PATCH_ROOT"
+    fi
     if [[ "$include_vendor" == true ]]; then
         process_series vendor "$VENDOR_PATCH_ROOT"
     fi
@@ -166,6 +176,9 @@ else
     fi
     if [[ "$include_vendor" == true ]]; then
         process_series vendor "$VENDOR_PATCH_ROOT"
+    fi
+    if [[ "$include_runtime" == true ]]; then
+        process_series runtime "$RUNTIME_PATCH_ROOT"
     fi
 fi
 

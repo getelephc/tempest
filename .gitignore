@@ -12,6 +12,8 @@ sessions/
 vendor/
 !patches/vendor/
 !patches/vendor/**
+!patches/runtime/
+!patches/runtime/**
 # @TODO(aidan-casey): clean this up
 packages/database.sqlite
 packages/database/src/database.sqlite
@@ -39,3 +41,7 @@ db-tenant-2.sqlite
 /elephc/server
 /elephc/server.s
 /elephc/server.o
+/elephc/runtime/vendor/
+/elephc/runtime/server
+/elephc/runtime/server.s
+/elephc/runtime/server.o

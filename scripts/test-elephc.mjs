@@ -8,7 +8,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const binary = path.join(root, 'elephc', 'server');
+const binary = path.join(root, 'elephc', 'runtime', 'server');
 
 await access(binary);
 
@@ -32,8 +32,8 @@ child.stderr.on('data', (chunk) => {
     serverOutput += chunk;
 });
 
-async function request(pathname) {
-    return fetch(`http://127.0.0.1:${port}${pathname}`, { redirect: 'manual' });
+async function request(pathname, options = {}) {
+    return fetch(`http://127.0.0.1:${port}${pathname}`, { redirect: 'manual', ...options });
 }
 
 async function waitUntilReady() {
@@ -66,7 +66,7 @@ try {
     assert.equal(home.status, 200);
     assert.match(home.headers.get('content-type'), /^text\/html/);
     assert.equal(home.headers.get('x-powered-by'), 'Tempest-on-Elephc');
-    assert.match(await home.text(), /Tempest on <strong>Elephc<\/strong>/);
+    assert.match(await home.text(), /Served by the original Tempest HTTP pipeline/);
     console.log('ok / -> 200 HTML');
 
     const health = await request('/health');
@@ -75,6 +75,7 @@ try {
         status: 'ok',
         framework: 'tempest',
         runtime: 'elephc',
+        pipeline: 'original',
     });
     console.log('ok /health -> 200 JSON');
 
@@ -90,8 +91,12 @@ try {
 
     const missing = await request('/missing');
     assert.equal(missing.status, 404);
-    assert.equal(await missing.text(), '404 Not Found\n');
+    assert.equal(await missing.text(), '');
     console.log('ok /missing -> 404');
+
+    const unsupportedMethod = await request('/health', { method: 'POST' });
+    assert.equal(unsupportedMethod.status, 404);
+    console.log('ok POST /health -> 404');
 } finally {
     if (child.exitCode === null) {
         child.kill('SIGINT');

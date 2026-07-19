@@ -1,0 +1,16 @@
+diff --git a/packages/http/src/Responses/NotFound.php b/packages/http/src/Responses/NotFound.php
+index 710107a4dc241c79ead0a7d0641b21f517ad432c..075223e241672a03e14964643a8162b4eae11b0e 100644
+--- a/packages/http/src/Responses/NotFound.php
++++ b/packages/http/src/Responses/NotFound.php
+@@ -7,2 +6,0 @@
+-use Generator;
+-use JsonSerializable;
+@@ -11,2 +8,0 @@
+-use Tempest\Http\Status;
+-use Tempest\View\View;
+@@ -18 +14 @@ final class NotFound implements Response
+-    public function __construct(View|JsonSerializable|Generator|string|array|null $body = null)
++    public function __construct(mixed $body = null)
+@@ -20 +16 @@ public function __construct(View|JsonSerializable|Generator|string|array|null $b
+-        $this->status = Status::NOT_FOUND;
++        $this->status = 404;

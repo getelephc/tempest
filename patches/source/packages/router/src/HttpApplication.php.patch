@@ -1,0 +1,37 @@
+diff --git a/packages/router/src/HttpApplication.php b/packages/router/src/HttpApplication.php
+index a9e5cc2de50b06944bc5b82efba20ef5ba8b2bba..d99d186d75acbd774fb15aa38126ef5f0e119bdb 100644
+--- a/packages/router/src/HttpApplication.php
++++ b/packages/router/src/HttpApplication.php
+@@ -7 +7,5 @@
+-use Tempest\Container\Container;
++use Elephc\TempestRuntime\AotRequest;
++use Elephc\TempestRuntime\AotKernel;
++use Elephc\TempestRuntime\AotResponseSender;
++use Elephc\TempestRuntime\StaticContainer;
++use RuntimeException;
+@@ -10,3 +13,0 @@
+-use Tempest\Core\Kernel;
+-use Tempest\Core\Tempest;
+-use Tempest\Http\RequestFactory;
+@@ -18 +19,5 @@ public function __construct(
+-        private Container $container,
++        private StaticContainer $container,
++        private GenericRouter $router,
++        private AotRequest $request,
++        private AotResponseSender $responseSender,
++        private AotKernel $kernel,
+@@ -24 +29 @@ public static function boot(string $root, array $discoveryLocations = []): self
+-        return Tempest::boot($root, $discoveryLocations)->get(HttpApplication::class);
++        throw new RuntimeException('Dynamic Tempest boot is unavailable in the finite Elephc profile.');
+@@ -29,6 +34,2 @@ public function run(): void
+-        $router = $this->container->get(Router::class);
+-        $psrRequest = $this->container->get(RequestFactory::class)->make();
+-        $responseSender = $this->container->get(ResponseSender::class);
+-
+-        $responseSender->send(
+-            response: $router->dispatch($psrRequest),
++        $this->responseSender->send(
++            response: $this->router->dispatch($this->request),
+@@ -37 +38 @@ public function run(): void
+-        $this->container->get(Kernel::class)->shutdown();
++        $this->kernel->shutdown();

@@ -1,0 +1,21 @@
+diff --git a/packages/http/src/Request.php b/packages/http/src/Request.php
+index 7193d4f579b45571c695e31ae20dde7afbee84e0..cb1370cbff7b39173fbe7287c6b85c8c0a519339 100644
+--- a/packages/http/src/Request.php
++++ b/packages/http/src/Request.php
+@@ -7,2 +6,0 @@
+-use Tempest\Http\Cookie\Cookie;
+-
+@@ -19 +17 @@ interface Request
+-    public RequestHeaders $headers { get; }
++    public array $headers { get; }
+@@ -30,0 +29,4 @@ interface Request
++    public function getMethod(): Method;
++
++    public function getPath(): string;
++
+@@ -41 +43 @@ public function getSessionValue(string $name): mixed;
+-    public function getCookie(string $name): ?Cookie;
++    public function getCookie(string $name): mixed;
+@@ -47 +49 @@ public function getCookie(string $name): ?Cookie;
+-    public function accepts(ContentType ...$contentType): bool;
++    public function accepts(mixed ...$contentType): bool;

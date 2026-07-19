@@ -1,0 +1,37 @@
+diff --git a/packages/container/src/Container.php b/packages/container/src/Container.php
+index dba11e198a64dd48cb17fe5c60405241713085ac..b783b13b49f4d2801173916558a9e0063d4777e4 100644
+--- a/packages/container/src/Container.php
++++ b/packages/container/src/Container.php
+@@ -7,7 +7 @@
+-use Psr\Container\ContainerInterface;
+-use Tempest\Reflection\ClassReflector;
+-use Tempest\Reflection\FunctionReflector;
+-use Tempest\Reflection\MethodReflector;
+-use UnitEnum;
+-
+-interface Container extends ContainerInterface
++interface Container
+@@ -19 +13 @@ public function unregister(string $className, bool $tagged = false): self;
+-    public function singleton(string $className, mixed $definition, string|UnitEnum|null $tag = null): self;
++    public function singleton(string $className, mixed $definition): Container;
+@@ -28 +22 @@ public function config(object $config): self;
+-    public function get(string $className, string|UnitEnum|null $tag = null, mixed ...$params): mixed;
++    public function get(string $className): mixed;
+@@ -30 +24 @@ public function get(string $className, string|UnitEnum|null $tag = null, mixed .
+-    public function has(string $className, string|UnitEnum|null $tag = null): bool;
++    public function has(string $className): bool;
+@@ -32 +26 @@ public function has(string $className, string|UnitEnum|null $tag = null): bool;
+-    public function invoke(ClassReflector|MethodReflector|FunctionReflector|callable|string $method, mixed ...$params): mixed;
++    public function invoke(mixed $method, mixed ...$params): mixed;
+@@ -39 +33 @@ public function invoke(ClassReflector|MethodReflector|FunctionReflector|callable
+-    public function addInitializer(ClassReflector|string $initializerClass): self;
++    public function addInitializer(string $initializerClass): Container;
+@@ -41 +35 @@ public function addInitializer(ClassReflector|string $initializerClass): self;
+-    public function addDecorator(ClassReflector|string $decoratorClass, ClassReflector|string $decoratedClass): self;
++    public function addDecorator(string $decoratorClass, string $decoratedClass): Container;
+@@ -47 +41 @@ public function addDecorator(ClassReflector|string $decoratorClass, ClassReflect
+-    public function addResettable(ClassReflector|string $resettableClass): self;
++    public function addResettable(string $resettableClass): Container;
+@@ -49 +43 @@ public function addResettable(ClassReflector|string $resettableClass): self;
+-    public function reset(): self;
++    public function reset(): Container;

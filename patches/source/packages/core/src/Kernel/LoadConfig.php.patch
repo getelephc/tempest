@@ -1,0 +1,16 @@
+diff --git a/packages/core/src/Kernel/LoadConfig.php b/packages/core/src/Kernel/LoadConfig.php
+index 934aa31a653830642b81837f63d89fc809e56ec1..f2785c67870708c93392bbf4d28980161c61f73c 100644
+--- a/packages/core/src/Kernel/LoadConfig.php
++++ b/packages/core/src/Kernel/LoadConfig.php
+@@ -32,9 +32,2 @@ public function __invoke(): void
+-        foreach ($configPaths as $path) {
+-            $configFile = require $path;
+-
+-            if ($configFile instanceof DiscoveryConfig) {
+-                $configFile->locations = [...$this->discoveryConfig->locations, ...$configFile->locations];
+-                $configFile->classes = [...$this->discoveryConfig->classes, ...$configFile->classes];
+-            }
+-
+-            $this->container->config($configFile);
++        if ($configPaths !== []) {
++            throw new \RuntimeException('Runtime config discovery is not available in the Elephc AOT profile.');

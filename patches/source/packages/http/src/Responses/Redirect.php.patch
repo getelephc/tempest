@@ -1,7 +1,17 @@
 diff --git a/packages/http/src/Responses/Redirect.php b/packages/http/src/Responses/Redirect.php
-index f6fbcfc10324c56c5d8e3582216163c9c79e1e54..c2e06710898cf3aec6de4c651e8beed1d4ccd136 100644
+index f6fbcfc10324c56c5d8e3582216163c9c79e1e54..b79431b6d4d30d0daf9991241297312ccebbbe8b 100644
 --- a/packages/http/src/Responses/Redirect.php
 +++ b/packages/http/src/Responses/Redirect.php
-@@ -19 +19 @@ public function __construct(
+@@ -9 +8,0 @@
+-use Tempest\Http\Status;
+@@ -19 +18 @@ public function __construct(
 -        private(set) string $to,
 +        public string $to,
+@@ -23,2 +22,2 @@ public function __construct(
+-            ? Status::MOVED_PERMANENTLY
+-            : Status::FOUND;
++            ? 301
++            : 302;
+@@ -31 +30 @@ public function permanent(): self
+-        $this->status = Status::MOVED_PERMANENTLY;
++        $this->status = 301;

@@ -1,0 +1,53 @@
+diff --git a/packages/http/src/Response.php b/packages/http/src/Response.php
+index 2c92b36b668b74df87b1ac8fcd915e36165c56b7..efc9350dafc2e2e87255b104a08f4b1b8eef31c9 100644
+--- a/packages/http/src/Response.php
++++ b/packages/http/src/Response.php
+@@ -7,6 +6,0 @@
+-use Generator;
+-use JsonSerializable;
+-use Tempest\Http\Cookie\Cookie;
+-use Tempest\View\View;
+-use UnitEnum;
+-
+@@ -18 +12 @@ interface Response
+-    public Status $status { get; }
++    public int $status { get; }
+@@ -30 +24,7 @@ interface Response
+-    public View|string|array|Generator|JsonSerializable|null $body { get; }
++    public mixed $body { get; }
++
++    public function getStatusCode(): int;
++
++    public function getHeaders(): array;
++
++    public function getBody(): mixed;
+@@ -35 +35 @@ interface Response
+-    public function getHeader(string $name): ?Header;
++    public function getHeader(string $name): mixed;
+@@ -40 +40 @@ public function getHeader(string $name): ?Header;
+-    public function addHeader(string $key, string $value): self;
++    public function addHeader(string $key, string $value): Response;
+@@ -45 +45 @@ public function addHeader(string $key, string $value): self;
+-    public function removeHeader(string $key): self;
++    public function removeHeader(string $key): Response;
+@@ -50 +50 @@ public function removeHeader(string $key): self;
+-    public function addSession(string $name, mixed $value): self;
++    public function addSession(string $name, mixed $value): Response;
+@@ -55 +55 @@ public function addSession(string $name, mixed $value): self;
+-    public function removeSession(string $name): self;
++    public function removeSession(string $name): Response;
+@@ -60 +60 @@ public function removeSession(string $name): self;
+-    public function flash(string|UnitEnum $key, mixed $value): self;
++    public function flash(string $key, mixed $value): Response;
+@@ -65 +65 @@ public function flash(string|UnitEnum $key, mixed $value): self;
+-    public function addCookie(Cookie $cookie): self;
++    public function addCookie(mixed $cookie): Response;
+@@ -70 +70 @@ public function addCookie(Cookie $cookie): self;
+-    public function removeCookie(string $key): self;
++    public function removeCookie(string $key): Response;
+@@ -75 +75 @@ public function removeCookie(string $key): self;
+-    public function setStatus(Status $status): self;
++    public function setStatus(int $status): Response;
+@@ -80 +80 @@ public function setStatus(Status $status): self;
+-    public function setBody(View|string|array|Generator|null $body): self;
++    public function setBody(mixed $body): Response;

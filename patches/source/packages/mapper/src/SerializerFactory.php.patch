@@ -1,5 +1,5 @@
 diff --git a/packages/mapper/src/SerializerFactory.php b/packages/mapper/src/SerializerFactory.php
-index 2bbe04b11b1ff8db439d7bce3abcd4729a5c633c..4a1a7996d56e200e43eaba3e302cd49a687f17ef 100644
+index 2bbe04b11b1ff8db439d7bce3abcd4729a5c633c..44308cb0a5e1616270ba5ff90bf0ad62bf9ad6d0 100644
 --- a/packages/mapper/src/SerializerFactory.php
 +++ b/packages/mapper/src/SerializerFactory.php
 @@ -23 +23 @@ final class SerializerFactory
@@ -8,3 +8,13 @@ index 2bbe04b11b1ff8db439d7bce3abcd4729a5c633c..4a1a7996d56e200e43eaba3e302cd49a
 @@ -25 +25 @@ final class SerializerFactory
 -    private(set) Context|UnitEnum|string|null $context = null;
 +    public Context|UnitEnum|string|null $context = null;
+@@ -78 +78,3 @@ public function forProperty(PropertyReflector $property): ?Serializer
+-            foreach ($this->resolveSerializers() as [$serializerClass]) {
++            foreach ($this->resolveSerializers() as $serializerDefinition) {
++                $serializerClass = $serializerDefinition[0];
++
+@@ -102 +104,3 @@ public function forValue(mixed $value): ?Serializer
+-        foreach ($this->resolveSerializers() as [$serializerClass]) {
++        foreach ($this->resolveSerializers() as $serializerDefinition) {
++            $serializerClass = $serializerDefinition[0];
++

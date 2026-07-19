@@ -1,7 +1,109 @@
 diff --git a/packages/router/src/GenericRouter.php b/packages/router/src/GenericRouter.php
-index 6bedfe0e0e82119a9cfc1df1628e8e4d8746a491..5659c8f454d6cb784162caddd4cb206166e42b06 100644
+index 6bedfe0e0e82119a9cfc1df1628e8e4d8746a491..2f7e789a5d1d209c9a310007ab302127bedf8def 100644
 --- a/packages/router/src/GenericRouter.php
 +++ b/packages/router/src/GenericRouter.php
-@@ -29 +29 @@ public function dispatch(Request|PsrRequest $request): Response
+@@ -7,4 +7,3 @@
+-use Psr\Http\Message\ServerRequestInterface as PsrRequest;
+-use Tempest\Container\Container;
+-use Tempest\Http\Mappers\PsrRequestToGenericRequestMapper;
+-use Tempest\Http\Request;
++use Elephc\TempestRuntime\AotRequest;
++use Elephc\TempestRuntime\AotRouteHandler;
++use Elephc\TempestRuntime\StaticContainer;
+@@ -12,6 +10,0 @@
+-use Tempest\Http\Responses\Ok;
+-use Tempest\Router\Exceptions\ControllerActionHadNoReturn;
+-use Tempest\Router\Exceptions\MatchedRouteCouldNotBeResolved;
+-use Tempest\View\View;
+-
+-use function Tempest\Mapper\map;
+@@ -22 +15 @@ public function __construct(
+-        private Container $container,
++        private StaticContainer $container,
+@@ -23,0 +17 @@ public function __construct(
++        private MatchRouteMiddleware $routeMiddleware,
+@@ -26 +20 @@ public function __construct(
+-    public function dispatch(Request|PsrRequest $request): Response
++    public function dispatch(AotRequest $request): Response
+@@ -28,9 +22 @@ public function dispatch(Request|PsrRequest $request): Response
+-        if (! $request instanceof Request) {
 -            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->do();
-+            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->execute();
+-        }
+-
+-        $this->container->singleton(Request::class, fn () => $request);
+-
+-        $callable = $this->getCallable();
+-
+-        return $this->processResponse($callable($request));
++        return $this->routeMiddleware->process($request, $this->getCallable());
+@@ -41,69 +27 @@ private function getCallable(): HttpMiddlewareCallable
+-        $callControllerAction = function (Request $_) {
+-            if (! $this->container->has(MatchedRoute::class)) {
+-                throw new MatchedRouteCouldNotBeResolved();
+-            }
+-
+-            $matchedRoute = $this->container->get(MatchedRoute::class);
+-
+-            $route = $matchedRoute->route;
+-
+-            $response = $this->container->invoke(
+-                $route->handler,
+-                ...$matchedRoute->params,
+-            );
+-
+-            if ($response === null) {
+-                throw new ControllerActionHadNoReturn($route);
+-            }
+-
+-            return $response;
+-        };
+-
+-        $callable = new HttpMiddlewareCallable(fn (Request $request) => $this->createResponse($callControllerAction($request)));
+-
+-        $middlewareStack = $this->routeConfig->middleware;
+-
+-        foreach ($middlewareStack->unwrap() as $middlewareClass) {
+-            $callable = new HttpMiddlewareCallable(closure: function (Request $request) use ($middlewareClass, $callable) {
+-                if ($this->container->has(MatchedRoute::class)) {
+-                    $matchedRoute = $this->container->get(MatchedRoute::class);
+-
+-                    // Skip the middleware if it's ignored by the route
+-                    if (in_array(
+-                        needle: $middlewareClass->getName(),
+-                        haystack: $matchedRoute->route->without,
+-                        strict: true,
+-                    )) {
+-                        return $callable($request);
+-                    }
+-                }
+-
+-                /** @var HttpMiddleware $middleware */
+-                $middleware = $this->container->get($middlewareClass->getName());
+-
+-                return $middleware($request, $callable);
+-            });
+-        }
+-
+-        return $callable;
+-    }
+-
+-    private function createResponse(string|array|Response|View $input): Response
+-    {
+-        if ($input instanceof View || is_array($input) || is_string($input)) {
+-            return new Ok($input);
+-        }
+-
+-        return $input;
+-    }
+-
+-    private function processResponse(Response $response): Response
+-    {
+-        foreach ($this->routeConfig->responseProcessors as $responseProcessorClass) {
+-            /** @var \Tempest\Router\ResponseProcessor $responseProcessor */
+-            $responseProcessor = $this->container->get($responseProcessorClass);
+-
+-            $response = $responseProcessor->process($response);
+-        }
+-
+-        return $response;
++        return new HttpMiddlewareCallable(new AotRouteHandler($this->container));

@@ -1,0 +1,86 @@
+diff --git a/packages/router/src/Routing/Construction/DiscoveredRoute.php b/packages/router/src/Routing/Construction/DiscoveredRoute.php
+index a32e9e22a78a98dab0cfabb1ac0afa9ba9cece98..d827d0427058af251bb5b92dddbf8b6f0ca68684 100644
+--- a/packages/router/src/Routing/Construction/DiscoveredRoute.php
++++ b/packages/router/src/Routing/Construction/DiscoveredRoute.php
+@@ -8,2 +8 @@
+-use Tempest\Reflection\MethodReflector;
+-use Tempest\Reflection\ParameterReflector;
++use RuntimeException;
+@@ -23 +22 @@ final class DiscoveredRoute implements Route
+-    public static function fromRoute(Route $route, array $decorators, MethodReflector $methodReflector): self
++    public static function fromRoute(Route $route, array $decorators, mixed $methodReflector): self
+@@ -25,15 +24 @@ public static function fromRoute(Route $route, array $decorators, MethodReflecto
+-        foreach ($decorators as $decorator) {
+-            $route = $decorator->decorate($route);
+-        }
+-
+-        $uri = self::parseUriAndParameters($route->uri, $methodReflector);
+-
+-        return new self(
+-            uri: $uri['uri'],
+-            method: $route->method,
+-            parameters: $uri['names'],
+-            optionalParameters: $uri['optional'],
+-            middleware: $route->middleware,
+-            handler: $methodReflector,
+-            without: $route->without,
+-        );
++        throw new RuntimeException('Runtime route discovery is unavailable in the finite Elephc profile.');
+@@ -44 +29 @@ public static function fromRoute(Route $route, array $decorators, MethodReflecto
+-    private function __construct(
++    public function __construct(
+@@ -52 +37 @@ private function __construct(
+-        public MethodReflector $handler,
++        public string $handler,
+@@ -68 +53 @@ private function __construct(
+-    private static function parseUriAndParameters(string $uri, MethodReflector $methodReflector): array
++    private static function parseUriAndParameters(string $uri, mixed $methodReflector): array
+@@ -70,47 +55 @@ private static function parseUriAndParameters(string $uri, MethodReflector $meth
+-        $regex = '#\{' . self::ROUTE_PARAM_OPTIONAL_REGEX . self::ROUTE_PARAM_NAME_REGEX . self::ROUTE_PARAM_CUSTOM_REGEX . '\}#';
+-
+-        $names = [];
+-        $optional = [];
+-
+-        $modifiedUri = preg_replace_callback(
+-            pattern: $regex,
+-            callback: static function (array $matches) use ($methodReflector, &$names, &$optional) {
+-                $isOptional = $matches[1] === '?';
+-                $paramName = $matches[2];
+-                $providedRegExp = $matches[3] ?? '';
+-
+-                $names[] = $paramName;
+-                $optional[$paramName] = $isOptional;
+-
+-                // Skip if there was already a constraint
+-                if ($providedRegExp !== '') {
+-                    return $matches[0];
+-                }
+-
+-                $parameter = $methodReflector->getParameter($paramName);
+-
+-                if (! $parameter instanceof ParameterReflector) {
+-                    return $matches[0];
+-                }
+-
+-                $constraint = match ($parameter->getType()->getName()) {
+-                    'int', 'integer' => ':\d+',
+-                    'float', 'double' => ':[\d.]+',
+-                    'bool', 'boolean' => ':(0|1|true|false)',
+-                    default => null,
+-                };
+-
+-                if ($constraint !== null) {
+-                    return sprintf('{%s%s%s}', $isOptional ? '?' : '', $paramName, $constraint);
+-                }
+-
+-                return $matches[0];
+-            },
+-            subject: $uri,
+-        );
+-
+-        return [
+-            'uri' => $modifiedUri,
+-            'names' => $names,
+-            'optional' => $optional,
+-        ];
++        throw new RuntimeException('Runtime route parsing is unavailable in the finite Elephc profile.');

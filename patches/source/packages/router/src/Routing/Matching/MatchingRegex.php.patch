@@ -1,0 +1,20 @@
+diff --git a/packages/router/src/Routing/Matching/MatchingRegex.php b/packages/router/src/Routing/Matching/MatchingRegex.php
+index ffc4a95ccc183314eee0a13921ffec70e8e3fa1a..ac5af30137968c1e5ae37113d1387adc855ec1c2 100644
+--- a/packages/router/src/Routing/Matching/MatchingRegex.php
++++ b/packages/router/src/Routing/Matching/MatchingRegex.php
+@@ -8 +7,0 @@
+-use Tempest\Router\Routing\Construction\MarkedRoute;
+@@ -21,0 +21,2 @@ public function match(string $uri): ?RouteMatch
++            $pattern = (string) $pattern;
++            $matches = [];
+@@ -25 +26 @@ public function match(string $uri): ?RouteMatch
+-                throw new RuntimeException('Failed to use matching regex. Got error ' . preg_last_error());
++                throw new RuntimeException('Failed to use matching regex.');
+@@ -32,3 +33 @@ public function match(string $uri): ?RouteMatch
+-            if (! array_key_exists(MarkedRoute::REGEX_MARK_TOKEN, $matches)) {
+-                continue;
+-            }
++            $parameter = $matches[1] ?? '';
+@@ -36 +35 @@ public function match(string $uri): ?RouteMatch
+-            return RouteMatch::match($matches);
++            return RouteMatch::fromParameter(is_string($parameter) ? $parameter : '');

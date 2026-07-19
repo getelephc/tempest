@@ -1,0 +1,38 @@
+diff --git a/packages/router/src/MatchRouteMiddleware.php b/packages/router/src/MatchRouteMiddleware.php
+index 87050102c18eed2b46d687c3302e9712f8312ce0..9811b857a99b52f5679aeb3c19cd4b0969f68cbf 100644
+--- a/packages/router/src/MatchRouteMiddleware.php
++++ b/packages/router/src/MatchRouteMiddleware.php
+@@ -5,4 +5,2 @@
+-use Tempest\Container\Container;
+-use Tempest\Http\GenericRequest;
+-use Tempest\Http\Method;
+-use Tempest\Http\Request;
++use Elephc\TempestRuntime\AotRequest;
++use Elephc\TempestRuntime\StaticContainer;
+@@ -11 +9 @@
+-use Tempest\Router\Routing\Matching\RouteMatcher;
++use Tempest\Router\Routing\Matching\GenericRouteMatcher;
+@@ -18,2 +16,2 @@ public function __construct(
+-        private RouteMatcher $routeMatcher,
+-        private Container $container,
++        private GenericRouteMatcher $routeMatcher,
++        private StaticContainer $container,
+@@ -22 +20 @@ public function __construct(
+-    public function __invoke(Request $request, HttpMiddlewareCallable $next): Response
++    public function __invoke(AotRequest $request, HttpMiddlewareCallable $next): Response
+@@ -24 +22,2 @@ public function __invoke(Request $request, HttpMiddlewareCallable $next): Respon
+-        $matchedRoute = $this->routeMatcher->match($request);
++        return $this->process($request, $next);
++    }
+@@ -26,3 +25,3 @@ public function __invoke(Request $request, HttpMiddlewareCallable $next): Respon
+-        if (! $matchedRoute instanceof MatchedRoute && $request->method === Method::HEAD && $request instanceof GenericRequest) {
+-            $matchedRoute = $this->routeMatcher->match($request->withMethod(Method::GET));
+-        }
++    public function process(AotRequest $request, HttpMiddlewareCallable $next): Response
++    {
++        $matchedRoute = $this->routeMatcher->match($request);
+@@ -35,3 +34 @@ public function __invoke(Request $request, HttpMiddlewareCallable $next): Respon
+-        $this->container->singleton(MatchedRoute::class, fn () => $matchedRoute);
+-
+-        return $next($request);
++        return $next->call($request, $matchedRoute);

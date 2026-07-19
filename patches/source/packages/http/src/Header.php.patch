@@ -1,0 +1,15 @@
+diff --git a/packages/http/src/Header.php b/packages/http/src/Header.php
+index 1b28132aea054c522e2d64fa610fc368ccde7334..697e6ad2fb8af14e8425d5d6235f1be85cad0b29 100644
+--- a/packages/http/src/Header.php
++++ b/packages/http/src/Header.php
+@@ -7,2 +6,0 @@
+-use BackedEnum;
+-
+@@ -19,4 +16,0 @@ public function add(mixed $value): void
+-        if ($value instanceof BackedEnum) {
+-            $value = $value->value;
+-        }
+-
+@@ -28 +22 @@ public function first(): mixed
+-        return array_first($this->values);
++        return $this->values[0] ?? null;
