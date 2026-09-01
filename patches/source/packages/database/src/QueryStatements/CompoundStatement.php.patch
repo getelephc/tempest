@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/QueryStatements/CompoundStatement.php b/packages/database/src/QueryStatements/CompoundStatement.php
-index afb75d04f7462f58f55f9756e6f38b07c94f1767..9500e84ac9bd81874403b7c9c57db82ab0eaa581 100644
---- a/packages/database/src/QueryStatements/CompoundStatement.php
-+++ b/packages/database/src/QueryStatements/CompoundStatement.php
-@@ -15 +15 @@
--    private(set) array $statements;
-+    public array $statements;

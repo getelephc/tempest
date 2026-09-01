@@ -1,7 +1,0 @@
-diff --git a/packages/mail/src/Testing/MailTester.php b/packages/mail/src/Testing/MailTester.php
-index ebb03f6c2d854c7d7ebc1d9eaf10f2f0b0cb3615..1db3f9277854391e44c52c144dfc8ee0261c5140 100644
---- a/packages/mail/src/Testing/MailTester.php
-+++ b/packages/mail/src/Testing/MailTester.php
-@@ -35 +35 @@ public function send(Email $email): self
--        $this->sentSymfonyEmail = map($email)->with(EmailToSymfonyEmailMapper::class)->do();
-+        $this->sentSymfonyEmail = map($email)->with(EmailToSymfonyEmailMapper::class)->execute();

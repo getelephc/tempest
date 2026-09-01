@@ -1,7 +1,0 @@
-diff --git a/packages/container/tests/Fixtures/ClassWithLazySlowPropertyDependency.php b/packages/container/tests/Fixtures/ClassWithLazySlowPropertyDependency.php
-index 40dabd2f7a378da594099c3fdac8812ed9bcd167..c42a059a0694664cca99b7a7ecb5b796b88ac5e5 100644
---- a/packages/container/tests/Fixtures/ClassWithLazySlowPropertyDependency.php
-+++ b/packages/container/tests/Fixtures/ClassWithLazySlowPropertyDependency.php
-@@ -13 +13 @@ final class ClassWithLazySlowPropertyDependency
--    private(set) SlowDependency $dependency;
-+    public SlowDependency $dependency;

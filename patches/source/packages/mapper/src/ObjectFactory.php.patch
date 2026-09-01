@@ -1,5 +1,5 @@
 diff --git a/packages/mapper/src/ObjectFactory.php b/packages/mapper/src/ObjectFactory.php
-index b0f71f5d62f3b9129178a24cb09c0b877b401275..0eaf90f819487dc512c784d032a9fdb44aeef190 100644
+index b0f71f5d62f3b9129178a24cb09c0b877b401275..1e03e0a719e4432e585d27bc908710187cf2e1ff 100644
 --- a/packages/mapper/src/ObjectFactory.php
 +++ b/packages/mapper/src/ObjectFactory.php
 @@ -115,3 +115,2 @@ public function in(Context|UnitEnum|string|null $context): self
@@ -8,24 +8,3 @@ index b0f71f5d62f3b9129178a24cb09c0b877b401275..0eaf90f819487dc512c784d032a9fdb4
 -        ]);
 +        $clone = clone $this;
 +        $clone->context = $context;
-@@ -157 +156 @@ public function from(mixed $data): mixed
--     *     ->do();
-+     *     ->execute();
-@@ -203 +202 @@ public function to(mixed $to): mixed
--     *     ->do();
-+     *     ->execute();
-@@ -206 +205 @@ public function to(mixed $to): mixed
--    public function do(): mixed
-+    public function execute(): mixed
-@@ -237 +236 @@ public function toArray(): array
--            return $this->with(ObjectToArrayMapper::class)->do();
-+            return $this->with(ObjectToArrayMapper::class)->execute();
-@@ -252 +251 @@ public function toArray(): array
--            return $this->with(JsonToArrayMapper::class)->do();
-+            return $this->with(JsonToArrayMapper::class)->execute();
-@@ -270 +269 @@ public function toJson(): string
--            return $this->with(ObjectToJsonMapper::class)->do();
-+            return $this->with(ObjectToJsonMapper::class)->execute();
-@@ -274 +273 @@ public function toJson(): string
--            return $this->with(ArrayToJsonMapper::class)->do();
-+            return $this->with(ArrayToJsonMapper::class)->execute();

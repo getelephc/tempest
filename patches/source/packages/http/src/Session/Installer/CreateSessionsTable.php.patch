@@ -1,7 +1,0 @@
-diff --git a/packages/http/src/Session/Installer/CreateSessionsTable.php b/packages/http/src/Session/Installer/CreateSessionsTable.php
-index ad32c6f8da9972693e5204f034761b32634a5f53..53debab0bd923b9881bd869dd9d0051f0bf49d88 100644
---- a/packages/http/src/Session/Installer/CreateSessionsTable.php
-+++ b/packages/http/src/Session/Installer/CreateSessionsTable.php
-@@ -15 +15 @@ final class CreateSessionsTable implements MigratesUp
--    private(set) string $name = '0000-00-00_create_sessions_table';
-+    public string $name = '0000-00-00_create_sessions_table';

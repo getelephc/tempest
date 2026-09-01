@@ -1,7 +1,0 @@
-diff --git a/packages/process/src/Testing/TestingProcessExecutor.php b/packages/process/src/Testing/TestingProcessExecutor.php
-index c40f6d29115578ead5734092e1d2ed7d504a2cc5..1520009933b300bb447ae72ed20cb9ce5a4f13d8 100644
---- a/packages/process/src/Testing/TestingProcessExecutor.php
-+++ b/packages/process/src/Testing/TestingProcessExecutor.php
-@@ -20 +20 @@ final class TestingProcessExecutor implements ProcessExecutor
--    private(set) array $executions = [];
-+    public array $executions = [];

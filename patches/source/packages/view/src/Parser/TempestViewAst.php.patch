@@ -1,10 +1,7 @@
 diff --git a/packages/view/src/Parser/TempestViewAst.php b/packages/view/src/Parser/TempestViewAst.php
-index 379e9564ccc007809732c30b90fcbf19208f0273..c7670bd08510e387723155f6ba82c7caa976ea3b 100644
+index 379e9564ccc007809732c30b90fcbf19208f0273..d2ab971ebb78f1367ca02188afd26529fed69519 100644
 --- a/packages/view/src/Parser/TempestViewAst.php
 +++ b/packages/view/src/Parser/TempestViewAst.php
 @@ -12 +12 @@ public function __construct(
 -        private(set) TokenCollection $tokens = new TokenCollection(),
 +        public TokenCollection $tokens = new TokenCollection(),
-@@ -15 +15 @@ public function __construct(
--    private(set) bool $isHtml = true;
-+    public bool $isHtml = true;

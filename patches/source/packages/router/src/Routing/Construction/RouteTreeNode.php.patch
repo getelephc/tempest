@@ -1,7 +1,0 @@
-diff --git a/packages/router/src/Routing/Construction/RouteTreeNode.php b/packages/router/src/Routing/Construction/RouteTreeNode.php
-index 566e1655348df742cdead046cbab32d278f4c73e..85a944e6548ce662d4bd2f560154cc74851f6e6c 100644
---- a/packages/router/src/Routing/Construction/RouteTreeNode.php
-+++ b/packages/router/src/Routing/Construction/RouteTreeNode.php
-@@ -37 +37 @@ public static function createStaticRouteNode(string $name): self
--        return new self(RouteTreeNodeType::Static, $name);
-+        return new self(RouteTreeNodeType::Literal, $name);

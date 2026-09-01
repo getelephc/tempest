@@ -1,10 +1,7 @@
 diff --git a/packages/support/src/Arr/ManipulatesArray.php b/packages/support/src/Arr/ManipulatesArray.php
-index 8e2bd52504b1d2f130cb76f39bd294f3d2d547d8..9121d100aeaa83ea421d6b4ba0f72c6bb963c32f 100644
+index 8e2bd52504b1d2f130cb76f39bd294f3d2d547d8..788585015d307f5140b97ef3b57ca127b706128c 100644
 --- a/packages/support/src/Arr/ManipulatesArray.php
 +++ b/packages/support/src/Arr/ManipulatesArray.php
-@@ -27 +27 @@ trait ManipulatesArray
--    private(set) array $value;
-+    public array $value;
 @@ -34 +34 @@ public function __construct(mixed $input = [])
 -        $this->value = namespace\wrap($input);
 +        $this->value = wrap($input);

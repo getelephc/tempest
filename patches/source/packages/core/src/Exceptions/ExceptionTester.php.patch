@@ -1,7 +1,0 @@
-diff --git a/packages/core/src/Exceptions/ExceptionTester.php b/packages/core/src/Exceptions/ExceptionTester.php
-index a8e72ad894aec66af846e48e1f6d8bade2949c10..fca887eaebe29846a14fa327c0bf6da3dac9e14e 100644
---- a/packages/core/src/Exceptions/ExceptionTester.php
-+++ b/packages/core/src/Exceptions/ExceptionTester.php
-@@ -11 +11 @@ final class ExceptionTester
--    private(set) ?TestingExceptionProcessor $processor = null;
-+    public ?TestingExceptionProcessor $processor = null;

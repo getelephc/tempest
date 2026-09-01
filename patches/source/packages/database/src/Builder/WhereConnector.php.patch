@@ -1,9 +1,0 @@
-diff --git a/packages/database/src/Builder/WhereConnector.php b/packages/database/src/Builder/WhereConnector.php
-index 33ede94f32361510315239ed0a5ef5fad4a7bada..f1c24c5f9878a2c6aa165077e7df05e31bf2ac56 100644
---- a/packages/database/src/Builder/WhereConnector.php
-+++ b/packages/database/src/Builder/WhereConnector.php
-@@ -7,2 +7,2 @@ enum WhereConnector: string
--    case AND = 'AND';
--    case OR = 'OR';
-+    case CONJUNCTION = 'AND';
-+    case DISJUNCTION = 'OR';

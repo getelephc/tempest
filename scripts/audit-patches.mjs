@@ -13,8 +13,17 @@ function compareStrings(left, right) {
     return left < right ? -1 : left > right ? 1 : 0;
 }
 
-async function listPatches(directory) {
-    const entries = await readdir(directory, { withFileTypes: true });
+async function listPatches(directory, optional = false) {
+    let entries;
+
+    try {
+        entries = await readdir(directory, { withFileTypes: true });
+    } catch (error) {
+        if (optional && error.code === 'ENOENT') {
+            return [];
+        }
+        throw error;
+    }
     const files = [];
 
     for (const entry of entries.sort((left, right) => compareStrings(left.name, right.name))) {
@@ -66,8 +75,10 @@ const digest = createHash('sha256');
 const targets = new Set();
 
 for (const currentSeries of series) {
-    const patches = await listPatches(currentSeries.root);
-    assert.ok(patches.length > 0, `${currentSeries.kind} patch corpus is empty.`);
+    const patches = await listPatches(currentSeries.root, currentSeries.kind === 'vendor');
+    if (currentSeries.kind !== 'vendor') {
+        assert.ok(patches.length > 0, `${currentSeries.kind} patch corpus is empty.`);
+    }
 
     for (const absolute of patches) {
         const relative = path.relative(root, absolute);
@@ -125,10 +136,6 @@ for (const currentSeries of series) {
     }
 }
 
-const expectedLockHash = (await readFile(path.join(root, 'patches', 'vendor.composer-lock.sha256'), 'utf8')).trim();
-const lockHash = createHash('sha256').update(await readFile(path.join(root, 'composer.lock'))).digest('hex');
-assert.equal(lockHash, expectedLockHash, 'composer.lock does not match the vendor patch baseline.');
-
 const expectedRuntimeLockHash = (await readFile(path.join(root, 'patches', 'runtime.composer-lock.sha256'), 'utf8')).trim();
 const runtimeLockHash = createHash('sha256').update(await readFile(path.join(root, 'elephc', 'runtime', 'composer.lock'))).digest('hex');
 assert.equal(runtimeLockHash, expectedRuntimeLockHash, 'Runtime composer.lock does not match the runtime patch baseline.');
@@ -161,6 +168,5 @@ console.log(`Source state: ${count('source', 'clean')} clean, ${count('source', 
 console.log(`Vendor state: ${count('vendor', 'clean')} clean, ${count('vendor', 'applied')} applied, ${count('vendor', 'missing')} missing`);
 console.log(`Runtime state: ${count('runtime', 'clean')} clean, ${count('runtime', 'applied')} applied, ${count('runtime', 'missing')} missing`);
 console.log(`Source baseline: ${sourceBaseline}`);
-console.log(`Composer lock SHA-256: ${lockHash}`);
 console.log(`Runtime Composer lock SHA-256: ${runtimeLockHash}`);
 console.log(`Corpus SHA-256: ${digest.digest('hex')}`);

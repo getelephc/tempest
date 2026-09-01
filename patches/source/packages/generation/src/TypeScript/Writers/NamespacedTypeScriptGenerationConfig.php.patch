@@ -1,7 +1,0 @@
-diff --git a/packages/generation/src/TypeScript/Writers/NamespacedTypeScriptGenerationConfig.php b/packages/generation/src/TypeScript/Writers/NamespacedTypeScriptGenerationConfig.php
-index 311096b232d3cdfaa939f57f58af794f35d94494..18c6b4ef5a44152338a332045b1ddf7c7f1859ef 100644
---- a/packages/generation/src/TypeScript/Writers/NamespacedTypeScriptGenerationConfig.php
-+++ b/packages/generation/src/TypeScript/Writers/NamespacedTypeScriptGenerationConfig.php
-@@ -15 +15 @@ final class NamespacedTypeScriptGenerationConfig implements TypeScriptGeneration
--    private(set) string $writer = NamespacedFileWriter::class;
-+    public string $writer = NamespacedFileWriter::class;

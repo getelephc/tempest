@@ -1,13 +1,7 @@
 diff --git a/packages/database/src/Builder/ModelInspector.php b/packages/database/src/Builder/ModelInspector.php
-index c9a09ac53f2ab634192d50ce4c24fb9dff32c84d..d4da6a5dc2e6668bf27f0538afa123ff26e63974 100644
+index c9a09ac53f2ab634192d50ce4c24fb9dff32c84d..d44ccb06c9f6616ae4228ea6a5b2d5e8dfaa7b0c 100644
 --- a/packages/database/src/Builder/ModelInspector.php
 +++ b/packages/database/src/Builder/ModelInspector.php
-@@ -41 +41 @@ final class ModelInspector
--    private(set) ?ClassReflector $reflector = null;
-+    public ?ClassReflector $reflector = null;
-@@ -43 +43 @@ final class ModelInspector
--    private(set) object|string|null $instance = null;
-+    public object|string|null $instance = null;
 @@ -76 +76 @@ public function __construct(
 -        private(set) object|string $model,
 +        public object|string $model,

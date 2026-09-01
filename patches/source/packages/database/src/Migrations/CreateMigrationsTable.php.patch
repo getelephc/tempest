@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/Migrations/CreateMigrationsTable.php b/packages/database/src/Migrations/CreateMigrationsTable.php
-index 795450fa31a46d3422fe4bd5b5db37bc576b5594..2ee0d39e0345d4ffc39415ca81c57fd5640d676c 100644
---- a/packages/database/src/Migrations/CreateMigrationsTable.php
-+++ b/packages/database/src/Migrations/CreateMigrationsTable.php
-@@ -15 +15 @@ final class CreateMigrationsTable implements MigratesUp, MigratesDown
--    private(set) string $name = '0000-00-00_create_migrations_table';
-+    public string $name = '0000-00-00_create_migrations_table';

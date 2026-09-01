@@ -1,7 +1,0 @@
-diff --git a/packages/console/src/Terminal/Terminal.php b/packages/console/src/Terminal/Terminal.php
-index 186b862fdd03fb3b0de4316aed6d4dc9f0823131..69fdcf9a44c561f7a0c0f276e3ac8dd8e819636e 100644
---- a/packages/console/src/Terminal/Terminal.php
-+++ b/packages/console/src/Terminal/Terminal.php
-@@ -32 +32 @@ final class Terminal
--    private(set) bool $supportsTty = true {
-+    public bool $supportsTty = true {

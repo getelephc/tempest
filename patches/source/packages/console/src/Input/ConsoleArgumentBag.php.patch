@@ -1,7 +1,0 @@
-diff --git a/packages/console/src/Input/ConsoleArgumentBag.php b/packages/console/src/Input/ConsoleArgumentBag.php
-index ef96b1bff9f795ee85054800b396cc171327d269..fa2657d3c7929afeebc6a4040913c98d9ef96feb 100644
---- a/packages/console/src/Input/ConsoleArgumentBag.php
-+++ b/packages/console/src/Input/ConsoleArgumentBag.php
-@@ -14 +14 @@ final class ConsoleArgumentBag
--    private(set) array $arguments = [];
-+    public array $arguments = [];

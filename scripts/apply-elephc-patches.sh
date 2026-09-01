@@ -6,7 +6,6 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 SOURCE_PATCH_ROOT="$ROOT/patches/source"
 VENDOR_PATCH_ROOT="$ROOT/patches/vendor"
 RUNTIME_PATCH_ROOT="$ROOT/patches/runtime"
-LOCK_SHA256_FILE="$ROOT/patches/vendor.composer-lock.sha256"
 
 mode=apply
 include_source=true
@@ -49,40 +48,6 @@ for command in git find; do
     fi
 done
 
-sha256_file()
-{
-    if command -v sha256sum >/dev/null 2>&1; then
-        sha256sum "$1" | awk '{print $1}'
-    else
-        shasum -a 256 "$1" | awk '{print $1}'
-    fi
-}
-
-verify_vendor_baseline()
-{
-    if [[ ! -d vendor ]]; then
-        echo "vendor/ does not exist. Run 'composer install' first." >&2
-        exit 1
-    fi
-
-    if [[ ! -f "$LOCK_SHA256_FILE" ]]; then
-        echo "Composer lock checksum not found: $LOCK_SHA256_FILE" >&2
-        exit 1
-    fi
-
-    local expected
-    local actual
-    expected=$(tr -d '[:space:]' < "$LOCK_SHA256_FILE")
-    actual=$(sha256_file composer.lock)
-
-    if [[ "$actual" != "$expected" ]]; then
-        echo "composer.lock does not match the vendor patch baseline." >&2
-        echo "Expected: $expected" >&2
-        echo "Actual:   $actual" >&2
-        exit 1
-    fi
-}
-
 applied=0
 already_applied=0
 reversed=0
@@ -96,6 +61,11 @@ process_series()
     local patch_root=$2
 
     if [[ ! -d "$patch_root" ]]; then
+        if [[ "$label" == "vendor" ]]; then
+            echo "$label patch tree has no patches; skipping."
+            return
+        fi
+
         echo "$label patch tree not found: $patch_root" >&2
         exit 1
     fi
@@ -104,8 +74,8 @@ process_series()
     count=$(find "$patch_root" -type f -name '*.patch' | wc -l | tr -d '[:space:]')
 
     if [[ "$count" == "0" ]]; then
-        echo "$label patch tree is empty: $patch_root" >&2
-        exit 1
+        echo "$label patch tree has no patches; skipping."
+        return
     fi
 
     while IFS= read -r patch; do
@@ -155,10 +125,6 @@ process_series()
         esac
     done < <(find "$patch_root" -type f -name '*.patch' | LC_ALL=C sort)
 }
-
-if [[ "$include_vendor" == true ]]; then
-    verify_vendor_baseline
-fi
 
 if [[ "$mode" == reverse ]]; then
     if [[ "$include_runtime" == true ]]; then

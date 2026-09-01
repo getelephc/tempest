@@ -1,5 +1,5 @@
 diff --git a/packages/core/src/Middleware.php b/packages/core/src/Middleware.php
-index d805b3611973c3b64c30e4fa0b337ae8be189a6b..1cdc20f2058b9cb9191a4056ae6c04ce77ace25d 100644
+index d805b3611973c3b64c30e4fa0b337ae8be189a6b..538a3bcd3e1b77c4f4629ee00407fb410392b483 100644
 --- a/packages/core/src/Middleware.php
 +++ b/packages/core/src/Middleware.php
 @@ -5,8 +4,0 @@
@@ -14,9 +14,6 @@ index d805b3611973c3b64c30e4fa0b337ae8be189a6b..1cdc20f2058b9cb9191a4056ae6c04ce
 @@ -15 +7 @@
 -final class Middleware implements IteratorAggregate
 +final class Middleware
-@@ -17 +9 @@ final class Middleware implements IteratorAggregate
--    private(set) array $middlewareClasses = [];
-+    public array $middlewareClasses = [];
 @@ -19,4 +11,2 @@ final class Middleware implements IteratorAggregate
 -    public function __construct(
 -        /** @var class-string<MiddlewareInterface> ...$middlewareClasses */
@@ -24,9 +21,6 @@ index d805b3611973c3b64c30e4fa0b337ae8be189a6b..1cdc20f2058b9cb9191a4056ae6c04ce
 -    ) {
 +    public function __construct(array $middlewareClasses = [])
 +    {
-@@ -26 +16 @@ public function __construct(
--    public function clone(): self
-+    public function copy(): self
 @@ -35 +25 @@ public function add(string ...$middlewareClasses): self
 -            $this->middlewareClasses[$middlewareClass] = new ClassReflector($middlewareClass);
 +            $this->middlewareClasses[$middlewareClass] = $middlewareClass;

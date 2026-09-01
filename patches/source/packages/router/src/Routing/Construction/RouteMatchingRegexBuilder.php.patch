@@ -1,7 +1,0 @@
-diff --git a/packages/router/src/Routing/Construction/RouteMatchingRegexBuilder.php b/packages/router/src/Routing/Construction/RouteMatchingRegexBuilder.php
-index d526eca01f5d966bdb22b473377561dea6d02301..a33867b5f033b69e2f2877e53cdcee2629fec9e0 100644
---- a/packages/router/src/Routing/Construction/RouteMatchingRegexBuilder.php
-+++ b/packages/router/src/Routing/Construction/RouteMatchingRegexBuilder.php
-@@ -131 +131 @@ private function routeNodeSegmentRegex(RouteTreeNode $node): string
--            RouteTreeNodeType::Static => "/{$node->segment}",
-+            RouteTreeNodeType::Literal => "/{$node->segment}",
