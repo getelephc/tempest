@@ -17,6 +17,8 @@ final readonly class AotResponseSender implements ResponseSender
 
     public function send(Response $response): Response
     {
+        header('X-Powered-By: Tempest-on-Elephc');
+
         foreach ($response->getHeaders() as $header) {
             if ($header instanceof \Tempest\Http\Header) {
                 foreach ($header->values as $value) {
@@ -32,6 +34,10 @@ final readonly class AotResponseSender implements ResponseSender
         }
 
         $body = $response->getBody();
+
+        if (is_string($body) && str_starts_with($body, '<!doctype html>')) {
+            header('Content-Type: text/html; charset=utf-8');
+        }
 
         if (is_array($body) || $body instanceof JsonSerializable) {
             echo json_encode($body);

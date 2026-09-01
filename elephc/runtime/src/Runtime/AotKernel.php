@@ -28,7 +28,11 @@ final class AotKernel implements Kernel
         ?Container $container = null,
         ?string $internalStorage = null,
     ): Kernel {
-        $kernel = new self($root, $container ?? new StaticContainer());
+        if ($container === null) {
+            $kernel = new self($root, new StaticContainer());
+        } else {
+            $kernel = new self($root, $container);
+        }
 
         if ($internalStorage !== null) {
             $kernel->internalStorage = (string) $internalStorage;
