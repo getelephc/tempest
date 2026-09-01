@@ -21,7 +21,7 @@ From a source-only checkout:
 
 ```bash
 export ELEPHC_REPO=/path/to/elephc
-composer install
+COMPOSER_ROOT_VERSION=3.x-dev composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/apply-elephc-patches.sh --check
 ./scripts/build-elephc.sh
@@ -65,12 +65,15 @@ without an initializer and the implicit `null` default for untyped properties.
 Neither feature had a corresponding workaround in this corpus, so no patch was
 removed for those changes.
 
-### Elephc 0.26.5 refresh
+### Elephc main refresh at `33b490754`
 
-The profile was revalidated against Elephc `0.26.5` at `33b490754`. Native
-support removed 45 source patch files and both root vendor patches. Eleven mixed
-patches were regenerated so they retain only unrelated workarounds. The removed
-rewrites covered:
+The profile was revalidated against Elephc main at `33b490754` (crate version
+`0.26.5`, 254 commits after the `v0.26.5` tag). The refresh reduced the complete
+corpus from 187 to 139 patch files: 45 source patches, both root vendor patches,
+and one compiler patch were removed, while the runtime patch remained. Eleven
+mixed source patches were regenerated to retain only unrelated workarounds.
+This removed 134 added workaround LoC; including patch headers and metadata,
+the corpus shrank by 593 lines. The removed rewrites covered:
 
 - ordinary, non-promoted asymmetric `private(set)` properties;
 - keyword-named methods and enum cases (`clone`, `do`, `AND`, `OR`, `TRY`,
@@ -89,11 +92,12 @@ Current Elephc requires regex users to declare PCRE2 through its native package
 manager. The runtime therefore commits `elephc.toml` and `elephc.lock`, and the
 build runs `elephc native install --locked` before final linking.
 
-Two 0.26.5 defects surfaced only after the obsolete patches were removed. The
-kernel now branches before constructing over a nullable container, avoiding the
-`??` inference failure tracked in #822. The synthetic response sender emits the
-profile's fixed HTML headers directly, avoiding the fluent interface/nested
-header ownership corruption tracked in #835.
+Two defects in that Elephc main revision surfaced only after the obsolete
+patches were removed. The kernel now branches before constructing over a
+nullable container, avoiding the `??` inference failure tracked in #822. The
+synthetic response sender emits the profile's fixed HTML headers directly,
+avoiding the fluent interface/nested header ownership corruption tracked in
+#835.
 
 ## Verified AOT boundary
 

@@ -5,7 +5,8 @@ The committed Tempest source tree stays identical to upstream commit
 stored as one patch per target:
 
 - `patches/source/` contains 138 Tempest source and test patches;
-- the root vendor series is empty on Elephc 0.26.5;
+- the root vendor series is empty on the tested Elephc main baseline
+  (`33b490754`);
 - `patches/runtime/` contains the isolated runtime Composer manifest patch;
 - `source.baseline` pins the upstream source commit;
 - `runtime.composer-lock.sha256` pins the isolated runtime dependency graph.
@@ -26,7 +27,7 @@ Starting from a fresh checkout:
 
 ```bash
 export ELEPHC_REPO=/path/to/elephc
-composer install
+COMPOSER_ROOT_VERSION=3.x-dev composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/apply-elephc-patches.sh --check
 ./scripts/build-elephc.sh

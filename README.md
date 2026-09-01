@@ -63,7 +63,7 @@ checkout, so no global elephc executable is involved.
 
 ```bash
 export ELEPHC_REPO=/path/to/elephc
-composer install
+COMPOSER_ROOT_VERSION=3.x-dev composer install
 ./scripts/apply-elephc-patches.sh
 ./scripts/build-elephc.sh
 ./elephc/runtime/server --listen 127.0.0.1:8080 --workers 1
