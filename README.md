@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <strong>Tempest 3.16.2 &middot; 183 source + 2 vendor + 1 runtime patches &middot; real Tempest HTTP pipeline &middot; finite web AOT profile</strong>
+  <strong>Tempest 3.16.2 &middot; 138 source + 0 vendor + 1 runtime patches &middot; real Tempest HTTP pipeline &middot; finite web AOT profile</strong>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@
   (commit `a14f676369`) is the pinned baseline. Tempest sources stay
   byte-identical to that import in a fresh checkout.
 - Compiler compatibility rewrites live in an explicit, file-level patch corpus:
-  183 Tempest source patches, 2 Composer dependency patches, and 1 isolated
+  138 Tempest source patches, no Composer dependency patches, and 1 isolated
   runtime Composer patch. Every patch
   has one target, original and patched blob hashes, and a path mirroring its
   target. Application is idempotent; a divergent file stops the process.
@@ -77,12 +77,13 @@ npm run audit:patches    # patch corpus integrity
 npm run test:clean-room  # full install-patch-build-test cycle in a source-only export
 ```
 
-`./scripts/apply-elephc-patches.sh --check` reports the applied root source and
-vendor state without modifying files. `scripts/build-elephc.sh` then installs
-the isolated runtime Composer graph, applies its one manifest patch, builds a
-patched compiler from a temporary archive of `ELEPHC_REPO`, verifies the
-object-expression `::class` regression probe, and compiles the web binary. The
-Elephc checkout itself remains unchanged.
+`./scripts/apply-elephc-patches.sh --check` reports the applied root source
+state without modifying files (the vendor series is now empty).
+`scripts/build-elephc.sh` then installs the isolated runtime Composer graph,
+applies its one manifest patch, builds the compiler from a temporary archive of
+`ELEPHC_REPO`, installs the locked PCRE2 native package required by current
+Elephc, verifies the object-expression `::class` regression probe, and compiles
+the web binary. The Elephc checkout itself remains unchanged.
 
 ## Current boundaries
 

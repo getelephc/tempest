@@ -31,21 +31,22 @@ npm run test:elephc
 `ELEPHC_REPO` is mandatory for scripts that invoke the compiler. It may point
 to an Elephc checkout anywhere on disk and is resolved to an absolute path
 before the clean-room export changes directory. The build exports its committed
-`HEAD` to a temporary directory, applies the compiler patch there, and uses the
-checkout's `target/` only as a Cargo cache. No repository-relative fallback,
-global executable, machine-specific path, or Elephc source mutation is involved.
+`HEAD` to a temporary directory and uses the checkout's `target/` only as a
+Cargo cache. No compiler patch, repository-relative fallback, global
+executable, machine-specific path, or Elephc source mutation is involved.
 
-The applicable corpus contains 183 source patches, 2 root vendor patches, and
+The applicable corpus contains 138 source patches, no root vendor patches, and
 1 runtime manifest patch. Every patch has one target, full original and patched
-Git blob hashes, and a path mirroring that target. Both Composer lock files are
+Git blob hashes, and a path mirroring that target. The runtime Composer lock is
 checksummed. The application order is bytewise stable; re-running the script is
 a no-op, while a divergent file stops the process.
 
 `scripts/build-elephc.sh` begins with an applied-state check, installs the
 isolated runtime Composer graph, applies its manifest patch, builds the
-temporary Elephc source, and verifies the object-expression `::class` regression
-probe. Compilation therefore cannot silently succeed from an unpatched
-checkout, a stale compiler, or a compiler that has lost that support.
+temporary Elephc source, installs the locked PCRE2 10.47 native package, and
+verifies the object-expression `::class` regression probe. Compilation
+therefore cannot silently succeed from an unpatched checkout, a stale compiler,
+or a compiler that has lost that support.
 `npm run test:clean-room` exports only committed files to a temporary directory
 and repeats Composer installation, first application, idempotence, compilation,
 and HTTP tests.
@@ -63,6 +64,36 @@ The current `Unreleased` section additionally lists static local declarations
 without an initializer and the implicit `null` default for untyped properties.
 Neither feature had a corresponding workaround in this corpus, so no patch was
 removed for those changes.
+
+### Elephc 0.26.5 refresh
+
+The profile was revalidated against Elephc `0.26.5` at `33b490754`. Native
+support removed 45 source patch files and both root vendor patches. Eleven mixed
+patches were regenerated so they retain only unrelated workarounds. The removed
+rewrites covered:
+
+- ordinary, non-promoted asymmetric `private(set)` properties;
+- keyword-named methods and enum cases (`clone`, `do`, `AND`, `OR`, `TRY`,
+  `CONTINUE`, and `Static`);
+- foreach array destructuring;
+- property and element increments in expression position;
+- assignments used directly as comparison operands;
+- final static methods.
+
+The local compiler patch for `object` type-name resolution was also removed:
+the fix and its regression coverage are now upstream. The local
+`object-class.php` probe remains as a cheap compiler-version gate rather than a
+source workaround.
+
+Current Elephc requires regex users to declare PCRE2 through its native package
+manager. The runtime therefore commits `elephc.toml` and `elephc.lock`, and the
+build runs `elephc native install --locked` before final linking.
+
+Two 0.26.5 defects surfaced only after the obsolete patches were removed. The
+kernel now branches before constructing over a nullable container, avoiding the
+`??` inference failure tracked in #822. The synthetic response sender emits the
+profile's fixed HTML headers directly, avoiding the fluent interface/nested
+header ownership corruption tracked in #835.
 
 ## Verified AOT boundary
 
@@ -89,9 +120,9 @@ middleware, matcher, matched-route value, controller, and response objects.
 
 The route attributes are not reflected at runtime: their URIs and controller
 classes are repeated in the finite manifest. Dynamic callable invocation is
-also replaced by an explicit controller dispatcher because it corrupts typed
-arguments in the current compiler. The supported dynamic route has one required
-string parameter; this is not a general parameter-binding implementation.
+also replaced by an explicit controller dispatcher so the AOT call graph and
+argument shapes stay finite. The supported dynamic route has one required string
+parameter; this is not a general parameter-binding implementation.
 
 Verified routes:
 
@@ -127,16 +158,48 @@ compatibility.
 
 ## Compatibility categories represented
 
-- Parenthesized assignments inside comparisons and boolean expressions.
 - Reserved `Namespace` identifiers and `namespace\function()` relative calls.
 - Standalone ternary expressions rewritten as `if`/`else`.
-- Asymmetric `private(set)` visibility normalized to public properties.
-- Keyword method and enum-case names renamed without changing represented values.
+- Asymmetric `private(set)` visibility on promoted properties normalized to
+  public promotion.
 - PHP 8.5 clone-with expressions lowered to clone-and-assign or construction.
-- Composer production metadata pruned of Rector to keep tooling out of the
-  runtime graph.
+- Dynamic first-class callable, `instanceof`, and class-constant expressions
+  lowered to supported local-variable or builtin forms.
+- Parameter retyping, backed-enum interface property access, `array_first()`,
+  namespaced `NAN`, and enum-case property defaults rewritten locally.
+- Finite-profile rewrites replace runtime includes, discovery, reflection, and
+  unconstrained callable dispatch with an explicit manifest.
 
-The setter-visibility rewrite relaxes encapsulation and is a known semantic
-difference. The finite profile does not depend on those modified upstream
-classes, but the patch series remains executable evidence for future compiler
-work.
+The promoted setter-visibility rewrite relaxes encapsulation and is a known
+semantic difference. The finite profile does not depend on those modified
+upstream classes, but the patch series remains executable evidence for future
+compiler work.
+
+## Elephc issue coverage
+
+Every reproducible compiler incompatibility left by this refresh was searched
+across open and closed Elephc issues. Existing coverage was reused; missing
+coverage was filed against the minimal reproducer.
+
+| Incompatibility | Elephc issue |
+|---|---|
+| Enum case default on a typed property | [#566](https://github.com/illegalstudio/elephc/issues/566) |
+| Interface/null coalescing inferred as `Mixed` | [#822](https://github.com/illegalstudio/elephc/issues/822) |
+| Promoted asymmetric `private(set)` | [#823](https://github.com/illegalstudio/elephc/issues/823) |
+| PHP 8.5 clone-with | [#824](https://github.com/illegalstudio/elephc/issues/824) |
+| Relative `namespace\function()` call | [#825](https://github.com/illegalstudio/elephc/issues/825) |
+| `Namespace` as a qualified-name segment | [#826](https://github.com/illegalstudio/elephc/issues/826) |
+| Standalone ternary statement | [#827](https://github.com/illegalstudio/elephc/issues/827) |
+| Dynamic first-class callable | [#828](https://github.com/illegalstudio/elephc/issues/828) |
+| Object property on the right of `instanceof` | [#829](https://github.com/illegalstudio/elephc/issues/829) |
+| Dynamic class constant / enum case fetch | [#830](https://github.com/illegalstudio/elephc/issues/830) |
+| Parameter retyped in default local mode | [#831](https://github.com/illegalstudio/elephc/issues/831) |
+| `BackedEnum::$value` after narrowing | [#832](https://github.com/illegalstudio/elephc/issues/832) |
+| Missing PHP 8.4 `array_first()` | [#833](https://github.com/illegalstudio/elephc/issues/833) |
+| Namespaced constant named `NAN` | [#834](https://github.com/illegalstudio/elephc/issues/834) |
+| Fluent interface result corrupts nested header strings | [#835](https://github.com/illegalstudio/elephc/issues/835) |
+
+Runtime-dynamic includes and open-ended discovery are not filed as compiler
+bugs: Elephc documents them as deliberate AOT boundaries, and no finite compiler
+fix can enumerate classes selected from future filesystem state. Their profile
+rewrites remain explicit rather than being presented as missing PHP syntax.
