@@ -1,9 +1,0 @@
-diff --git a/packages/auth/src/OAuth/Testing/TestingOAuthClient.php b/packages/auth/src/OAuth/Testing/TestingOAuthClient.php
-index 5a791ea05e06be83534a1c2bb2d2bd9b9c3310f5..12e2522815dc35ffeec668b672131c62761cb396 100644
---- a/packages/auth/src/OAuth/Testing/TestingOAuthClient.php
-+++ b/packages/auth/src/OAuth/Testing/TestingOAuthClient.php
-@@ -61,2 +61,2 @@ public function __construct(
--        private(set) OAuthUser $user,
--        private(set) readonly OAuthConfig $config,
-+        public OAuthUser $user,
-+        public readonly OAuthConfig $config,

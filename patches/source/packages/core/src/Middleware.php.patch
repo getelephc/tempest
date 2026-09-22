@@ -1,5 +1,5 @@
 diff --git a/packages/core/src/Middleware.php b/packages/core/src/Middleware.php
-index d805b3611973c3b64c30e4fa0b337ae8be189a6b..538a3bcd3e1b77c4f4629ee00407fb410392b483 100644
+index d805b3611973c3b64c30e4fa0b337ae8be189a6b..de3e2a9f07a0fc287d2bbbfa1396d751a92a1277 100644
 --- a/packages/core/src/Middleware.php
 +++ b/packages/core/src/Middleware.php
 @@ -5,8 +4,0 @@
@@ -14,23 +14,35 @@ index d805b3611973c3b64c30e4fa0b337ae8be189a6b..538a3bcd3e1b77c4f4629ee00407fb41
 @@ -15 +7 @@
 -final class Middleware implements IteratorAggregate
 +final class Middleware
-@@ -19,4 +11,2 @@ final class Middleware implements IteratorAggregate
+@@ -19,5 +11,5 @@ final class Middleware implements IteratorAggregate
 -    public function __construct(
 -        /** @var class-string<MiddlewareInterface> ...$middlewareClasses */
 -        string ...$middlewareClasses,
 -    ) {
+-        $this->add(...$middlewareClasses);
 +    public function __construct(array $middlewareClasses = [])
 +    {
-@@ -35 +25 @@ public function add(string ...$middlewareClasses): self
++        if ($middlewareClasses !== []) {
++            $this->add(...$middlewareClasses);
++        }
+@@ -35 +27 @@ public function add(string ...$middlewareClasses): self
 -            $this->middlewareClasses[$middlewareClass] = new ClassReflector($middlewareClass);
 +            $this->middlewareClasses[$middlewareClass] = $middlewareClass;
-@@ -45 +35 @@ public function remove(string ...$middlewareClasses): self
+@@ -45 +37,9 @@ public function remove(string ...$middlewareClasses): self
 -            unset($this->middlewareClasses[$middlewareClass]);
-+            $this->middlewareClasses = array_diff_key($this->middlewareClasses, [$middlewareClass => true]);
-@@ -51 +41 @@ public function remove(string ...$middlewareClasses): self
++            $classes = [];
++
++            foreach ($this->middlewareClasses as $name => $class) {
++                if ($name !== $middlewareClass) {
++                    $classes[$name] = $class;
++                }
++            }
++
++            $this->middlewareClasses = $classes;
+@@ -51 +51 @@ public function remove(string ...$middlewareClasses): self
 -    public function getIterator(): Traversable
 +    public function unwrap(): array
-@@ -53,10 +43 @@ public function getIterator(): Traversable
+@@ -53,10 +53 @@ public function getIterator(): Traversable
 -        return new ArrayIterator($this->middlewareClasses);
 -    }
 -
@@ -42,7 +54,7 @@ index d805b3611973c3b64c30e4fa0b337ae8be189a6b..538a3bcd3e1b77c4f4629ee00407fb41
 -            yield $middlewareClass->getName() => $middlewareClass;
 -        }
 +        return array_values($this->middlewareClasses);
-@@ -68,7 +48,0 @@ private function sort(): self
+@@ -68,7 +58,0 @@ private function sort(): self
 -        uasort($this->middlewareClasses, function (ClassReflector $a, ClassReflector $b): int {
 -            $priorityA = $a->getAttribute(Priority::class)->priority ?? Priority::NORMAL;
 -            $priorityB = $b->getAttribute(Priority::class)->priority ?? Priority::NORMAL;
@@ -50,7 +62,7 @@ index d805b3611973c3b64c30e4fa0b337ae8be189a6b..538a3bcd3e1b77c4f4629ee00407fb41
 -            return $priorityA <=> $priorityB;
 -        });
 -
-@@ -80,5 +54,7 @@ public function __serialize(): array
+@@ -80,5 +64,7 @@ public function __serialize(): array
 -        return [
 -            'middlewareClasses' => arr($this->middlewareClasses)
 -                ->map(fn (ClassReflector $class) => $class->getName())
@@ -63,7 +75,7 @@ index d805b3611973c3b64c30e4fa0b337ae8be189a6b..538a3bcd3e1b77c4f4629ee00407fb41
 +        }
 +
 +        return ['middlewareClasses' => $classes];
-@@ -89,3 +65,5 @@ public function __unserialize(array $data): void
+@@ -89,3 +75,5 @@ public function __unserialize(array $data): void
 -        $this->middlewareClasses = arr($data['middlewareClasses'])
 -            ->map(fn (string $className) => new ClassReflector($className))
 -            ->toArray();

@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/DatabaseContext.php b/packages/database/src/DatabaseContext.php
-index c92b1514ec111ee07b4b857c50ea1f6c9bb3ed52..329271419e4812ea9e7f8f9525e9bb640af50540 100644
---- a/packages/database/src/DatabaseContext.php
-+++ b/packages/database/src/DatabaseContext.php
-@@ -13 +13 @@ public function __construct(
--        private(set) DatabaseDialect $dialect,
-+        public DatabaseDialect $dialect,

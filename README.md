@@ -18,11 +18,11 @@
 </p>
 
 <p align="center">
-  <strong>Tempest 3.16.2 &middot; 138 source + 0 vendor + 1 runtime patches &middot; real Tempest HTTP pipeline &middot; finite web AOT profile</strong>
+  <strong>Tempest 3.16.2 &middot; 20 source + 0 vendor + 1 runtime patches &middot; real Tempest HTTP pipeline &middot; finite web AOT profile</strong>
 </p>
 
 <p align="center">
-  An experimental port that compiles a pinned Tempest 3.x checkout into a finite native <a href="https://github.com/illegalstudio/elephc">elephc</a> web binary while retaining every compiler compatibility rewrite as a reviewable patch corpus.
+  An experimental port that compiles a pinned Tempest 3.x checkout into a finite native <a href="https://github.com/illegalstudio/elephc">elephc</a> web binary while keeping every rewrite required by the verified request graph in a reviewable patch corpus.
 </p>
 
 <p align="center">
@@ -41,10 +41,14 @@
   (commit `a14f676369`) is the pinned baseline. Tempest sources stay
   byte-identical to that import in a fresh checkout.
 - Compiler compatibility rewrites live in an explicit, file-level patch corpus:
-  138 Tempest source patches, no Composer dependency patches, and 1 isolated
+  20 Tempest source patches, no Composer dependency patches, and 1 isolated
   runtime Composer patch. Every patch
   has one target, original and patched blob hashes, and a path mirroring its
   target. Application is idempotent; a divergent file stops the process.
+- The minimum corpus was revalidated against Elephc main commit `574105c407`
+  (crate version `0.27.0`). It contains only files reached by the finite web
+  entry point. Removed framework-wide patches are not a claim of complete
+  Tempest compatibility.
 - The profile targets PHP 8.5 and is compiled with
   `--php-version 8.5 --web`. The build refuses to run unless the complete
   patch series is applied.
@@ -89,7 +93,9 @@ the web binary. The Elephc checkout itself remains unchanged.
 
 The entry point is `elephc/runtime/server.php`. Its isolated Composer project
 mirrors the patched Tempest package instead of symlinking it and disables the
-framework's eager `autoload.files` list with a committed runtime patch.
+framework's eager `autoload.files` list with a committed runtime patch. No
+synthetic Symfony, Whoops, or PHP internal-type declarations are part of the
+compiled graph.
 
 The verified request path is:
 
@@ -108,7 +114,7 @@ elephc worker
 `Bootstrap` contains the finite route manifest. The `#[Get]` attributes remain
 on the controller methods, but Elephc does not discover them with runtime
 reflection. `AotRequest`, `StaticContainer`, `AotRouteHandler`,
-`AotResponseSender`, and `AotKernel` are the explicit synthetic boundary.
+`AotResponseSender`, and `AotKernel` are the explicit finite AOT boundary.
 
 The supported profile currently has GET routes, one required string parameter,
 status/header/body/JSON/redirect responses, HEAD body suppression, and a 404

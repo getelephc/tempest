@@ -1,7 +1,0 @@
-diff --git a/packages/database/src/RawSqlDatabaseContext.php b/packages/database/src/RawSqlDatabaseContext.php
-index 3e6ec3404dd193be85814b4d885bc3d850b037cd..248ff1bb0b7c41f5306168aad46b495ca8c7c2be 100644
---- a/packages/database/src/RawSqlDatabaseContext.php
-+++ b/packages/database/src/RawSqlDatabaseContext.php
-@@ -13 +13 @@ public function __construct(
--        private(set) DatabaseDialect $dialect,
-+        public DatabaseDialect $dialect,

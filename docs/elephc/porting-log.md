@@ -35,7 +35,7 @@ before the clean-room export changes directory. The build exports its committed
 Cargo cache. No compiler patch, repository-relative fallback, global
 executable, machine-specific path, or Elephc source mutation is involved.
 
-The applicable corpus contains 138 source patches, no root vendor patches, and
+The applicable corpus contains 20 source patches, no root vendor patches, and
 1 runtime manifest patch. Every patch has one target, full original and patched
 Git blob hashes, and a path mirroring that target. The runtime Composer lock is
 checksummed. The application order is bytewise stable; re-running the script is
@@ -99,6 +99,41 @@ synthetic response sender emits the profile's fixed HTML headers directly,
 avoiding the fluent interface/nested header ownership corruption tracked in
 #835.
 
+### Minimal web refresh at `574105c407`
+
+The profile was revalidated against Elephc main at `574105c407` (crate version
+`0.27.0`). Every source patch was removed individually, the runtime package was
+remirrored, and the complete entry point was checked. A second fixed-point pass
+then tested the remaining patches after all independently removable patches had
+gone. The final candidate was compiled with `--web` and passed all six HTTP
+checks.
+
+This reduced the source corpus from 138 to 20 file-level patches. The 118
+removed patches included every test patch and compatibility rewrites outside
+the finite request graph. Their removal narrows the corpus to the supported web
+profile; it does not claim that every unpatched Tempest file compiles with
+Elephc.
+
+The isolated runtime also stopped autoloading its 18 local synthetic
+declarations for PHP internal types, Symfony, and Whoops. Removing all five
+classmap entries and all four synthetic PSR-4 roots still passed both `--check`
+and `--web`. The Composer `replace` entries remain so those full dependency
+packages do not enter the production graph.
+
+Two retained source patches needed new workarounds on this Elephc baseline:
+
+- `Middleware` guards the empty constructor array before calling a variadic
+  spread. The unguarded `$this->add(...[])` exhausted the request heap or
+  terminated the handler with `SIGSEGV`.
+- `Middleware` and `IsResponse` rebuild associative arrays with finite loops
+  when removing a key. `array_diff_key()` rejects a typed object property as
+  its first argument, while direct `unset()` on the property element reaches
+  an unsupported EIR target shape.
+
+The single runtime Composer patch is still required. Re-enabling the framework
+`autoload.files` list makes compilation enter Symfony UID and fail on its
+runtime `goto` control flow.
+
 ## Verified AOT boundary
 
 The working entry point is `elephc/runtime/server.php`. The runtime has a pinned
@@ -119,8 +154,10 @@ The profile keeps these Tempest concepts as PHP classes:
 Runtime discovery and reflective dependency injection are replaced by the
 manifest in `Elephc\TempestRuntime\Bootstrap`. `AotRequest`, `StaticContainer`,
 `AotRouteHandler`, `AotResponseSender`, and `AotKernel` are the narrow synthetic
-boundary. A request still crosses Tempest's application, router, route
-middleware, matcher, matched-route value, controller, and response objects.
+boundary. They replace framework services selected through runtime discovery;
+they are not dependency fixture classes. A request still crosses Tempest's
+application, router, route middleware, matcher, matched-route value, controller,
+and response objects.
 
 The route attributes are not reflected at runtime: their URIs and controller
 classes are repeated in the finite manifest. Dynamic callable invocation is
@@ -162,28 +199,29 @@ compatibility.
 
 ## Compatibility categories represented
 
-- Reserved `Namespace` identifiers and `namespace\function()` relative calls.
-- Standalone ternary expressions rewritten as `if`/`else`.
-- Asymmetric `private(set)` visibility on promoted properties normalized to
-  public promotion.
-- PHP 8.5 clone-with expressions lowered to clone-and-assign or construction.
-- Dynamic first-class callable, `instanceof`, and class-constant expressions
-  lowered to supported local-variable or builtin forms.
-- Parameter retyping, backed-enum interface property access, `array_first()`,
-  namespaced `NAN`, and enum-case property defaults rewritten locally.
-- Finite-profile rewrites replace runtime includes, discovery, reflection, and
-  unconstrained callable dispatch with an explicit manifest.
+- The container interface and implementation surface are narrowed to the
+  methods used by the finite request pipeline.
+- Middleware metadata becomes a finite string array rather than a reflective
+  `ClassReflector` graph.
+- HTTP request and response state uses compiler-supported primitive fields and
+  explicitly refuses sessions and cookies outside the supported profile.
+- Status values, headers, JSON, redirects, and not-found responses retain the
+  Tempest response classes with finite constructor and accessor shapes.
+- Router construction, matching, and controller dispatch use the committed
+  route manifest instead of runtime reflection and unconstrained callables.
+- One required string route parameter is propagated through a finite matched
+  route value rather than general parameter binding.
 
 The promoted setter-visibility rewrite relaxes encapsulation and is a known
-semantic difference. The finite profile does not depend on those modified
-upstream classes, but the patch series remains executable evidence for future
-compiler work.
+semantic difference. The remaining instance is runtime-reachable and stays in
+the minimal corpus until Elephc can compile the upstream promoted form.
 
-## Elephc issue coverage
+## Historical Elephc issue coverage
 
-Every reproducible compiler incompatibility left by this refresh was searched
-across open and closed Elephc issues. Existing coverage was reused; missing
-coverage was filed against the minimal reproducer.
+The broader `33b490754` refresh searched every then-reproducible compiler
+incompatibility across open and closed Elephc issues. The table remains as
+historical context; most rows no longer correspond to files in the minimal web
+corpus.
 
 | Incompatibility | Elephc issue |
 |---|---|

@@ -1,12 +1,12 @@
-# Tempest compatibility patch corpus
+# Finite Tempest web compatibility patch corpus
 
 The committed Tempest source tree stays identical to upstream commit
 `a14f676369bb00c935b9603fe58ccc4c85e78820`. All compiler-facing rewrites are
-stored as one patch per target:
+stored as one patch per target reached by the verified web entry point:
 
-- `patches/source/` contains 138 Tempest source and test patches;
+- `patches/source/` contains 20 Tempest source patches;
 - the root vendor series is empty on the tested Elephc main baseline
-  (`33b490754`);
+  (`574105c407`);
 - `patches/runtime/` contains the isolated runtime Composer manifest patch;
 - `source.baseline` pins the upstream source commit;
 - `runtime.composer-lock.sha256` pins the isolated runtime dependency graph.
@@ -57,6 +57,11 @@ The audit verifies one target per patch, full Git blob hashes, mirrored paths,
 allowed target types, source/vendor/runtime state, the runtime Composer lock
 checksum, and a stable SHA-256 over the complete corpus.
 
-Patches are retained as compatibility evidence until the original source
-compiles and an Elephc regression test protects the compiler-side fix. A
-narrower finite profile is not by itself a reason to discard them.
+The corpus is intentionally scoped to the finite request graph rooted at
+`elephc/runtime/server.php`. A source patch remains only while removing that
+file-level rewrite makes the entry point fail to check, compile, or pass the
+HTTP verification suite on the tested Elephc baseline.
+
+This policy does not claim that unpatched, unreachable Tempest files compile
+with Elephc. `full-framework.php` remains the diagnostic for that broader and
+runtime-dynamic boundary.
