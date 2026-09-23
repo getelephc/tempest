@@ -6,7 +6,7 @@ stored as one patch per target reached by the verified web entry point:
 
 - `patches/source/` contains 20 Tempest source patches;
 - the root vendor series is empty on the tested Elephc main baseline
-  (`574105c407`);
+  (`605fb1d78c`);
 - `patches/runtime/` contains the isolated runtime Composer manifest patch;
 - `source.baseline` pins the upstream source commit;
 - `runtime.composer-lock.sha256` pins the isolated runtime dependency graph.
@@ -14,8 +14,8 @@ stored as one patch per target reached by the verified web entry point:
 The directory layout mirrors the target path. For example:
 
 ```text
-packages/container/src/GenericContainer.php
-patches/source/packages/container/src/GenericContainer.php.patch
+packages/container/src/Container.php
+patches/source/packages/container/src/Container.php.patch
 
 elephc/runtime/vendor/tempest/framework/composer.json
 patches/runtime/vendor/tempest/framework/composer.json.patch

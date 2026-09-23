@@ -45,7 +45,7 @@
   runtime Composer patch. Every patch
   has one target, original and patched blob hashes, and a path mirroring its
   target. Application is idempotent; a divergent file stops the process.
-- The minimum corpus was revalidated against Elephc main commit `574105c407`
+- The minimum corpus was revalidated against Elephc main commit `605fb1d78c`
   (crate version `0.27.0`). It contains only files reached by the finite web
   entry point. Removed framework-wide patches are not a claim of complete
   Tempest compatibility.
@@ -88,6 +88,14 @@ applies its one manifest patch, builds the compiler from a temporary archive of
 `ELEPHC_REPO`, installs the locked PCRE2 native package required by current
 Elephc, verifies the object-expression `::class` regression probe, and compiles
 the web binary. The Elephc checkout itself remains unchanged.
+
+After changing a source patch in an existing checkout, reinstall the mirrored
+Tempest package while the source patches are applied before rebuilding:
+
+```bash
+COMPOSER_ROOT_VERSION=3.x-dev composer reinstall tempest/framework \
+  --working-dir elephc/runtime --no-interaction --prefer-dist
+```
 
 ## Current boundaries
 

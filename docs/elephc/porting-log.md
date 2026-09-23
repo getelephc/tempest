@@ -134,6 +134,20 @@ The single runtime Composer patch is still required. Re-enabling the framework
 `autoload.files` list makes compilation enter Symfony UID and fail on its
 runtime `goto` control flow.
 
+### Interface ABI refresh at `605fb1d78c`
+
+Elephc main at `605fb1d78c` validates the physical signature of a source
+method implementing an interface. The previous finite `GenericRouter` patch
+kept `implements Router` but narrowed `dispatch()` from the interface's
+`Request|PsrRequest` parameter to `AotRequest`. The new check correctly rejects
+that signature even though `AotRequest` implements `Request`.
+
+The existing `GenericRouter` patch now accepts `mixed`, which is compatible with
+the interface parameter, and checks for `AotRequest` before dispatching into
+the finite route pipeline. No source patch target or synthetic dependency was
+added. A clean-room install, `--web` compilation, patch audit, and all six HTTP
+checks passed against this Elephc commit.
+
 ## Verified AOT boundary
 
 The working entry point is `elephc/runtime/server.php`. The runtime has a pinned

@@ -1,5 +1,5 @@
 diff --git a/packages/router/src/GenericRouter.php b/packages/router/src/GenericRouter.php
-index 6bedfe0e0e82119a9cfc1df1628e8e4d8746a491..2f7e789a5d1d209c9a310007ab302127bedf8def 100644
+index 6bedfe0e0e82119a9cfc1df1628e8e4d8746a491..0b3fc0f209bd1c655d60db0b35098c7852b8f5ee 100644
 --- a/packages/router/src/GenericRouter.php
 +++ b/packages/router/src/GenericRouter.php
 @@ -7,4 +7,3 @@
@@ -24,19 +24,20 @@ index 6bedfe0e0e82119a9cfc1df1628e8e4d8746a491..2f7e789a5d1d209c9a310007ab302127
 +        private MatchRouteMiddleware $routeMiddleware,
 @@ -26 +20 @@ public function __construct(
 -    public function dispatch(Request|PsrRequest $request): Response
-+    public function dispatch(AotRequest $request): Response
-@@ -28,9 +22 @@ public function dispatch(Request|PsrRequest $request): Response
++    public function dispatch(mixed $request): Response
+@@ -28,2 +22,2 @@ public function dispatch(Request|PsrRequest $request): Response
 -        if (! $request instanceof Request) {
 -            $request = map($request)->with(PsrRequestToGenericRequestMapper::class)->do();
--        }
--
++        if (! $request instanceof AotRequest) {
++            throw new \RuntimeException('Unsupported request type in the finite Elephc profile.');
+@@ -32,5 +26 @@ public function dispatch(Request|PsrRequest $request): Response
 -        $this->container->singleton(Request::class, fn () => $request);
 -
 -        $callable = $this->getCallable();
 -
 -        return $this->processResponse($callable($request));
 +        return $this->routeMiddleware->process($request, $this->getCallable());
-@@ -41,69 +27 @@ private function getCallable(): HttpMiddlewareCallable
+@@ -41,69 +31 @@ private function getCallable(): HttpMiddlewareCallable
 -        $callControllerAction = function (Request $_) {
 -            if (! $this->container->has(MatchedRoute::class)) {
 -                throw new MatchedRouteCouldNotBeResolved();
